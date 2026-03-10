@@ -263,7 +263,7 @@ const badgeColors: Record<string, string> = {
   "FLAGSHIP": "bg-gold text-forest",
   "BEST SELLER": "bg-forest text-cream-100",
   "ADVANCED": "bg-forest-700 text-cream-100",
-  "POPULAR": "bg-gold/20 text-gold border border-gold/40",
+  "POPULAR": "bg-gold text-forest",
 };
 
 export default function Services() {
