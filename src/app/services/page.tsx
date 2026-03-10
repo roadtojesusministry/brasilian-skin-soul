@@ -75,49 +75,133 @@ const signature = [
     duration: "60 min",
     img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
   },
-];
-
-const specialty = [
   {
     name: "Dermaplane Glow Facial",
+    tagline: "Silky Smooth · Luminous",
     desc: "Physical exfoliation removes dead skin cells and peach fuzz for silky-smooth, luminous skin. Makeup applies flawlessly after.",
-    price: "$XXX", duration: "60+ min",
+    price: "$XXX",
+    duration: "60+ min",
+    img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
   },
   {
     name: "Acne Facial",
+    tagline: "Clear · Balance · Heal",
     desc: "A targeted treatment designed to deeply cleanse, reduce inflammation, clear breakouts, and balance oily skin. Gentle yet effective.",
-    price: "$XXX", duration: "65 min",
+    price: "$XXX",
+    duration: "65 min",
+    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
   },
   {
     name: "Stem Cell Facial",
+    tagline: "Deep Cellular Renewal",
     desc: "Plant-derived stem cells stimulate skin renewal and repair at a cellular level. Exceptional for mature skin seeking deep regeneration.",
-    price: "$XXX", duration: "90 min",
+    price: "$XXX",
+    duration: "90 min",
+    img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
   },
   {
     name: "LED Photo Facial",
+    tagline: "Heal · Clarify · Renew",
     desc: "Targeted light therapy reduces inflammation, kills acne bacteria, stimulates collagen, and accelerates healing — all with zero downtime.",
-    price: "$XXX", duration: "45+ min",
+    price: "$XXX",
+    duration: "45+ min",
+    img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
   },
   {
     name: "Teen Glow Facial",
+    tagline: "Gentle · Balancing · Fresh",
     desc: "Specially formulated for teenage skin. Gentle deep cleanse, extractions, and balancing treatment that builds healthy skincare habits early.",
-    price: "$XXX", duration: "50 min",
+    price: "$XXX",
+    duration: "50 min",
+    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
   },
   {
     name: "Pampering Spa Facial",
+    tagline: "Pure Relaxation",
     desc: "A relaxing, classic spa facial with deep cleanse, steam, extractions, masque, and a full face and shoulder massage. Pure bliss.",
-    price: "$XXX", duration: "90 min",
+    price: "$XXX",
+    duration: "90 min",
+    img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
   },
   {
     name: "Tropical Deluxe Facial",
-    desc: "Head-to-toe tropical experience with papaya enzyme scrub, glycolic peel, oxygen therapy, seaweed hand treatment, and reflexology foot massage.",
-    price: "$XXX", duration: "75+ min",
+    tagline: "Head-to-Toe Tropical Escape",
+    desc: "Papaya enzyme scrub, glycolic peel, oxygen therapy, seaweed hand treatment, and reflexology foot massage — a full sensory journey.",
+    price: "$XXX",
+    duration: "75+ min",
+    img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
   },
   {
     name: "Executive Facial",
+    tagline: "Results. No Downtime.",
     desc: "An efficient, results-driven facial for the busy professional. Deep cleanse, exfoliation, extractions and hydration — in under an hour.",
-    price: "$XXX", duration: "50 min",
+    price: "$XXX",
+    duration: "50 min",
+    img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
   },
+];
+
+const advancedPackages = [
+  {
+    name: "Lift & Sculpt Series",
+    group: "Energy & Lifting",
+    desc: "The ultimate non-surgical lifting protocol. Three progressive sessions combining microcurrent muscle training, Therma-Lift contouring, and Cold Plasma collagen stimulation. Each session builds on the last — the cumulative effect is a visibly lifted, firmed, and sculpted face.",
+    technologies: ["Microcurrent Lifting", "Therma-Lift Technology", "Cold Plasma (13,000V)"],
+    price: "$XXX",
+    sessions: 3,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Illuminate Series",
+    group: "Light & Oxygen",
+    desc: "Heal, hydrate, and brighten from within. Three sessions layering targeted LED light therapy, pressurized oxygen infusion (Intraceuticals), and CO2 carboxytherapy firming. Perfect for dull, uneven, or inflamed skin that needs a deep reset.",
+    technologies: ["LED Photo Therapy", "Oxygen Infusion (Intraceuticals)", "CO2 Carboxytherapy"],
+    price: "$XXX",
+    sessions: 3,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Resurface & Refine Series",
+    group: "Resurfacing & Renewal",
+    desc: "Progressive skin renewal that reveals smoother, more even-toned skin with every session. Combines professional microdermabrasion, surgical-grade Dermaplane exfoliation, and a glycolic peel for lasting texture transformation.",
+    technologies: ["Microdermabrasion", "Dermaplane Exfoliation", "Glycolic Peel"],
+    price: "$XXX",
+    sessions: 3,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+      </svg>
+    ),
+  },
+  {
+    name: "Cellular Renewal Series",
+    group: "Cellular Science",
+    desc: "Deep regeneration from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, far-infrared promotes circulation and natural detox, and Gua Sha lymphatic drainage sculpts and restores your skin's natural radiance.",
+    technologies: ["Plant Stem Cell Therapy", "Far-Infrared Technology", "Gua Sha Lymphatic Drainage"],
+    price: "$XXX",
+    sessions: 3,
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+      </svg>
+    ),
+  },
+];
+
+const packages = [
+  { name: "Glow Series — Microdermabrasion", desc: "3 sessions of professional microdermabrasion for progressive skin renewal and lasting smoothness.", price: "$XXX", sessions: 3 },
+  { name: "Lift Series — Eye Lift Stem Cell", desc: "3 targeted eye lift treatments using stem cell technology to firm, brighten, and reduce fine lines.", price: "$XXX", sessions: 3 },
+  { name: "Sculpt Series — Therma-Lift", desc: "3 Therma-Lift sculpting sessions for progressive tightening and contouring results.", price: "$XXX", sessions: 3 },
+  { name: "Revive Series — Microcurrent", desc: "3 microcurrent sessions to train facial muscles, build lift, and restore youthful contours.", price: "$XXX", sessions: 3 },
+  { name: "Radiance Series — LED Photo", desc: "3 LED photo treatments targeting your specific concern — acne, aging, or pigmentation.", price: "$XXX", sessions: 3 },
 ];
 
 const addons = [
@@ -165,14 +249,6 @@ const waxing = [
   { name: "Shoulder Waxing", price: "$XX" },
 ];
 
-const packages = [
-  { name: "Glow Series — Microdermabrasion", desc: "3 sessions of professional microdermabrasion for progressive skin renewal and lasting smoothness.", price: "$XXX", sessions: 3 },
-  { name: "Lift Series — Eye Lift Stem Cell", desc: "3 targeted eye lift treatments using stem cell technology to firm, brighten, and reduce fine lines.", price: "$XXX", sessions: 3 },
-  { name: "Sculpt Series — Therma-Lift", desc: "3 Therma-Lift sculpting sessions for progressive tightening and contouring results.", price: "$XXX", sessions: 3 },
-  { name: "Revive Series — Microcurrent", desc: "3 microcurrent sessions to train facial muscles, build lift, and restore youthful contours.", price: "$XXX", sessions: 3 },
-  { name: "Radiance Series — LED Photo", desc: "3 LED photo treatments targeting your specific concern — acne, aging, or pigmentation.", price: "$XXX", sessions: 3 },
-];
-
 const badgeColors: Record<string, string> = {
   "FLAGSHIP": "bg-gold text-forest",
   "BEST SELLER": "bg-forest text-cream-100",
@@ -184,7 +260,8 @@ export default function Services() {
     <>
     <Navbar />
     <div className="bg-cream-100 min-h-screen">
-      {/* Hero */}
+
+      {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1800&q=80" alt="Spa" fill className="object-cover" />
@@ -202,7 +279,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Signature Facials */}
+      {/* ── SIGNATURE FACIALS ────────────────────────────────── */}
       <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Most Popular</p>
@@ -238,66 +315,49 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Specialty Treatments */}
-      <section id="advanced" className="py-24 bg-cream-200">
+      {/* ── ADVANCED TECHNOLOGY PACKAGES ─────────────────────── */}
+      <section id="advanced-packages" className="py-24 bg-forest">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">For Every Skin Type</p>
-            <h2 className="font-serif text-5xl text-forest font-light">Specialty Treatments</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {specialty.map((s) => (
-              <div key={s.name} className="bg-white rounded-2xl p-6 border border-forest-100 shadow-sm hover:shadow-md hover:border-forest-300 transition-all">
-                <h3 className="font-serif text-xl text-forest mb-2">{s.name}</h3>
-                <p className="text-sm text-forest-500 leading-relaxed mb-4">{s.desc}</p>
-                <div className="flex items-center justify-between text-sm pt-3 border-t border-forest-100">
-                  <span className="font-bold text-forest">{s.price}</span>
-                  <span className="text-forest-400 text-xs">{s.duration}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Add-Ons */}
-      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Customize Your Treatment</p>
-          <h2 className="font-serif text-5xl text-forest font-light">Add-Ons</h2>
-          <p className="text-forest-500 mt-3 max-w-lg mx-auto">Enhance any facial with one or more of these targeted boosters.</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {addons.map((a) => (
-            <div key={a.name} className="flex items-start gap-4 bg-white rounded-xl p-5 border border-forest-100 hover:border-forest-300 transition-colors">
-              <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="font-medium text-forest text-sm">{a.name}</p>
-                  <span className="text-gold font-semibold text-sm">{a.price}</span>
-                </div>
-                <p className="text-xs text-forest-400 leading-relaxed">{a.desc}</p>
-              </div>
+            <div className="inline-flex items-center gap-2 text-gold mb-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+              </svg>
+              <p className="text-xs uppercase tracking-[0.25em] font-medium">Multi-Session Protocols</p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Body & Massage */}
-      <section id="body" className="py-24 bg-forest">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Full Body Care</p>
-            <h2 className="font-serif text-5xl text-white font-light">Body & Massage</h2>
+            <h2 className="font-serif text-5xl text-white font-light mb-4">Advanced Technology Packages</h2>
+            <p className="text-white/60 max-w-xl mx-auto">
+              One session is great. Three sessions is transformation. Each package is a progressive protocol built around one of our four core technology groups — results that compound with every visit.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {bodyMassage.map((s) => (
-              <div key={s.name} className="bg-white/10 border border-white/10 rounded-2xl p-6 hover:bg-white/15 transition-colors">
-                <h3 className="font-serif text-xl text-white mb-2">{s.name}</h3>
-                <p className="text-sm text-white/60 leading-relaxed mb-4">{s.desc}</p>
-                <div className="flex items-center justify-between text-sm pt-3 border-t border-white/10">
-                  <span className="font-bold text-gold">{s.price}</span>
-                  <span className="text-white/40 text-xs">{s.duration}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {advancedPackages.map((p) => (
+              <div key={p.name} className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-gold/30 transition-all">
+                <div className="flex items-start justify-between mb-5">
+                  <div className="flex items-center gap-3">
+                    <span className="text-gold">{p.icon}</span>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-gold/70 font-medium">{p.group}</p>
+                      <h3 className="font-serif text-2xl text-white leading-tight">{p.name}</h3>
+                    </div>
+                  </div>
+                  <div className="inline-flex items-center gap-1 bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 ml-4">
+                    {p.sessions} Sessions
+                  </div>
+                </div>
+                <p className="text-white/60 text-sm leading-relaxed mb-5">{p.desc}</p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {p.technologies.map((tech) => (
+                    <span key={tech} className="text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex items-center justify-between pt-5 border-t border-white/10">
+                  <span className="font-bold text-gold text-xl">{p.price}</span>
+                  <Link href="/booking" className="bg-gold text-forest px-6 py-2.5 rounded-full text-xs font-semibold hover:bg-gold-light transition-colors">
+                    Book This Series
+                  </Link>
                 </div>
               </div>
             ))}
@@ -305,26 +365,8 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Waxing */}
-      <section id="advanced" className="py-24 bg-cream-200">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Hair Removal</p>
-            <h2 className="font-serif text-5xl text-forest font-light">Waxing Services</h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {waxing.map((w) => (
-              <div key={w.name} className="bg-white rounded-xl p-4 border border-forest-100 flex items-center justify-between hover:border-forest-300 transition-colors">
-                <span className="text-sm text-forest font-medium">{w.name}</span>
-                <span className="text-sm text-gold font-semibold ml-2 flex-shrink-0">{w.price}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Packages */}
-      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
+      {/* ── TREATMENT PACKAGES ───────────────────────────────── */}
+      <section id="packages" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Save More</p>
           <h2 className="font-serif text-5xl text-forest font-light">Treatment Packages</h2>
@@ -349,7 +391,72 @@ export default function Services() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ── ADD-ONS ──────────────────────────────────────────── */}
+      <section id="addons" className="py-24 bg-cream-200">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Customize Your Treatment</p>
+            <h2 className="font-serif text-5xl text-forest font-light">Add-Ons</h2>
+            <p className="text-forest-500 mt-3 max-w-lg mx-auto">Enhance any facial with one or more of these targeted boosters.</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {addons.map((a) => (
+              <div key={a.name} className="flex items-start gap-4 bg-white rounded-xl p-5 border border-forest-100 hover:border-forest-300 transition-colors">
+                <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="font-medium text-forest text-sm">{a.name}</p>
+                    <span className="text-gold font-semibold text-sm">{a.price}</span>
+                  </div>
+                  <p className="text-xs text-forest-400 leading-relaxed">{a.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── BODY & MASSAGE ───────────────────────────────────── */}
+      <section id="body" className="py-24 bg-forest">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Full Body Care</p>
+            <h2 className="font-serif text-5xl text-white font-light">Body & Massage</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {bodyMassage.map((s) => (
+              <div key={s.name} className="bg-white/10 border border-white/10 rounded-2xl p-6 hover:bg-white/15 transition-colors">
+                <h3 className="font-serif text-xl text-white mb-2">{s.name}</h3>
+                <p className="text-sm text-white/60 leading-relaxed mb-4">{s.desc}</p>
+                <div className="flex items-center justify-between text-sm pt-3 border-t border-white/10">
+                  <span className="font-bold text-gold">{s.price}</span>
+                  <span className="text-white/40 text-xs">{s.duration}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── WAXING ───────────────────────────────────────────── */}
+      <section id="waxing" className="py-24 bg-cream-200">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Hair Removal</p>
+            <h2 className="font-serif text-5xl text-forest font-light">Waxing Services</h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {waxing.map((w) => (
+              <div key={w.name} className="bg-white rounded-xl p-4 border border-forest-100 flex items-center justify-between hover:border-forest-300 transition-colors">
+                <span className="text-sm text-forest font-medium">{w.name}</span>
+                <span className="text-sm text-gold font-semibold ml-2 flex-shrink-0">{w.price}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ──────────────────────────────────────────────── */}
       <section className="py-20 bg-forest text-center">
         <div className="max-w-xl mx-auto px-6">
           <h2 className="font-serif text-4xl text-white font-light mb-4">Not sure where to start?</h2>
@@ -359,11 +466,12 @@ export default function Services() {
               Book a Consultation
             </Link>
             <a href="tel:+18185775421" className="border border-white/30 text-white px-8 py-4 rounded-full text-sm hover:border-gold hover:text-gold transition-colors">
-              📞 (818) 577-5421
+              (818) 577-5421
             </a>
           </div>
         </div>
       </section>
+
     </div>
     </>
   );
