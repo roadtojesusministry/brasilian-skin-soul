@@ -44,7 +44,6 @@ const featuredServices = [
 const serviceCategories = [
   {
     label: "Signature Facials",
-    href: "/services#signature",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
@@ -52,17 +51,7 @@ const serviceCategories = [
     ),
   },
   {
-    label: "Advanced Technology",
-    href: "/services#advanced",
-    svg: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-      </svg>
-    ),
-  },
-  {
     label: "Body Treatments",
-    href: "/services#body",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
@@ -71,7 +60,6 @@ const serviceCategories = [
   },
   {
     label: "Massage & Add-ons",
-    href: "/services#addons",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -80,7 +68,6 @@ const serviceCategories = [
   },
   {
     label: "Waxing Services",
-    href: "/services#waxing",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
@@ -89,12 +76,67 @@ const serviceCategories = [
   },
   {
     label: "Treatment Packages",
-    href: "/services#packages",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
       </svg>
     ),
+  },
+];
+
+// Advanced technology items organized by category
+const advancedTech = [
+  {
+    group: "Energy & Lifting",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+      </svg>
+    ),
+    items: [
+      { name: "Microcurrent Lifting", desc: "Electrical muscle stimulation for a natural, non-surgical lift" },
+      { name: "Therma-Lift Technology", desc: "Heat-based sculpting to tighten skin and contour the face" },
+      { name: "Cold Plasma (13,000V)", desc: "Amplifies absorption of skin boosters by up to 120× and stimulates collagen" },
+    ],
+  },
+  {
+    group: "Light & Oxygen",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+      </svg>
+    ),
+    items: [
+      { name: "LED Photo Therapy", desc: "Red, blue & near-infrared light to heal, clarify, and regenerate" },
+      { name: "Oxygen Infusion (Intraceuticals)", desc: "Pressurized oxygen drives customized serums deep into the skin" },
+      { name: "CO2 Carboxytherapy", desc: "Carbon dioxide mask delivers instant firming and brightening" },
+    ],
+  },
+  {
+    group: "Resurfacing & Renewal",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+      </svg>
+    ),
+    items: [
+      { name: "Microdermabrasion", desc: "Diamond-tip resurfacing for smooth, even-toned skin" },
+      { name: "Dermaplane Exfoliation", desc: "Surgical-grade blade removes dead cells and peach fuzz" },
+      { name: "Glycolic Peel", desc: "Alpha hydroxy acid resurfaces and brightens for a fresh glow" },
+    ],
+  },
+  {
+    group: "Cellular Science",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+      </svg>
+    ),
+    items: [
+      { name: "Plant Stem Cell Therapy", desc: "Triggers skin renewal and repair at the deepest cellular layer" },
+      { name: "Far-Infrared Technology", desc: "Promotes circulation, eases tension, and supports natural detox" },
+      { name: "Gua Sha Lymphatic Drainage", desc: "Ancient technique enhanced with modern oxygen infusion for deep detox" },
+    ],
   },
 ];
 
@@ -115,9 +157,9 @@ const LeafIcon = () => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18" />
   </svg>
 );
-const SparkleIcon = () => (
+const BoltIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 text-gold flex-shrink-0">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
   </svg>
 );
 
@@ -193,7 +235,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-6 text-sm text-white/70">
               <span className="flex items-center gap-2"><StarIcon /> 60+ Five-Star Reviews</span>
               <span className="flex items-center gap-2"><LeafIcon /> 28 Years Experience</span>
-              <span className="flex items-center gap-2"><SparkleIcon /> Advanced Technology</span>
+              <span className="flex items-center gap-2"><BoltIcon /> Advanced Technology</span>
             </div>
           </div>
 
@@ -229,14 +271,63 @@ export default function Home() {
       {/* ── SERVICE CATEGORIES STRIP ─────────────────────────── */}
       <section className="bg-forest py-10">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {serviceCategories.map((c) => (
-              <Link key={c.label} href={c.href}
-                className="flex flex-col items-center gap-3 p-5 rounded-xl hover:bg-white/5 transition-colors text-center group">
-                <span className="text-gold/80 group-hover:text-gold transition-colors">{c.svg}</span>
-                <span className="text-xs text-white/70 font-medium leading-tight group-hover:text-white transition-colors">{c.label}</span>
-              </Link>
+              <div key={c.label}
+                className="flex flex-col items-center gap-3 p-5 rounded-xl text-center">
+                <span className="text-gold/80">{c.svg}</span>
+                <span className="text-xs text-white/70 font-medium leading-tight">{c.label}</span>
+              </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ADVANCED TECHNOLOGY ──────────────────────────────── */}
+      <section className="py-24 bg-forest border-t border-white/10">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 text-gold mb-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+              </svg>
+              <p className="text-xs uppercase tracking-[0.25em] font-medium">What Sets Us Apart</p>
+            </div>
+            <h2 className="font-serif text-5xl md:text-6xl text-white font-light mb-4">
+              Advanced Technology
+            </h2>
+            <p className="text-white/60 max-w-xl mx-auto text-base leading-relaxed">
+              Claudia combines 28 years of hands-on mastery with cutting-edge skincare technology — giving you results you simply cannot get at a standard spa.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {advancedTech.map((group) => (
+              <div key={group.group} className="bg-white/5 border border-white/10 rounded-2xl p-7">
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-gold">{group.icon}</span>
+                  <h3 className="text-sm uppercase tracking-[0.2em] text-gold font-semibold">{group.group}</h3>
+                </div>
+                <div className="flex flex-col gap-4">
+                  {group.items.map((item) => (
+                    <div key={item.name} className="flex gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-gold/60 mt-2 flex-shrink-0" />
+                      <div>
+                        <p className="text-white font-medium text-sm">{item.name}</p>
+                        <p className="text-white/50 text-xs leading-relaxed mt-0.5">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/services"
+              className="inline-flex items-center gap-2 border border-gold/50 text-gold px-8 py-4 rounded-full text-sm font-medium hover:bg-gold hover:text-forest transition-colors">
+              See All Treatments →
+            </Link>
           </div>
         </div>
       </section>
