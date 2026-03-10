@@ -49,6 +49,7 @@ const signature = [
     desc: "Gentle microcurrent waves stimulate facial muscles and boost collagen, delivering a natural lift and firming effect. Visible results from the very first session.",
     price: "$XXX",
     duration: "90 min",
+    badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
   },
   {
@@ -245,6 +246,7 @@ const badgeColors: Record<string, string> = {
   "FLAGSHIP": "bg-gold text-forest",
   "BEST SELLER": "bg-forest text-cream-100",
   "ADVANCED": "bg-forest-700 text-cream-100",
+  "POPULAR": "bg-gold/20 text-gold border border-gold/40",
 };
 
 export default function Services() {
