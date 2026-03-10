@@ -1,23 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --forest: #1B4D2E;
-  --cream: #FAF8F2;
-  --gold: #C9A96E;
+@theme {
+  /* Colors */
+  --color-forest:     #1B4D2E;
+  --color-forest-50:  #f2f7f4;
+  --color-forest-100: #e0ede5;
+  --color-forest-200: #c2daca;
+  --color-forest-300: #96c0a6;
+  --color-forest-400: #65a07e;
+  --color-forest-500: #42825e;
+  --color-forest-600: #31674a;
+  --color-forest-700: #27533c;
+  --color-forest-800: #1e3f2d;
+  --color-forest-900: #1a3526;
+
+  --color-cream:     #FAF8F2;
+  --color-cream-50:  #fefdfb;
+  --color-cream-100: #faf8f2;
+  --color-cream-200: #f4efe3;
+  --color-cream-300: #ece3d0;
+
+  --color-gold:       #C9A96E;
+  --color-gold-light: #D4B87A;
+  --color-gold-dark:  #A8854A;
+
+  /* Fonts */
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans:  var(--font-inter), system-ui, sans-serif;
+
+  /* Animations */
+  --animate-marquee-left:  marquee-left 60s linear infinite;
+  --animate-marquee-right: marquee-right 60s linear infinite;
+
+  @keyframes marquee-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes marquee-right {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  background-color: var(--cream);
-  color: var(--forest);
-  font-family: var(--font-inter), system-ui, sans-serif;
-}
-
-.font-serif {
-  font-family: var(--font-cormorant), Georgia, serif;
+  background-color: var(--color-cream);
+  color: var(--color-forest);
 }
 
 .line-clamp-4 {
