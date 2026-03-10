@@ -6,25 +6,38 @@ import { techScience } from "@/lib/techScience";
 interface Props {
   techNames: string[];
   groupName?: string;
+  iconOnly?: boolean;
 }
 
-export default function TechInfoButton({ techNames, groupName }: Props) {
+export default function TechInfoButton({ techNames, groupName, iconOnly }: Props) {
   const [open, setOpen] = useState(false);
   const items = techNames.map((name) => ({ name, info: techScience[name] })).filter((t) => t.info);
   if (items.length === 0) return null;
 
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        aria-label="The science behind this treatment"
-        className="inline-flex items-center gap-1 text-xs border border-white/20 text-white/40 hover:text-gold hover:border-gold/50 px-2.5 py-1 rounded-full transition-colors flex-shrink-0"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5v-5m0-3.75h.008M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
-        </svg>
-        The Science
-      </button>
+      {iconOnly ? (
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Learn more about this treatment"
+          className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-forest-200 text-forest-300 hover:text-gold hover:border-gold/50 transition-colors flex-shrink-0"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3 h-3">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5v-5m0-3.75h.008M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
+          </svg>
+        </button>
+      ) : (
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="The science behind this treatment"
+          className="inline-flex items-center gap-1 text-xs border border-white/20 text-white/40 hover:text-gold hover:border-gold/50 px-2.5 py-1 rounded-full transition-colors flex-shrink-0"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5v-5m0-3.75h.008M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
+          </svg>
+          The Science
+        </button>
+      )}
 
       {open && (
         <div

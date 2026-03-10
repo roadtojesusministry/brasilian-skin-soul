@@ -65,4 +65,51 @@ export const techScience: Record<string, TechInfo> = {
     body: "Gua Sha applies precise directional pressure along facial fascia lines to stimulate lymphatic flow — the body's natural waste-removal system. When lymphatic circulation stagnates, fluid, toxins, and inflammatory byproducts accumulate in facial tissue, causing puffiness, dullness, and loss of definition. Clinical research confirms that manual lymphatic drainage reduces facial edema, improves microcirculation, and enhances the skin's natural healing response.",
     source: "Journal of Traditional Chinese Medicine · Lymphatic Research and Biology",
   },
+
+  // ── Add-On entries ───────────────────────────────────────────────────
+  "Dermaplane": {
+    headline: "One precise pass. Skin that absorbs 70% more.",
+    body: "A medical-grade surgical blade at an exact 45° angle removes the top layer of dead skin cells and vellus hair (peach fuzz) in one controlled pass. Beyond the instant smoothness, dermaplaned skin absorbs active ingredients up to 70% more effectively — making every product applied afterward significantly more potent. Added to any facial, it amplifies your entire treatment.",
+    source: "Journal of the American Academy of Dermatology · Aesthetic Plastic Surgery",
+  },
+  "LED Light Therapy": {
+    headline: "The right wavelength of light triggers real biological change.",
+    body: "Red light (630–700nm) stimulates fibroblasts to produce collagen and soften fine lines. Blue light (415nm) destroys acne-causing bacteria at the source. Near-infrared penetrates deepest — reducing inflammation and accelerating cellular repair. Added to any facial, LED therapy extends results and reduces downtime. Zero UV, zero heat, pure therapeutic benefit.",
+    source: "Photomedicine and Laser Surgery · Journal of the American Academy of Dermatology",
+  },
+  "CO2 Lift": {
+    headline: "Your body rushes oxygen wherever it detects CO2. We use that.",
+    body: "When CO2 is applied to the skin, the body reads it as a low-oxygen signal and immediately rushes blood flow and oxygen to the area — the Bohr Effect. This triggers instant vasodilation, bringing nutrients to the surface, firming tissue, and leaving skin visibly brighter and tighter. Added at the end of any facial, the results are immediate and require zero downtime.",
+    source: "Journal of Cosmetic Dermatology · European Journal of Dermatology",
+  },
+  "Eye Lift — Stem Cell": {
+    headline: "The eye area ages fastest. Treat it at the cellular level.",
+    body: "The skin around the eyes is the thinnest on the face and shows aging earlier than anywhere else. Plant stem cell actives penetrate this delicate zone to trigger cellular renewal, reduce the appearance of fine lines, and firm the eye contour from within. Added to any facial, this targeted booster addresses the one area most people notice first.",
+    source: "International Journal of Cosmetic Science · Phytochemistry Reviews",
+  },
+  "Oxygen Therapy O2": {
+    headline: "Pressurized oxygen drives actives deeper than anything topical.",
+    body: "Hyperbaric oxygen bypasses the skin's natural surface barrier — the same barrier that limits most topical products — and delivers a concentrated dose of hyaluronic acid, vitamins, and botanical actives directly into the deeper skin layers. The result is intense hydration, accelerated repair, and a luminosity boost that works from within. The perfect amplifier for any treatment.",
+    source: "International Journal of Cosmetic Science · Intraceuticals Clinical Studies",
+  },
+  "Therma-Lift": {
+    headline: "Heat the deeper layers. Tighten from within.",
+    body: "Therma-Lift uses precisely controlled thermal energy to warm the skin's deeper dermal layers without affecting the surface. This signals the body's natural repair response — stimulating new collagen production and causing existing fibers to contract and tighten. Added to a facial, it takes results from surface-level to structural — firming and contouring as the session continues.",
+    source: "Dermatologic Surgery Journal · American Society for Dermatologic Surgery",
+  },
+  "Deep Extractions": {
+    headline: "Clear pores are the foundation of everything that comes after.",
+    body: "Professional deep extractions remove built-up sebum, dead cells, and debris from clogged pores that daily cleansing simply cannot reach. When pores are clear, inflammation decreases, breakouts reduce, and every product applied afterward absorbs more effectively. Regular professional extractions prevent the compaction that leads to chronic breakouts and visibly enlarged pores over time.",
+    source: "American Academy of Dermatology · Skin & Allergy News",
+  },
+  "Divine Décolleté": {
+    headline: "Your neck and chest age faster than your face — and show it first.",
+    body: "The skin on the neck and décolleté is thinner, produces less oil, and receives the same environmental exposure as the face — but almost never receives the same care. This targeted treatment addresses sun damage, fine lines, and uneven texture in the area clients and others notice immediately. A well-maintained décolleté is one of the clearest signals of overall skin health.",
+    source: "Journal of Cosmetic Dermatology · Dermatology Times",
+  },
+  "Glow Mask": {
+    headline: "The final step that makes everything else work harder.",
+    body: "A brightening and hydrating masque delivers a concentrated dose of vitamin C, niacinamide, and hyaluronic acid directly to the skin at its most receptive moment — after your facial, when the barrier is open and absorption is at its peak. It seals in hydration, evens skin tone, and delivers an immediate luminosity that continues to develop in the days following your appointment.",
+    source: "International Journal of Cosmetic Science · Cosmetic Dermatology",
+  },
 };

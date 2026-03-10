@@ -404,9 +404,12 @@ export default function Services() {
               <div key={a.name} className="flex items-start gap-4 bg-white rounded-xl p-5 border border-forest-100 hover:border-forest-300 transition-colors">
                 <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
                 <div className="flex-1">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="font-medium text-forest text-sm">{a.name}</p>
-                    <span className="text-gold font-semibold text-sm">{a.price}</span>
+                  <div className="flex items-center justify-between mb-1 gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <p className="font-medium text-forest text-sm">{a.name}</p>
+                      <TechInfoButton techNames={[a.name]} groupName={a.name} iconOnly />
+                    </div>
+                    <span className="text-gold font-semibold text-sm flex-shrink-0">{a.price}</span>
                   </div>
                   <p className="text-xs text-forest-400 leading-relaxed">{a.desc}</p>
                 </div>
