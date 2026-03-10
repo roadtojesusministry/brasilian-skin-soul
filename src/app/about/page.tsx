@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,6 +17,8 @@ const milestones = [
 
 export default function About() {
   return (
+    <>
+    <Navbar />
     <div className="bg-cream-100 min-h-screen">
 
       {/* Hero */}
@@ -158,5 +161,6 @@ export default function About() {
       </section>
 
     </div>
+    </>
   );
 }

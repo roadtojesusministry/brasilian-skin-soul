@@ -170,7 +170,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-forest/70" />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gold mb-5">Woodland Hills, California</p>
             <h1 className="font-serif text-6xl md:text-7xl text-white font-light leading-[1.1] mb-6">
@@ -198,13 +198,24 @@ export default function Home() {
           </div>
 
           <div className="hidden lg:flex justify-end">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-10 flex flex-col items-center gap-4">
-              <Image src="/logo-circle-2.png" alt="Brasilian Skin Soul" width={200} height={200} className="drop-shadow-xl" />
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-10 flex flex-col items-center gap-6 min-w-[280px]">
+              <Image src="/logo-circle-2.png" alt="Brasilian Skin Soul" width={180} height={180} className="drop-shadow-xl" />
               <div className="text-center">
                 <p className="font-serif text-2xl text-white">Brasilian Skin Soul</p>
                 <p className="text-xs text-white/60 tracking-widest uppercase mt-1">by Claudia Pieri</p>
               </div>
-
+              <div className="w-full border-t border-white/15 pt-2 flex flex-col gap-1">
+                {[
+                  { label: "Services", href: "/services" },
+                  { label: "About", href: "/about" },
+                  { label: "Contact", href: "/contact" },
+                ].map((l) => (
+                  <Link key={l.href} href={l.href}
+                    className="text-white/70 hover:text-white text-sm text-center py-2.5 rounded-xl hover:bg-white/10 transition-colors tracking-wide">
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>

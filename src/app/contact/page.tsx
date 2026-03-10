@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 export const metadata = {
   title: "Contact | Brasilian Skin Soul — Woodland Hills, CA",
   description: "Visit Brasilian Skin Soul by Claudia Pieri at 5303 Comercio Ln Suite #2, Woodland Hills, CA. Call (818) 577-5421 to book.",
@@ -5,6 +6,8 @@ export const metadata = {
 
 export default function Contact() {
   return (
+    <>
+    <Navbar />
     <div className="pt-32 pb-20 bg-cream-100 min-h-screen">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
@@ -106,5 +109,6 @@ export default function Contact() {
         </div>
       </div>
     </div>
+    </>
   );
 }
