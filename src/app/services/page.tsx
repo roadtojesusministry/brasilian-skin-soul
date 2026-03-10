@@ -196,14 +196,6 @@ const advancedPackages = [
   },
 ];
 
-const packages = [
-  { name: "Glow Series — Microdermabrasion", desc: "3 sessions of professional microdermabrasion for progressive skin renewal and lasting smoothness.", price: "$XXX", sessions: 3 },
-  { name: "Lift Series — Eye Lift Stem Cell", desc: "3 targeted eye lift treatments using stem cell technology to firm, brighten, and reduce fine lines.", price: "$XXX", sessions: 3 },
-  { name: "Sculpt Series — Therma-Lift", desc: "3 Therma-Lift sculpting sessions for progressive tightening and contouring results.", price: "$XXX", sessions: 3 },
-  { name: "Revive Series — Microcurrent", desc: "3 microcurrent sessions to train facial muscles, build lift, and restore youthful contours.", price: "$XXX", sessions: 3 },
-  { name: "Radiance Series — LED Photo", desc: "3 LED photo treatments targeting your specific concern — acne, aging, or pigmentation.", price: "$XXX", sessions: 3 },
-];
-
 const addons = [
   { name: "Dermaplane", desc: "Removes dead skin cells and fine facial hair for silky smooth skin.", price: "$XX" },
   { name: "Glycolic Peel", desc: "Resurfaces skin and brightens tone with alpha hydroxy acid.", price: "$XX" },
@@ -362,32 +354,6 @@ export default function Services() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── TREATMENT PACKAGES ───────────────────────────────── */}
-      <section id="packages" className="py-24 max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Save More</p>
-          <h2 className="font-serif text-5xl text-forest font-light">Treatment Packages</h2>
-          <p className="text-forest-500 mt-3 max-w-lg mx-auto">Commit to your skin and save. Each package is 3 sessions of your chosen treatment for progressive, lasting results.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {packages.map((p) => (
-            <div key={p.name} className="bg-white rounded-2xl p-8 border border-forest-100 shadow-sm hover:shadow-md hover:border-gold transition-all">
-              <div className="inline-flex items-center gap-1 bg-gold/10 text-gold text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                {p.sessions} Sessions
-              </div>
-              <h3 className="font-serif text-2xl text-forest mb-3 leading-tight">{p.name}</h3>
-              <p className="text-sm text-forest-500 leading-relaxed mb-6">{p.desc}</p>
-              <div className="flex items-center justify-between pt-4 border-t border-forest-100">
-                <span className="font-bold text-forest text-xl">{p.price}</span>
-                <Link href="/booking" className="bg-forest text-cream-100 px-5 py-2 rounded-full text-xs font-medium hover:bg-forest-700 transition-colors">
-                  Book Package
-                </Link>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
