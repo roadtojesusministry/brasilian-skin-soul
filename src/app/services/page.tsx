@@ -16,6 +16,7 @@ const signature = [
     duration: "2 hr",
     badge: "FLAGSHIP",
     img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
+    addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
     name: "Intraceuticals Oxygen Facial",
@@ -25,6 +26,7 @@ const signature = [
     duration: "60+ min",
     badge: "BEST SELLER",
     img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+    addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -34,6 +36,7 @@ const signature = [
     duration: "60+ min",
     badge: "ADVANCED",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
+    addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
   },
   {
     name: "Therma-Lift Sculpting Facial",
@@ -42,6 +45,7 @@ const signature = [
     price: "$XXX",
     duration: "80 min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
+    addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -51,6 +55,7 @@ const signature = [
     duration: "90 min",
     badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
+    addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
     name: "Gua Sha Oxygen Facial",
@@ -59,6 +64,7 @@ const signature = [
     price: "$XXX",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
+    addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
   },
   {
     name: "Lift & Firm Facial",
@@ -67,6 +73,7 @@ const signature = [
     price: "$XXX",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
+    addons: ["Microcurrent Lifting", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
     name: "Oxygen Glow Facial",
@@ -75,6 +82,7 @@ const signature = [
     price: "$XXX",
     duration: "60 min",
     img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
+    addons: ["Dermaplane", "LED Light Therapy", "Glow Mask"],
   },
   {
     name: "Dermaplane Glow Facial",
@@ -83,6 +91,7 @@ const signature = [
     price: "$XXX",
     duration: "60+ min",
     img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
+    addons: ["Glycolic Peel", "Oxygen Therapy O2", "Glow Mask"],
   },
   {
     name: "Acne Facial",
@@ -91,6 +100,7 @@ const signature = [
     price: "$XXX",
     duration: "65 min",
     img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+    addons: ["LED Light Therapy", "Deep Extractions", "Glycolic Peel"],
   },
   {
     name: "Stem Cell Facial",
@@ -99,6 +109,7 @@ const signature = [
     price: "$XXX",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
+    addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
   },
   {
     name: "LED Photo Facial",
@@ -107,6 +118,7 @@ const signature = [
     price: "$XXX",
     duration: "45+ min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
+    addons: ["Deep Extractions", "CO2 Lift", "Glow Mask"],
   },
   {
     name: "Teen Glow Facial",
@@ -115,6 +127,7 @@ const signature = [
     price: "$XXX",
     duration: "50 min",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
+    addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
   },
   {
     name: "Pampering Spa Facial",
@@ -123,6 +136,7 @@ const signature = [
     price: "$XXX",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
+    addons: ["Dermaplane", "Oxygen Therapy O2", "Divine Décolleté"],
   },
   {
     name: "Tropical Deluxe Facial",
@@ -131,6 +145,7 @@ const signature = [
     price: "$XXX",
     duration: "75+ min",
     img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
+    addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
     name: "Executive Facial",
@@ -139,6 +154,7 @@ const signature = [
     price: "$XXX",
     duration: "50 min",
     img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
+    addons: ["Dermaplane", "Microcurrent Lifting", "Glycolic Peel"],
   },
 ];
 
@@ -296,6 +312,18 @@ export default function Services() {
                 <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1">{s.tagline}</p>
                 <h3 className="font-serif text-xl text-forest mb-2 leading-tight">{s.name}</h3>
                 <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
+                {s.addons && (
+                  <div className="mt-3 pt-3 border-t border-forest-50">
+                    <p className="text-xs text-forest-300 mb-1.5">Enhance with:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {s.addons.map((addon) => (
+                        <span key={addon} className="text-xs bg-gold/8 text-gold border border-gold/25 px-2 py-0.5 rounded-full">
+                          + {addon}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-forest-100">
                   <span className="font-bold text-forest text-lg">{s.price}</span>
                   <span className="text-xs text-forest-400">{s.duration}</span>
