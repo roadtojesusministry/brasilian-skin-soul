@@ -14,13 +14,22 @@ const featuredServices = [
     img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
   },
   {
-    name: "Gua Sha Oxygen Facial",
-    tagline: "Ancient Healing · Modern Glow",
-    desc: "Traditional Gua Sha lymphatic drainage with oxygen infusion. Reduces puffiness, detoxifies, and leaves skin sculpted and radiant.",
+    name: "Intraceuticals Oxygen Facial",
+    tagline: "Hydrate · Lift · Rejuvenate",
+    desc: "Cutting-edge oxygen therapy delivers customized serums deep into the skin for intense hydration and anti-aging benefits. Includes eye mask, extractions, and shoulder massage.",
     price: "$XXX",
-    duration: "90 min",
-    badge: null,
-    img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
+    duration: "60+ min",
+    badge: "BEST SELLER",
+    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+  },
+  {
+    name: "Cold Plasma Rejuvenation",
+    tagline: "Science Meets Skin",
+    desc: "13,000 volts of cold plasma stimulate collagen and amplify absorption of skin boosters by up to 120×. Powerful, non-invasive, visible results.",
+    price: "$XXX",
+    duration: "60+ min",
+    badge: "ADVANCED",
+    img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -29,16 +38,7 @@ const featuredServices = [
     price: "$XXX",
     duration: "90 min",
     badge: "POPULAR",
-    img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
-  },
-  {
-    name: "Acne Facial",
-    tagline: "Clear · Balance · Heal",
-    desc: "A targeted treatment designed to deeply cleanse, reduce inflammation, clear breakouts, and restore balance to acne-prone or oily skin.",
-    price: "$XXX",
-    duration: "65 min",
-    badge: null,
-    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
   },
 ];
 
@@ -144,8 +144,10 @@ const advancedTech = [
 ];
 
 const badgeColors: Record<string, string> = {
-  FLAGSHIP: "bg-gold text-forest",
-  POPULAR:  "bg-forest text-cream-100",
+  FLAGSHIP:    "bg-gold text-forest",
+  "BEST SELLER": "bg-forest text-cream-100",
+  ADVANCED:    "bg-forest-700 text-cream-100",
+  POPULAR:     "bg-gold text-forest",
 };
 
 // SVG icons for trust strip
