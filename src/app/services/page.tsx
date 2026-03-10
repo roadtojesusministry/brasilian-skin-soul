@@ -39,15 +39,6 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
   },
   {
-    name: "Therma-Lift Sculpting Facial",
-    tagline: "Tighten · Tone · Sculpt",
-    desc: "Combines Therma-Lift sculpting technology with microdermabrasion and oxygen infusion to visibly tighten, firm, and smooth the skin. A favorite for those wanting a lifted, contoured look.",
-    price: "$XXX",
-    duration: "80 min",
-    img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
-    addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
-  },
-  {
     name: "Microcurrent Lifting Facial",
     tagline: "The Non-Surgical Facelift",
     desc: "Gentle microcurrent waves stimulate facial muscles and boost collagen, delivering a natural lift and firming effect. Visible results from the very first session.",
@@ -56,6 +47,15 @@ const signature = [
     badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
+  },
+  {
+    name: "Therma-Lift Sculpting Facial",
+    tagline: "Tighten · Tone · Sculpt",
+    desc: "Combines Therma-Lift sculpting technology with microdermabrasion and oxygen infusion to visibly tighten, firm, and smooth the skin. A favorite for those wanting a lifted, contoured look.",
+    price: "$XXX",
+    duration: "80 min",
+    img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
+    addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
     name: "Gua Sha Oxygen Facial",
@@ -359,8 +359,8 @@ export default function Services() {
                   <div className="flex items-center gap-3">
                     <span className="text-gold">{p.icon}</span>
                     <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-gold/70 font-medium">{p.group}</p>
-                      <h3 className="font-serif text-2xl text-white leading-tight">{p.name}</h3>
+                      <h3 className="font-serif text-2xl text-gold leading-tight">{p.group}</h3>
+                      <p className="text-sm text-white/50 font-light mt-0.5">{p.name}</p>
                     </div>
                   </div>
                   <div className="inline-flex items-center gap-1 bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 ml-4">
