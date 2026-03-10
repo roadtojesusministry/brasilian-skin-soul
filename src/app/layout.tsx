@@ -20,6 +20,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   title: "Brasilian Skin Soul | Luxury Spa & Skincare — Woodland Hills, CA",
   description: "Luxury skincare treatments by Claudia Pieri — 28+ years of experience. Facials, oxygen therapy, microdermabrasion & more in Woodland Hills, CA. Book today.",
   keywords: "spa woodland hills, facial woodland hills, skincare woodland hills, brasilian skin soul, Claudia Pieri, oxygen facial, microdermabrasion",
