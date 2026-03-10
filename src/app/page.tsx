@@ -204,9 +204,7 @@ export default function Home() {
                 <p className="font-serif text-2xl text-white">Brasilian Skin Soul</p>
                 <p className="text-xs text-white/60 tracking-widest uppercase mt-1">by Claudia Pieri</p>
               </div>
-              <Link href="/booking" className="mt-2 bg-gold text-forest px-6 py-2.5 rounded-full text-xs font-semibold hover:bg-gold-light transition-colors">
-                Book Now →
-              </Link>
+
             </div>
           </div>
         </div>
