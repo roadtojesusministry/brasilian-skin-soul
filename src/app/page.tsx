@@ -306,19 +306,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {advancedTech.map((group) => (
               <div key={group.group} className="bg-white/5 border border-white/10 rounded-2xl p-7">
-                <div className="flex items-center gap-3 mb-5">
-                  <span className="text-gold">{group.icon}</span>
-                  <h3 className="text-sm uppercase tracking-[0.2em] text-gold font-semibold">{group.group}</h3>
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-3">
+                    <span className="text-gold">{group.icon}</span>
+                    <h3 className="text-sm uppercase tracking-[0.2em] text-gold font-semibold">{group.group}</h3>
+                  </div>
+                  <TechInfoButton techNames={group.items.map((i) => i.name)} groupName={group.group} />
                 </div>
                 <div className="flex flex-col gap-4">
                   {group.items.map((item) => (
                     <div key={item.name} className="flex gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-gold/60 mt-2 flex-shrink-0" />
                       <div className="flex-1">
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-white font-medium text-sm">{item.name}</p>
-                          <TechInfoButton techName={item.name} />
-                        </div>
+                        <p className="text-white font-medium text-sm">{item.name}</p>
                         <p className="text-white/50 text-xs leading-relaxed mt-0.5">{item.desc}</p>
                       </div>
                     </div>

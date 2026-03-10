@@ -364,16 +364,18 @@ export default function Services() {
                       <p className="text-sm text-white/50 font-light mt-0.5">{p.name}</p>
                     </div>
                   </div>
-                  <div className="inline-flex items-center gap-1 bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 ml-4">
-                    {p.sessions} Sessions
+                  <div className="flex flex-col items-end gap-2 flex-shrink-0 ml-4">
+                    <div className="inline-flex items-center gap-1 bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full">
+                      {p.sessions} Sessions
+                    </div>
+                    <TechInfoButton techNames={p.technologies} groupName={p.group} />
                   </div>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed mb-5">{p.desc}</p>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {p.technologies.map((tech) => (
-                    <span key={tech} className="inline-flex items-center gap-1.5 text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
+                    <span key={tech} className="text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
                       {tech}
-                      <TechInfoButton techName={tech} />
                     </span>
                   ))}
                 </div>
