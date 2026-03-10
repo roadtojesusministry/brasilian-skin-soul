@@ -191,7 +191,7 @@ export default function Home() {
             </div>
             {/* Trust strip with SVG icons */}
             <div className="flex flex-wrap gap-6 text-sm text-white/70">
-              <span className="flex items-center gap-2"><StarIcon /> 50+ Five-Star Reviews</span>
+              <span className="flex items-center gap-2"><StarIcon /> 60+ Five-Star Reviews</span>
               <span className="flex items-center gap-2"><LeafIcon /> 28 Years Experience</span>
               <span className="flex items-center gap-2"><SparkleIcon /> Advanced Technology</span>
             </div>

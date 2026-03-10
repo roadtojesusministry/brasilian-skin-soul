@@ -12,7 +12,7 @@ const milestones = [
   { year: "2000s", label: "Mastered LED therapy, glycolic peels & microdermabrasion" },
   { year: "2010s", label: "Embraced cutting-edge technologies: Therma-Lift, Cold Plasma, Microcurrent" },
   { year: "2020", label: "Founded Brasilian SkinSoul — her own practice" },
-  { year: "Today", label: "28+ years of experience, 50+ five-star reviews, clients for 20+ years" },
+  { year: "Today", label: "28+ years of experience, 60+ five-star reviews, clients for 20+ years" },
 ];
 
 export default function About() {
@@ -55,8 +55,8 @@ export default function About() {
             <div className="grid grid-cols-3 gap-4 mt-6">
               {[
                 { value: "28+", label: "Years Experience" },
-                { value: "50+", label: "5-Star Reviews" },
-                { value: "20+", label: "Year Clients" },
+                { value: "60+", label: "5-Star Reviews" },
+                { value: "20+", label: "Year Loyal Clients" },
               ].map((s) => (
                 <div key={s.label} className="bg-white rounded-2xl p-4 text-center border border-forest-100 shadow-sm">
                   <p className="font-serif text-3xl text-forest font-light">{s.value}</p>

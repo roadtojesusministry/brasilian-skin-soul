@@ -72,7 +72,7 @@ export default function ReviewsMarquee() {
         <h2 className="font-serif text-4xl md:text-5xl text-forest font-light mb-4">What People Are Saying</h2>
         <div className="flex items-center justify-center gap-8 mt-4 text-sm text-forest-500">
           <span className="flex items-center gap-2">⭐ <strong className="text-forest">5.0</strong> on Google</span>
-          <span className="flex items-center gap-2">💬 <strong className="text-forest">50+</strong> Reviews</span>
+          <span className="flex items-center gap-2">💬 <strong className="text-forest">60+</strong> Reviews</span>
           <span className="flex items-center gap-2">🌿 <strong className="text-forest">20+ year</strong> loyal clients</span>
         </div>
       </div>
