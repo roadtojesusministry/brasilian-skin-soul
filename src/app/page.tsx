@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ReviewsMarquee from "@/components/ReviewsMarquee";
 
 const featuredServices = [
   {
@@ -30,12 +31,6 @@ const featuredServices = [
     duration: "75+ min",
     emoji: "🌺",
   },
-];
-
-const testimonials = [
-  { quote: "Claudia is just the best — a relaxing experience with so many options to meet your skin needs. I always leave so pleased with better skin!", author: "Erin" },
-  { quote: "You have a magic touch.", author: "Client" },
-  { quote: "Thank you for healing my skin.", author: "Client" },
 ];
 
 export default function Home() {
@@ -158,24 +153,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="py-20 bg-cream-200">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Kind Words</p>
-            <h2 className="font-serif text-4xl md:text-5xl text-forest font-light">What Clients Say</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <div key={i} className="bg-white rounded-2xl p-8 shadow-sm border border-forest-100">
-                <p className="text-gold text-3xl font-serif mb-4">&ldquo;</p>
-                <p className="text-forest-700 leading-relaxed italic mb-6">{t.quote}</p>
-                <p className="text-sm text-forest-400 font-medium">— {t.author}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* REVIEWS MARQUEE */}
+      <ReviewsMarquee />
 
       {/* CTA */}
       <section className="py-20 bg-forest text-cream-100 text-center">
