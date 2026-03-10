@@ -28,6 +28,7 @@ const signature = [
     badge: "BEST SELLER",
     img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
     addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
+    series: "Illuminate Series",
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -38,6 +39,7 @@ const signature = [
     badge: "ADVANCED",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
+    series: "Lift & Sculpt Series",
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -48,6 +50,7 @@ const signature = [
     badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
+    series: "Lift & Sculpt Series",
   },
   {
     name: "Therma-Lift Sculpting Facial",
@@ -57,6 +60,7 @@ const signature = [
     duration: "80 min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
+    series: "Lift & Sculpt Series",
   },
   {
     name: "Gua Sha Oxygen Facial",
@@ -66,6 +70,7 @@ const signature = [
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
+    series: "Cellular Renewal Series",
   },
   {
     name: "Lift & Firm Facial",
@@ -84,6 +89,7 @@ const signature = [
     duration: "60 min",
     img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
     addons: ["Dermaplane", "LED Light Therapy", "Glow Mask"],
+    series: "Illuminate Series",
   },
   {
     name: "Dermaplane Glow Facial",
@@ -93,6 +99,7 @@ const signature = [
     duration: "60+ min",
     img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
     addons: ["Glycolic Peel", "Oxygen Therapy O2", "Glow Mask"],
+    series: "Resurface & Refine Series",
   },
   {
     name: "Acne Facial",
@@ -111,6 +118,7 @@ const signature = [
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
+    series: "Cellular Renewal Series",
   },
   {
     name: "LED Photo Facial",
@@ -120,6 +128,7 @@ const signature = [
     duration: "45+ min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
     addons: ["Deep Extractions", "CO2 Lift", "Glow Mask"],
+    series: "Illuminate Series",
   },
   {
     name: "Teen Glow Facial",
@@ -290,67 +299,19 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ── SIGNATURE FACIALS ────────────────────────────────── */}
-      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Most Popular</p>
-          <h2 className="font-serif text-5xl text-forest font-light">Signature Facials</h2>
-          <p className="text-forest-500 mt-3 max-w-lg mx-auto">Our core menu — each treatment a unique experience designed to transform your skin.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {signature.map((s) => (
-            <div key={s.name} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-forest-100 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
-              <div className="relative h-44 overflow-hidden">
-                <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-forest/25" />
-                {s.badge && (
-                  <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
-                    {s.badge}
-                  </span>
-                )}
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1">{s.tagline}</p>
-                <h3 className="font-serif text-xl text-forest mb-2 leading-tight">{s.name}</h3>
-                <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
-                {s.addons && (
-                  <div className="mt-3 pt-3 border-t border-forest-50">
-                    <p className="text-xs text-forest-300 mb-1.5">Enhance with:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {s.addons.map((addon) => (
-                        <span key={addon} className="text-xs bg-gold/8 text-gold border border-gold/25 px-2 py-0.5 rounded-full">
-                          + {addon}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-forest-100">
-                  <span className="font-bold text-forest text-lg">{s.price}</span>
-                  <span className="text-xs text-forest-400">{s.duration}</span>
-                </div>
-                <Link href="/booking" className="mt-3 block text-center bg-forest text-cream-100 py-2.5 rounded-full text-xs font-medium hover:bg-forest-700 transition-colors">
-                  Book This Treatment
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── ADVANCED TECHNOLOGY PACKAGES ─────────────────────── */}
-      <section id="advanced-packages" className="py-24 bg-forest">
+      {/* ── THE TRANSFORMATION SERIES ────────────────────────── */}
+      <section id="transformation-series" className="py-24 bg-forest">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-gold mb-4">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
               </svg>
-              <p className="text-xs uppercase tracking-[0.25em] font-medium">Multi-Session Protocols</p>
+              <p className="text-xs uppercase tracking-[0.25em] font-medium">Advanced Technology · 3-Session Protocols</p>
             </div>
-            <h2 className="font-serif text-5xl text-white font-light mb-4">Advanced Technology Packages</h2>
+            <h2 className="font-serif text-5xl text-white font-light mb-4">The Transformation Series</h2>
             <p className="text-white/60 max-w-xl mx-auto">
-              One session is great. Three sessions is transformation. Each package is a progressive protocol built around one of our four core technology groups — results that compound with every visit.
+              One session is great. Three sessions is transformation. Each series is a progressive protocol built around one of our four core technology groups — results that compound with every visit.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -388,6 +349,64 @@ export default function Services() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── SIGNATURE FACIALS ────────────────────────────────── */}
+      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Most Popular</p>
+          <h2 className="font-serif text-5xl text-forest font-light">Signature Facials</h2>
+          <p className="text-forest-500 mt-3 max-w-lg mx-auto">Our core menu — each treatment a unique experience designed to transform your skin.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {signature.map((s) => (
+            <div key={s.name} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-forest-100 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+              <div className="relative h-44 overflow-hidden">
+                <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-forest/25" />
+                {s.badge && (
+                  <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
+                    {s.badge}
+                  </span>
+                )}
+              </div>
+              <div className="p-5 flex flex-col flex-1">
+                <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1">{s.tagline}</p>
+                <h3 className="font-serif text-xl text-forest mb-2 leading-tight">{s.name}</h3>
+                <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
+                {s.series && (
+                  <div className="mt-3 pt-3 border-t border-forest-50">
+                    <Link href="#transformation-series" className="inline-flex items-center gap-1 text-xs text-gold/70 hover:text-gold transition-colors group">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3 flex-shrink-0">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                      </svg>
+                      Part of <span className="font-medium group-hover:underline">{s.series}</span> →
+                    </Link>
+                  </div>
+                )}
+                {s.addons && (
+                  <div className="mt-2">
+                    <p className="text-xs text-forest-300 mb-1.5">Enhance with:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {s.addons.map((addon) => (
+                        <span key={addon} className="text-xs bg-gold/8 text-gold border border-gold/25 px-2 py-0.5 rounded-full">
+                          + {addon}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-forest-100">
+                  <span className="font-bold text-forest text-lg">{s.price}</span>
+                  <span className="text-xs text-forest-400">{s.duration}</span>
+                </div>
+                <Link href="/booking" className="mt-3 block text-center bg-forest text-cream-100 py-2.5 rounded-full text-xs font-medium hover:bg-forest-700 transition-colors">
+                  Book This Treatment
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
