@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
+import TechInfoButton from "@/components/TechInfoButton";
 
 const featuredServices = [
   {
@@ -97,6 +98,7 @@ const advancedTech = [
       { name: "Microcurrent Lifting", desc: "Electrical muscle stimulation for a natural, non-surgical lift" },
       { name: "Therma-Lift Technology", desc: "Heat-based sculpting to tighten skin and contour the face" },
       { name: "Cold Plasma (13,000V)", desc: "Amplifies absorption of skin boosters by up to 120× and stimulates collagen" },
+
     ],
   },
   {
@@ -110,6 +112,7 @@ const advancedTech = [
       { name: "LED Photo Therapy", desc: "Red, blue & near-infrared light to heal, clarify, and regenerate" },
       { name: "Oxygen Infusion (Intraceuticals)", desc: "Pressurized oxygen drives customized serums deep into the skin" },
       { name: "CO2 Carboxytherapy", desc: "Carbon dioxide mask delivers instant firming and brightening" },
+
     ],
   },
   {
@@ -311,8 +314,11 @@ export default function Home() {
                   {group.items.map((item) => (
                     <div key={item.name} className="flex gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-gold/60 mt-2 flex-shrink-0" />
-                      <div>
-                        <p className="text-white font-medium text-sm">{item.name}</p>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-white font-medium text-sm">{item.name}</p>
+                          <TechInfoButton techName={item.name} />
+                        </div>
                         <p className="text-white/50 text-xs leading-relaxed mt-0.5">{item.desc}</p>
                       </div>
                     </div>

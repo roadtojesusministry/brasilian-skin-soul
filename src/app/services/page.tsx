@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
+import TechInfoButton from "@/components/TechInfoButton";
 
 export const metadata = {
   title: "Services | Brasilian Skin Soul — Woodland Hills, CA",
@@ -370,8 +371,9 @@ export default function Services() {
                 <p className="text-white/60 text-sm leading-relaxed mb-5">{p.desc}</p>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {p.technologies.map((tech) => (
-                    <span key={tech} className="text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
+                    <span key={tech} className="inline-flex items-center gap-1.5 text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
                       {tech}
+                      <TechInfoButton techName={tech} />
                     </span>
                   ))}
                 </div>
