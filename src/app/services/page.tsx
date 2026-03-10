@@ -200,7 +200,7 @@ export default function Services() {
       </section>
 
       {/* Signature Facials */}
-      <section className="py-24 max-w-6xl mx-auto px-6">
+      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Most Popular</p>
           <h2 className="font-serif text-5xl text-forest font-light">Signature Facials</h2>
@@ -236,7 +236,7 @@ export default function Services() {
       </section>
 
       {/* Specialty Treatments */}
-      <section className="py-24 bg-cream-200">
+      <section id="advanced" className="py-24 bg-cream-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">For Every Skin Type</p>
@@ -258,7 +258,7 @@ export default function Services() {
       </section>
 
       {/* Add-Ons */}
-      <section className="py-24 max-w-6xl mx-auto px-6">
+      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Customize Your Treatment</p>
           <h2 className="font-serif text-5xl text-forest font-light">Add-Ons</h2>
@@ -281,7 +281,7 @@ export default function Services() {
       </section>
 
       {/* Body & Massage */}
-      <section className="py-24 bg-forest">
+      <section id="body" className="py-24 bg-forest">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Full Body Care</p>
@@ -303,7 +303,7 @@ export default function Services() {
       </section>
 
       {/* Waxing */}
-      <section className="py-24 bg-cream-200">
+      <section id="advanced" className="py-24 bg-cream-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Hair Removal</p>
@@ -321,7 +321,7 @@ export default function Services() {
       </section>
 
       {/* Packages */}
-      <section className="py-24 max-w-6xl mx-auto px-6">
+      <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Save More</p>
           <h2 className="font-serif text-5xl text-forest font-light">Treatment Packages</h2>
