@@ -3,7 +3,7 @@ import Link from "next/link";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import TechInfoButton from "@/components/TechInfoButton";
 import FadeIn from "@/components/FadeIn";
-import { Crown, Wind, Zap, Activity } from "lucide-react";
+
 
 const featuredServices = [
   {
@@ -13,7 +13,7 @@ const featuredServices = [
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
-    icon: Crown,
+    image: "/facial-royal-glow.jpg",
   },
   {
     name: "Intraceuticals Oxygen Facial",
@@ -22,7 +22,7 @@ const featuredServices = [
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
-    icon: Wind,
+    image: "/facial-intraceuticals.jpg",
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -31,7 +31,7 @@ const featuredServices = [
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
-    icon: Zap,
+    image: "/facial-cold-plasma.jpg",
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -40,11 +40,19 @@ const featuredServices = [
     price: "$165",
     duration: "90 min",
     badge: "POPULAR",
-    icon: Activity,
+    image: "/facial-microcurrent.jpg",
   },
 ];
 
 const serviceCategories = [
+  {
+    label: "Unique Protocols",
+    svg: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3" />
+      </svg>
+    ),
+  },
   {
     label: "Signature Facials",
     svg: (
@@ -61,20 +69,11 @@ const serviceCategories = [
       </svg>
     ),
   },
-
   {
     label: "Waxing Services",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
-      </svg>
-    ),
-  },
-  {
-    label: "Treatment Packages",
-    svg: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
       </svg>
     ),
   },
@@ -253,11 +252,11 @@ export default function Home() {
               </div>
               <div className="w-full border-t border-white/15 pt-3 flex flex-col gap-1">
                 {serviceCategories.map((c) => (
-                  <Link key={c.label} href="/services"
-                    className="flex items-center gap-3 text-white/70 hover:text-white text-xs py-2 px-3 rounded-xl hover:bg-white/10 transition-colors">
+                  <div key={c.label}
+                    className="flex items-center gap-3 text-white/70 text-xs py-2 px-3 rounded-xl">
                     <span className="text-gold/70 [&>svg]:w-4 [&>svg]:h-4">{c.svg}</span>
                     {c.label}
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>
@@ -277,24 +276,9 @@ export default function Home() {
           <p className="font-serif text-2xl md:text-3xl text-white font-light leading-relaxed mb-3">
             Most spas offer one technology at a time.
           </p>
-          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12">
+          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
             Claudia builds protocols — four curated programs that layer the most powerful modalities together in every session, each amplifying the others for results no single treatment can achieve.
           </p>
-          <div className="grid grid-cols-3 gap-6 border-t border-white/10 pt-10">
-            <div className="text-center">
-              <p className="font-serif text-4xl text-gold font-light mb-1">28</p>
-              <p className="text-xs text-white/50 uppercase tracking-widest">Years of Mastery</p>
-            </div>
-            <div className="text-center border-x border-white/10">
-              <p className="font-serif text-4xl text-gold font-light mb-1">4</p>
-              <p className="text-xs text-white/50 uppercase tracking-widest">Technology Protocols</p>
-              <p className="text-xs text-white/30 mt-1">Science-backed · Exclusively bundled</p>
-            </div>
-            <div className="text-center">
-              <p className="font-serif text-4xl text-gold font-light mb-1">12</p>
-              <p className="text-xs text-white/50 uppercase tracking-widest">Signature Facials</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -314,6 +298,26 @@ export default function Home() {
             <p className="text-white/60 max-w-xl mx-auto text-base leading-relaxed">
               Claudia combines 28 years of hands-on mastery with cutting-edge skincare technology — giving you results you simply cannot get at a standard spa.
             </p>
+          </div></FadeIn>
+
+          {/* 4 Unique Protocols intro */}
+          <FadeIn><div className="mb-14">
+            <p className="text-xs uppercase tracking-[0.25em] text-gold/70 text-center mb-6">Our Unique Protocols</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { name: "Lift & Sculpt Series", tech: "Microcurrent · Therma-Lift · Cold Plasma", price: "$495" },
+                { name: "Illuminate Series", tech: "LED · Oxygen Intraceuticals · CO2", price: "$435" },
+                { name: "Resurface & Refine Series", tech: "Microdermabrasion · Dermaplane · Glycolic Peel", price: "$360" },
+                { name: "Cellular Renewal Series", tech: "Stem Cell · Far-Infrared · Gua Sha", price: "$420" },
+              ].map((p) => (
+                <div key={p.name} className="bg-white/5 border border-gold/20 rounded-2xl p-5 text-center hover:bg-white/10 transition-colors">
+                  <p className="font-serif text-lg text-white font-light leading-snug mb-2">{p.name}</p>
+                  <p className="text-xs text-white/40 leading-relaxed mb-3">{p.tech}</p>
+                  <p className="text-gold font-semibold text-base">{p.price}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center text-xs text-white/30 mt-4">Each protocol layers multiple technologies in a single session — amplifying results no single treatment can achieve.</p>
           </div></FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -363,17 +367,18 @@ export default function Home() {
             {featuredServices.map((s, i) => (
               <FadeIn key={s.name} delay={i === 1 ? 'delay-100' : i === 2 ? 'delay-200' : i === 3 ? 'delay-300' : ''}>
               <div
-                className="gold-hover group bg-white rounded-2xl border border-forest-100 transition-all duration-300 hover:-translate-y-2"
+                className="gold-hover group bg-white rounded-2xl border border-forest-100 transition-all duration-300 hover:-translate-y-2 overflow-hidden"
               >
-                {/* Slim green strip */}
-                <div className="relative bg-forest flex flex-col items-center justify-center py-5 px-4 text-center">
-                  <s.icon className="w-6 h-6 text-gold mb-2 opacity-90" strokeWidth={1.5} />
-                  <h3 className="font-serif text-lg text-cream-100 leading-tight">{s.name}</h3>
+                {/* Image header */}
+                <div className="relative h-44 w-full overflow-hidden">
+                  <Image src={s.image} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/20 to-transparent" />
                   {s.badge && (
-                    <span className={`absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-full ${badgeColors[s.badge]}`}>
+                    <span className={`absolute top-3 right-3 text-xs font-bold px-2 py-0.5 rounded-full ${badgeColors[s.badge]}`}>
                       {s.badge}
                     </span>
                   )}
+                  <h3 className="absolute bottom-3 left-4 right-4 font-serif text-lg text-cream-100 leading-tight">{s.name}</h3>
                 </div>
                 <div className="p-6">
                   <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
@@ -394,16 +399,7 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Service category icons */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-14 pt-10 border-t border-forest-100">
-            {serviceCategories.map((c) => (
-              <Link key={c.label} href="/services"
-                className="flex flex-col items-center gap-3 p-5 rounded-xl text-center hover:bg-forest-50 transition-colors group">
-                <span className="text-gold/70 group-hover:text-gold transition-colors [&>svg]:w-7 [&>svg]:h-7">{c.svg}</span>
-                <span className="text-xs text-forest-400 font-medium leading-tight group-hover:text-forest transition-colors">{c.label}</span>
-              </Link>
-            ))}
-          </div>
+
         </div>
       </section>
 
