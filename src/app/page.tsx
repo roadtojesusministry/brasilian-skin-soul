@@ -3,6 +3,7 @@ import Link from "next/link";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import TechInfoButton from "@/components/TechInfoButton";
 import FadeIn from "@/components/FadeIn";
+import { Crown, Wind, Zap, Activity } from "lucide-react";
 
 const featuredServices = [
   {
@@ -12,7 +13,7 @@ const featuredServices = [
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
-    img: "/facial-royal-glow.jpg",
+    icon: Crown,
   },
   {
     name: "Intraceuticals Oxygen Facial",
@@ -21,7 +22,7 @@ const featuredServices = [
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
-    img: "/facial-intraceuticals.jpg",
+    icon: Wind,
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -30,7 +31,7 @@ const featuredServices = [
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
-    img: "/facial-cold-plasma.jpg",
+    icon: Zap,
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -39,7 +40,7 @@ const featuredServices = [
     price: "$165",
     duration: "90 min",
     badge: "POPULAR",
-    img: "/facial-microcurrent.jpg",
+    icon: Activity,
   },
 ];
 
@@ -361,9 +362,8 @@ export default function Home() {
               <div
                 className="gold-hover group bg-white rounded-2xl overflow-hidden border border-forest-100 transition-all duration-300 hover:-translate-y-2"
               >
-                <div className="relative h-48 overflow-hidden">
-                  <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-forest/20" />
+                <div className="relative h-40 bg-forest flex items-center justify-center">
+                  <s.icon className="w-14 h-14 text-gold opacity-90 group-hover:scale-110 transition-transform duration-300" strokeWidth={1.25} />
                   {s.badge && (
                     <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
                       {s.badge}

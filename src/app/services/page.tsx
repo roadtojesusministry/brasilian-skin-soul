@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import TechInfoButton from "@/components/TechInfoButton";
+import { Crown, Leaf, Wind, Zap, Flame, Activity, Droplets, Sun, ShieldCheck, Dna, Flower, Award } from "lucide-react";
 
 export const metadata = {
   title: "Services | Brasilian Skin Soul — Woodland Hills, CA",
@@ -16,7 +17,7 @@ const signature = [
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
-    img: "/facial-royal-glow.jpg",
+    icon: Crown,
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
@@ -26,7 +27,7 @@ const signature = [
     price: "$215",
     duration: "90+ min",
     badge: "RITUAL",
-    img: "/facial-brasilian-ritual.jpg",
+    icon: Leaf,
     addons: ["Eye Lift — Stem Cell", "Divine Décolleté", "LED Light Therapy"],
   },
   {
@@ -36,7 +37,7 @@ const signature = [
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
-    img: "/facial-intraceuticals.jpg",
+    icon: Wind,
     addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
   },
   {
@@ -46,7 +47,7 @@ const signature = [
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
-    img: "/facial-cold-plasma.jpg",
+    icon: Zap,
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
   },
   {
@@ -55,7 +56,7 @@ const signature = [
     desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
     price: "$165",
     duration: "90 min",
-    img: "/facial-therma-lift.jpg",
+    icon: Activity,
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
@@ -64,7 +65,7 @@ const signature = [
     desc: "Uses targeted heat to contour and tighten the skin from the surface — where Microcurrent trains the muscles from within, Therma-Lift sculpts from the outside. Combined with microdermabrasion and oxygen infusion, each session leaves your face visibly lifted, firmed, and refined.",
     price: "$185",
     duration: "80 min",
-    img: "/facial-microcurrent.jpg",
+    icon: Flame,
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
@@ -73,7 +74,7 @@ const signature = [
     desc: "The ultimate detox facial. Traditional Gua Sha lymphatic drainage sculpts and de-puffs, pressurized oxygen infusion floods skin with nutrients, and targeted LED light therapy accelerates healing and brightens from within. Three powerful modalities — one deeply restorative ritual.",
     price: "$185",
     duration: "90 min",
-    img: "/facial-lymph-glow.jpg",
+    icon: Droplets,
     addons: ["Deep Extractions", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
@@ -82,7 +83,7 @@ const signature = [
     desc: "Double exfoliation at its finest. Surgical-grade Dermaplane removes dead skin cells and peach fuzz for a silky-smooth canvas, then a Glycolic Peel resurfaces and brightens for lasting tone transformation. Makeup applies flawlessly. Skin glows for days.",
     price: "$175",
     duration: "70+ min",
-    img: "/facial-royal-glow.jpg",
+    icon: Sun,
     addons: ["Oxygen Therapy O2", "LED Light Therapy", "Glow Mask"],
   },
   {
@@ -91,7 +92,7 @@ const signature = [
     desc: "A clinical-grade acne treatment that goes beyond the surface. Deep extractions clear congestion, LED light therapy kills acne-causing bacteria and reduces inflammation, and a targeted balancing masque restores skin harmony. Designed for real results, not just a temporary fix.",
     price: "$165",
     duration: "65 min",
-    img: "/facial-clear-skin.jpg",
+    icon: ShieldCheck,
     addons: ["Deep Extractions", "Glycolic Peel", "Glow Mask"],
   },
   {
@@ -100,7 +101,7 @@ const signature = [
     desc: "Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen, and repair damage at its source — improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can't achieve. For anyone seeking deep, lasting regeneration.",
     price: "$185",
     duration: "90 min",
-    img: "/facial-stem-cell.jpg",
+    icon: Dna,
     addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
   },
   {
@@ -109,7 +110,7 @@ const signature = [
     desc: "Designed for teenage skin — gentle enough for sensitive, developing complexions, effective enough to make a real difference. A deep cleanse, careful extractions, and a balancing masque address real concerns without stripping or irritating. A perfect first step into healthy skincare habits.",
     price: "$95",
     duration: "50 min",
-    img: "/facial-smooth-bright.jpg",
+    icon: Flower,
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
   },
   {
@@ -118,7 +119,7 @@ const signature = [
     desc: "Built for the professional who demands results without downtime. Deep cleanse, surgical-grade Dermaplane exfoliation, extractions, and targeted hydration — all delivered in under an hour. No fuss, no recovery time. Just polished, refreshed, camera-ready skin.",
     price: "$165",
     duration: "60 min",
-    img: "/facial-power.jpg",
+    icon: Award,
     addons: ["Microcurrent Lifting", "Glycolic Peel", "CO2 Lift"],
   },
 ];
@@ -331,9 +332,8 @@ export default function Services() {
             <div key={s.name}
               className="gold-hover group bg-white rounded-2xl overflow-hidden border border-forest-100 transition-all duration-300 hover:-translate-y-2 flex flex-col"
             >
-              <div className="relative h-44 overflow-hidden">
-                <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-forest/25" />
+              <div className="relative h-36 bg-forest flex items-center justify-center">
+                <s.icon className="w-12 h-12 text-gold opacity-90 group-hover:scale-110 transition-transform duration-300" strokeWidth={1.25} />
                 {s.badge && (
                   <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
                     {s.badge}
