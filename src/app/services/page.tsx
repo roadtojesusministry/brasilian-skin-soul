@@ -330,19 +330,19 @@ export default function Services() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {signature.map((s) => (
             <div key={s.name}
-              className="gold-hover group bg-white rounded-2xl overflow-hidden border border-forest-100 transition-all duration-300 hover:-translate-y-2 flex flex-col"
+              className="gold-hover group bg-white rounded-2xl border border-forest-100 transition-all duration-300 hover:-translate-y-2 flex flex-col"
             >
-              <div className="relative h-36 bg-forest flex items-center justify-center">
-                <s.icon className="w-12 h-12 text-gold opacity-90 group-hover:scale-110 transition-transform duration-300" strokeWidth={1.25} />
+              <div className="p-5 flex flex-col flex-1">
                 {s.badge && (
-                  <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
+                  <span className={`self-start text-xs font-bold px-2 py-0.5 rounded-full mb-3 ${badgeColors[s.badge]}`}>
                     {s.badge}
                   </span>
                 )}
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1">{s.tagline}</p>
-                <h3 className="font-serif text-xl text-forest mb-2 leading-tight">{s.name}</h3>
+                <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <s.icon className="w-4 h-4 text-gold shrink-0" strokeWidth={1.5} />
+                  <h3 className="font-serif text-xl text-forest leading-tight">{s.name}</h3>
+                </div>
                 <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
                 {s.addons && (
                   <div className="mt-2">
