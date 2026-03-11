@@ -7,7 +7,7 @@ const featuredServices = [
   {
     name: "Royal Glow Facial",
     tagline: "The Ultimate Experience",
-    desc: "Our flagship 2-hour luxury treatment combining oxygen therapy, microcurrent lifting, LED light, and full massage. The pinnacle of skin transformation.",
+    desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you'll leave looking and feeling genuinely transformed.",
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
@@ -16,7 +16,7 @@ const featuredServices = [
   {
     name: "Intraceuticals Oxygen Facial",
     tagline: "Hydrate · Lift · Rejuvenate",
-    desc: "Cutting-edge oxygen therapy delivers customized serums deep into the skin for intense hydration and anti-aging benefits. Includes eye mask, extractions, and shoulder massage.",
+    desc: "The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Pressurized oxygen drives customized serums deep into layers no topical product can reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift.",
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
@@ -25,7 +25,7 @@ const featuredServices = [
   {
     name: "Cold Plasma Rejuvenation",
     tagline: "Science Meets Skin",
-    desc: "13,000 volts of cold plasma stimulate collagen and amplify absorption of skin boosters by up to 120×. Powerful, non-invasive, visible results.",
+    desc: "13,000 volts of cold plasma stimulate collagen and elastin while amplifying absorption of skin boosters by up to 120×. Opens micro-channels that drive active ingredients deeper than any topical product can reach. Non-invasive, with visible results from the very first session.",
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
@@ -34,7 +34,7 @@ const featuredServices = [
   {
     name: "Microcurrent Lifting Facial",
     tagline: "The Non-Surgical Facelift",
-    desc: "Gentle microcurrent waves stimulate facial muscles and boost collagen for a natural lift and firming effect. Visible results from session one.",
+    desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
     price: "$165",
     duration: "90 min",
     badge: "POPULAR",
