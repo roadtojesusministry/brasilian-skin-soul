@@ -71,3 +71,12 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Gold hover shadow — CSS-only, no JS handlers needed */
+.gold-hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s ease;
+}
+.gold-hover:hover {
+  box-shadow: 0 20px 50px -10px rgba(201,169,110,0.3);
+}

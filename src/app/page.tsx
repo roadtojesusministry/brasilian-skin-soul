@@ -354,10 +354,7 @@ export default function Home() {
             {featuredServices.map((s, i) => (
               <FadeIn key={s.name} delay={i === 1 ? 'delay-100' : i === 2 ? 'delay-200' : i === 3 ? 'delay-300' : ''}>
               <div
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-forest-100 transition-all duration-300 hover:-translate-y-2"
-                style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}
-                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 20px 50px -10px rgba(201,169,110,0.3)')}
-                onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)')}
+                className="gold-hover group bg-white rounded-2xl overflow-hidden border border-forest-100 transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
