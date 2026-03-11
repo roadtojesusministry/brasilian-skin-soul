@@ -52,20 +52,18 @@ const signature = [
   {
     name: "Microcurrent Lifting Facial",
     tagline: "The Non-Surgical Facelift",
-    desc: "Gentle microcurrent waves stimulate facial muscles and boost collagen, delivering a natural lift and firming effect. Visible results from the very first session.",
+    desc: "Gentle microcurrent waves stimulate facial muscles and boost collagen, delivering a natural lift and firming effect. Think of it as a workout for your face — the more sessions, the more defined and sculpted the result. Visible lift from the very first visit.",
     price: "$165",
     duration: "90 min",
-    badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
     name: "Therma-Lift Sculpting Facial",
     tagline: "Tighten · Tone · Sculpt",
-    desc: "Combines Therma-Lift sculpting technology with microdermabrasion and oxygen infusion to visibly tighten, firm, and smooth the skin. A favorite for those wanting a lifted, contoured look.",
+    desc: "Combines Therma-Lift sculpting technology with microdermabrasion and oxygen infusion to visibly tighten, firm, and smooth the skin. Each treatment leaves your face feeling noticeably lifted — and looking like it was sculpted from the outside in.",
     price: "$185",
     duration: "80 min",
-    badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
@@ -131,7 +129,7 @@ const advancedPackages = [
     group: "Non-Surgical Lifting",
     desc: "The ultimate non-surgical lifting protocol. Three progressive sessions combining microcurrent muscle training, Therma-Lift contouring, and Cold Plasma collagen stimulation. Each session builds on the last — the cumulative effect is a visibly lifted, firmed, and sculpted face.",
     technologies: ["Microcurrent Lifting", "Therma-Lift Technology", "Cold Plasma (13,000V)"],
-    price: "$445",
+    price: "$495",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
@@ -144,7 +142,7 @@ const advancedPackages = [
     group: "Radiance & Healing",
     desc: "Heal, hydrate, and brighten from within. Three sessions layering targeted LED light therapy, pressurized oxygen infusion (Intraceuticals), and CO2 carboxytherapy firming. Perfect for dull, uneven, or inflamed skin that needs a deep reset.",
     technologies: ["LED Photo Therapy", "Oxygen Infusion (Intraceuticals)", "CO2 Carboxytherapy"],
-    price: "$395",
+    price: "$435",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
@@ -157,7 +155,7 @@ const advancedPackages = [
     group: "Texture & Tone",
     desc: "Three progressive sessions that strip away years of texture buildup and reveal the smoothest, most even-toned skin of your life. Diamond microdermabrasion resurfaces deep layers, surgical-grade Dermaplane clears peach fuzz and dead skin for a flawless canvas, and a professional glycolic peel dissolves surface damage to reveal bright, renewed skin beneath. Each session goes deeper — the cumulative result is a complexion that genuinely glows.",
     technologies: ["Microdermabrasion", "Dermaplane Exfoliation", "Glycolic Peel"],
-    price: "$330",
+    price: "$360",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
@@ -170,7 +168,7 @@ const advancedPackages = [
     group: "Cellular Science",
     desc: "Deep regeneration from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, far-infrared promotes circulation and natural detox, and Gua Sha lymphatic drainage sculpts and restores your skin's natural radiance.",
     technologies: ["Plant Stem Cell Therapy", "Far-Infrared Technology", "Gua Sha Lymphatic Drainage"],
-    price: "$380",
+    price: "$420",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
@@ -283,20 +281,22 @@ export default function Services() {
                       <h3 className="font-serif text-2xl text-gold leading-tight">{p.name}</h3>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-2 flex-shrink-0 ml-4">
+                  <div className="flex-shrink-0 ml-4">
                     <div className="inline-flex items-center gap-1 bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full">
                       {p.sessions} Sessions
                     </div>
-                    <TechInfoButton techNames={p.technologies} groupName={p.group} />
                   </div>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed mb-5">{p.desc}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-3">
                   {p.technologies.map((tech) => (
                     <span key={tech} className="text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
                       {tech}
                     </span>
                   ))}
+                </div>
+                <div className="mb-5">
+                  <TechInfoButton techNames={p.technologies} groupName={p.group} />
                 </div>
                 <div className="flex items-center justify-between pt-5 border-t border-white/10">
                   <span className="font-bold text-gold text-xl">{p.price}</span>
@@ -338,7 +338,7 @@ export default function Services() {
                     <p className="text-xs text-forest-300 mb-1.5">Enhance with:</p>
                     <div className="flex flex-wrap gap-1">
                       {s.addons.map((addon) => (
-                        <span key={addon} className="text-xs bg-gold/8 text-gold border border-gold/25 px-2 py-0.5 rounded-full">
+                        <span key={addon} className="text-xs bg-gold/12 text-gold/80 border border-gold/35 px-2 py-0.5 rounded-full">
                           + {addon}
                         </span>
                       ))}

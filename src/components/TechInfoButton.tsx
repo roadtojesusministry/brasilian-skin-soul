@@ -29,13 +29,16 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
       ) : (
         <button
           onClick={() => setOpen(true)}
-          aria-label="The science behind this treatment"
-          className="inline-flex items-center gap-1 text-xs border border-white/20 text-white/40 hover:text-gold hover:border-gold/50 px-2.5 py-1 rounded-full transition-colors flex-shrink-0"
+          aria-label="How this treatment works"
+          className="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-gold transition-colors flex-shrink-0 group"
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5v-5m0-3.75h.008M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
           </svg>
-          The Science
+          How it works
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3 h-3 group-hover:translate-x-0.5 transition-transform">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
         </button>
       )}
 
