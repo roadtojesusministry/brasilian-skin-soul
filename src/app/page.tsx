@@ -3,7 +3,6 @@ import Link from "next/link";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import TechInfoButton from "@/components/TechInfoButton";
 import FadeIn from "@/components/FadeIn";
-import ParallaxHero from "@/components/ParallaxHero";
 
 const featuredServices = [
   {
@@ -210,14 +209,20 @@ export default function Home() {
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <ParallaxHero>
-          <Image
-            src="/hero-bg.jpg"
-            alt="Spa ambiance"
-            fill className="object-cover" priority
-          />
-          <div className="absolute inset-0 bg-forest/70" />
-        </ParallaxHero>
+        {/* Video hero background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/hero-bg.jpg"
+            className="w-full h-full object-cover"
+          >
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-forest/65" />
+        </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
