@@ -295,8 +295,8 @@ export default function Home() {
             <h2 className="font-serif text-5xl md:text-6xl text-white font-light mb-4">
               Advanced Technology
             </h2>
-            <p className="text-white/60 max-w-xl mx-auto text-base leading-relaxed">
-              Claudia combines 28 years of hands-on mastery with cutting-edge skincare technology — giving you results you simply cannot get at a standard spa.
+            <p className="text-white/60 max-w-2xl mx-auto text-base leading-relaxed">
+              Claudia combines 28 years of hands-on mastery with cutting-edge skincare technology — giving you results you simply cannot get at a standard spa. Each protocol layers multiple technologies in a single session — amplifying results no single treatment can achieve.
             </p>
           </div></FadeIn>
 
@@ -305,19 +305,17 @@ export default function Home() {
             <p className="text-xs uppercase tracking-[0.25em] text-gold/70 text-center mb-6">Our Unique Protocols</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { name: "Lift & Sculpt Series", tech: "Microcurrent · Therma-Lift · Cold Plasma", price: "$495" },
-                { name: "Illuminate Series", tech: "LED · Oxygen Intraceuticals · CO2", price: "$435" },
-                { name: "Resurface & Refine Series", tech: "Microdermabrasion · Dermaplane · Glycolic Peel", price: "$360" },
-                { name: "Cellular Renewal Series", tech: "Stem Cell · Far-Infrared · Gua Sha", price: "$420" },
+                { name: "Lift & Sculpt Series", tech: "Microcurrent · Therma-Lift · Cold Plasma" },
+                { name: "Illuminate Series", tech: "LED · Oxygen Intraceuticals · CO2" },
+                { name: "Resurface & Refine Series", tech: "Microdermabrasion · Dermaplane · Glycolic Peel" },
+                { name: "Cellular Renewal Series", tech: "Stem Cell · Far-Infrared · Gua Sha" },
               ].map((p) => (
                 <div key={p.name} className="bg-white/5 border border-gold/20 rounded-2xl p-5 text-center hover:bg-white/10 transition-colors">
                   <p className="font-serif text-lg text-white font-light leading-snug mb-2">{p.name}</p>
-                  <p className="text-xs text-white/40 leading-relaxed mb-3">{p.tech}</p>
-                  <p className="text-gold font-semibold text-base">{p.price}</p>
+                  <p className="text-xs text-white/40 leading-relaxed">{p.tech}</p>
                 </div>
               ))}
             </div>
-            <p className="text-center text-xs text-white/30 mt-4">Each protocol layers multiple technologies in a single session — amplifying results no single treatment can achieve.</p>
           </div></FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
