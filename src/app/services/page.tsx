@@ -332,17 +332,21 @@ export default function Services() {
             <div key={s.name}
               className="gold-hover group bg-white rounded-2xl border border-forest-100 transition-all duration-300 hover:-translate-y-2 flex flex-col"
             >
-              <div className="p-5 flex flex-col flex-1">
-                {s.badge && (
-                  <span className={`self-start text-xs font-bold px-2 py-0.5 rounded-full mb-3 ${badgeColors[s.badge]}`}>
-                    {s.badge}
-                  </span>
-                )}
-                <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
-                <div className="flex items-center gap-2 mb-2">
-                  <s.icon className="w-4 h-4 text-gold shrink-0" strokeWidth={1.5} />
-                  <h3 className="font-serif text-xl text-forest leading-tight">{s.name}</h3>
+              <div className="flex flex-col flex-1">
+                {/* Title block — warm gold tint */}
+                <div className="px-5 pt-5 pb-4 bg-gold/8 border-b border-gold/20">
+                  {s.badge && (
+                    <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full mb-2 ${badgeColors[s.badge]}`}>
+                      {s.badge}
+                    </span>
+                  )}
+                  <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1.5">{s.tagline}</p>
+                  <div className="flex items-center gap-2">
+                    <s.icon className="w-4 h-4 text-gold shrink-0" strokeWidth={1.5} />
+                    <h3 className="font-serif text-xl text-forest leading-tight">{s.name}</h3>
+                  </div>
                 </div>
+                <div className="p-5 flex flex-col flex-1">
                 <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
                 {s.addons && (
                   <div className="mt-2">
@@ -363,6 +367,7 @@ export default function Services() {
                 <Link href="/booking" className="mt-3 block text-center bg-forest text-cream-100 py-2.5 rounded-full text-xs font-medium hover:bg-forest-700 transition-colors">
                   Book This Treatment
                 </Link>
+                </div>{/* end inner p-5 */}
               </div>
             </div>
           ))}
