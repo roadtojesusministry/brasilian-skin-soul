@@ -319,7 +319,12 @@ export default function Services() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {signature.map((s) => (
-            <div key={s.name} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-forest-100 hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col">
+            <div key={s.name}
+              className="group bg-white rounded-2xl overflow-hidden border border-forest-100 transition-all duration-300 hover:-translate-y-2 flex flex-col"
+              style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 20px 50px -10px rgba(201,169,110,0.3)')}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)')}
+            >
               <div className="relative h-44 overflow-hidden">
                 <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div className="absolute inset-0 bg-forest/25" />

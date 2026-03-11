@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import TechInfoButton from "@/components/TechInfoButton";
+import FadeIn from "@/components/FadeIn";
+import ParallaxHero from "@/components/ParallaxHero";
 
 const featuredServices = [
   {
@@ -208,21 +210,21 @@ export default function Home() {
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
+        <ParallaxHero>
           <Image
             src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1800&q=85"
             alt="Spa ambiance"
             fill className="object-cover" priority
           />
           <div className="absolute inset-0 bg-forest/70" />
-        </div>
+        </ParallaxHero>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 pt-16 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-gold mb-5">Woodland Hills, California</p>
             <h1 className="font-serif text-6xl md:text-7xl text-white font-light leading-[1.1] mb-6">
               Heal Your Skin.<br />
-              <span className="italic text-gold">Transform</span><br />
+              <span className="italic text-gold animate-[shimmer_3s_ease-in-out_infinite]">Transform</span><br />
               Your Life.
             </h1>
             <p className="text-white/75 text-lg leading-relaxed mb-8 max-w-md">
@@ -245,7 +247,7 @@ export default function Home() {
 
           <div className="hidden lg:flex justify-end">
             <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-10 flex flex-col items-center gap-6 min-w-[280px]">
-              <Image src="/logo-circle-2.png" alt="Brasilian Skin Soul" width={180} height={180} className="drop-shadow-xl" />
+              <Image src="/logo-circle-2.png" alt="Brasilian Skin Soul" width={180} height={180} className="drop-shadow-xl animate-[breathe_4s_ease-in-out_infinite]" />
               <div className="text-center">
                 <p className="font-serif text-2xl text-white">Brasilian Skin Soul</p>
                 <p className="text-xs text-white/60 tracking-widest uppercase mt-1">by Claudia Pieri</p>
@@ -290,7 +292,7 @@ export default function Home() {
       {/* ── ADVANCED TECHNOLOGY ──────────────────────────────── */}
       <section className="py-24 bg-forest border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <FadeIn><div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-gold mb-4">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
@@ -303,11 +305,12 @@ export default function Home() {
             <p className="text-white/60 max-w-xl mx-auto text-base leading-relaxed">
               Claudia combines 28 years of hands-on mastery with cutting-edge skincare technology — giving you results you simply cannot get at a standard spa.
             </p>
-          </div>
+          </div></FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {advancedTech.map((group) => (
-              <div key={group.group} className="bg-white/5 border border-white/10 rounded-2xl p-7">
+            {advancedTech.map((group, i) => (
+              <FadeIn key={group.group} delay={i === 1 ? 'delay-100' : i === 2 ? 'delay-200' : i === 3 ? 'delay-300' : ''}>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-7">
                 <div className="flex items-center justify-between gap-3 mb-5">
                   <div className="flex items-center gap-3">
                     <span className="text-gold">{group.icon}</span>
@@ -327,6 +330,7 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+              </FadeIn>
             ))}
           </div>
 
@@ -342,14 +346,19 @@ export default function Home() {
       {/* ── FEATURED SERVICES ────────────────────────────────── */}
       <section className="py-24 bg-cream-100">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <FadeIn><div className="text-center mb-16">
             <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Most Loved</p>
             <h2 className="font-serif text-5xl md:text-6xl text-forest font-light">Signature Treatments</h2>
-          </div>
+          </div></FadeIn>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredServices.map((s) => (
-              <div key={s.name}
-                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-forest-100 hover:shadow-xl transition-all hover:-translate-y-1">
+            {featuredServices.map((s, i) => (
+              <FadeIn key={s.name} delay={i === 1 ? 'delay-100' : i === 2 ? 'delay-200' : i === 3 ? 'delay-300' : ''}>
+              <div
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-forest-100 transition-all duration-300 hover:-translate-y-2"
+                style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 20px 50px -10px rgba(201,169,110,0.3)')}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)')}
+              >
                 <div className="relative h-48 overflow-hidden">
                   <Image src={s.img} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-forest/20" />
@@ -369,6 +378,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              </FadeIn>
             ))}
           </div>
           <div className="text-center mt-10">
@@ -383,7 +393,7 @@ export default function Home() {
       {/* ── ABOUT CLAUDIA ────────────────────────────────────── */}
       <section className="py-24 bg-forest">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="relative">
+          <FadeIn><div className="relative">
             <div className="relative rounded-3xl overflow-hidden h-[500px]">
               <Image src="/claudia.jpg" alt="Claudia Pieri" fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent" />
@@ -396,9 +406,9 @@ export default function Home() {
               <p className="font-serif text-4xl font-bold">28</p>
               <p className="text-xs font-semibold uppercase tracking-wide">Years<br />Experience</p>
             </div>
-          </div>
+          </div></FadeIn>
 
-          <div>
+          <FadeIn delay="delay-150"><div>
             <p className="text-xs uppercase tracking-[0.2em] text-gold mb-4">Meet Your Therapist</p>
             <h2 className="font-serif text-5xl md:text-6xl text-white font-light italic leading-tight mb-6">
               A Healer with<br />Love in Her Heart
@@ -415,7 +425,7 @@ export default function Home() {
             <Link href="/about" className="inline-flex items-center gap-2 bg-gold text-forest px-8 py-4 rounded-full text-sm font-semibold hover:bg-gold-light transition-colors">
               Read Claudia&apos;s Full Story →
             </Link>
-          </div>
+          </div></FadeIn>
         </div>
       </section>
 
