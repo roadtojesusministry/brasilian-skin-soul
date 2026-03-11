@@ -20,9 +20,19 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
+    name: "The Brasilian Ritual",
+    tagline: "Where Beauty Meets Ritual",
+    desc: "The most complete and immersive treatment on our entire menu — and our most uniquely Brazilian one. A full sensory journey: papaya enzyme exfoliation and a glycolic peel resurface and renew, steam and extractions deeply purify, pressurized oxygen therapy floods the skin with nutrients, and a CO2 carboxytherapy mask firms and brightens instantly. A heated seaweed hand treatment and reflexology foot massage melt away every point of tension. Ends with a full face, neck, and shoulder massage. 90 minutes of pure ritual.",
+    price: "$215",
+    duration: "90+ min",
+    badge: "RITUAL",
+    img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
+    addons: ["Eye Lift — Stem Cell", "Divine Décolleté", "LED Light Therapy"],
+  },
+  {
     name: "Intraceuticals Oxygen Facial",
     tagline: "Hydrate · Lift · Rejuvenate",
-    desc: "Cutting-edge Oxygen Therapy delivers customized serums deep into the skin for intense hydration and anti-aging benefits. Includes eye mask, extractions, décolleté treatment and shoulder massage.",
+    desc: "Intraceuticals is the gold standard in oxygen-based skin therapy — trusted by celebrities and skin professionals worldwide. Pressurized oxygen propels customized serums packed with hyaluronic acid, vitamins, and peptides deep into the skin layers that topical products can never reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift. Includes eye mask, extractions, décolleté treatment, and shoulder massage.",
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
@@ -55,6 +65,7 @@ const signature = [
     desc: "Combines Therma-Lift sculpting technology with microdermabrasion and oxygen infusion to visibly tighten, firm, and smooth the skin. A favorite for those wanting a lifted, contoured look.",
     price: "$185",
     duration: "80 min",
+    badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
@@ -66,15 +77,6 @@ const signature = [
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
     addons: ["Deep Extractions", "Eye Lift — Stem Cell", "CO2 Lift"],
-  },
-  {
-    name: "Lift & Firm Facial",
-    tagline: "Turn Back the Clock",
-    desc: "A powerhouse anti-aging facial that targets fine lines, sagging skin, and loss of elasticity using high-performance peptide serums, collagen-stimulating masques, and professional lifting massage techniques. Results you can see — and feel — from the first session.",
-    price: "$185",
-    duration: "90 min",
-    img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
-    addons: ["Microcurrent Lifting", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
     name: "Smooth & Bright Facial",
@@ -97,7 +99,7 @@ const signature = [
   {
     name: "Stem Cell Facial",
     tagline: "Deep Cellular Renewal",
-    desc: "Plant-derived stem cells stimulate skin renewal and repair at a cellular level. Exceptional for mature skin seeking deep regeneration.",
+    desc: "Cutting-edge regenerative science for skin that feels reborn. Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen production, and repair damage at its source — not just the surface. This treatment rebuilds your skin from within, improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can't achieve. Transformative results for anyone seeking deep, lasting regeneration.",
     price: "$185",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
@@ -106,29 +108,11 @@ const signature = [
   {
     name: "Teen Glow Facial",
     tagline: "Gentle · Balancing · Fresh",
-    desc: "Specially formulated for teenage skin. Gentle deep cleanse, extractions, and balancing treatment that builds healthy skincare habits early.",
-    price: "$85",
+    desc: "Designed specifically for teenage skin — gentle enough for sensitive, developing complexions, effective enough to make a real difference. A thorough deep cleanse clears impurities and excess oil, careful extractions target congestion without trauma, and a soothing balancing masque restores harmony. Claudia works with teens the same way she works with every client — with patience, care, and 28 years of expertise. A perfect introduction to healthy skincare habits that last a lifetime.",
+    price: "$95",
     duration: "50 min",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
-  },
-  {
-    name: "Pampering Spa Facial",
-    tagline: "Pure Luxury · Pure Relaxation",
-    desc: "The classic spa experience — elevated. Deep cleanse, steam, extractions, a CO2 carboxytherapy mask for instant firming and brightness, and a full face and shoulder massage. Everything your skin and soul need in one blissful session.",
-    price: "$185",
-    duration: "90 min",
-    img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
-    addons: ["Dermaplane", "Oxygen Therapy O2", "Divine Décolleté"],
-  },
-  {
-    name: "Tropical Deluxe Facial",
-    tagline: "Head-to-Toe Tropical Escape",
-    desc: "Papaya enzyme scrub, glycolic peel, oxygen therapy, seaweed hand treatment, and reflexology foot massage — a full sensory journey.",
-    price: "$185",
-    duration: "75+ min",
-    img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
-    addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
     name: "The Power Facial",
@@ -144,7 +128,7 @@ const signature = [
 const advancedPackages = [
   {
     name: "Lift & Sculpt Series",
-    group: "Energy & Lifting",
+    group: "Non-Surgical Lifting",
     desc: "The ultimate non-surgical lifting protocol. Three progressive sessions combining microcurrent muscle training, Therma-Lift contouring, and Cold Plasma collagen stimulation. Each session builds on the last — the cumulative effect is a visibly lifted, firmed, and sculpted face.",
     technologies: ["Microcurrent Lifting", "Therma-Lift Technology", "Cold Plasma (13,000V)"],
     price: "$445",
@@ -157,7 +141,7 @@ const advancedPackages = [
   },
   {
     name: "Illuminate Series",
-    group: "Light & Oxygen",
+    group: "Radiance & Healing",
     desc: "Heal, hydrate, and brighten from within. Three sessions layering targeted LED light therapy, pressurized oxygen infusion (Intraceuticals), and CO2 carboxytherapy firming. Perfect for dull, uneven, or inflamed skin that needs a deep reset.",
     technologies: ["LED Photo Therapy", "Oxygen Infusion (Intraceuticals)", "CO2 Carboxytherapy"],
     price: "$395",
@@ -170,8 +154,8 @@ const advancedPackages = [
   },
   {
     name: "Resurface & Refine Series",
-    group: "Resurfacing & Renewal",
-    desc: "Progressive skin renewal that reveals smoother, more even-toned skin with every session. Combines professional microdermabrasion, surgical-grade Dermaplane exfoliation, and a glycolic peel for lasting texture transformation.",
+    group: "Texture & Tone",
+    desc: "Three progressive sessions that strip away years of texture buildup and reveal the smoothest, most even-toned skin of your life. Diamond microdermabrasion resurfaces deep layers, surgical-grade Dermaplane clears peach fuzz and dead skin for a flawless canvas, and a professional glycolic peel dissolves surface damage to reveal bright, renewed skin beneath. Each session goes deeper — the cumulative result is a complexion that genuinely glows.",
     technologies: ["Microdermabrasion", "Dermaplane Exfoliation", "Glycolic Peel"],
     price: "$330",
     sessions: 3,
@@ -246,6 +230,7 @@ const badgeColors: Record<string, string> = {
   "BEST SELLER": "bg-forest text-cream-100",
   "ADVANCED": "bg-forest-700 text-cream-100",
   "POPULAR": "bg-gold text-forest",
+  "RITUAL": "bg-gold text-forest",
 };
 
 export default function Services() {
@@ -294,8 +279,8 @@ export default function Services() {
                   <div className="flex items-center gap-3">
                     <span className="text-gold">{p.icon}</span>
                     <div>
-                      <h3 className="font-serif text-2xl text-gold leading-tight">{p.group}</h3>
-                      <p className="text-sm text-white/50 font-light mt-0.5">{p.name}</p>
+                      <p className="text-xs uppercase tracking-[0.15em] text-white/40 font-medium mb-1">{p.group}</p>
+                      <h3 className="font-serif text-2xl text-gold leading-tight">{p.name}</h3>
                     </div>
                   </div>
                   <div className="flex flex-col items-end gap-2 flex-shrink-0 ml-4">
