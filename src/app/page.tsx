@@ -216,7 +216,7 @@ export default function Home() {
             muted
             loop
             playsInline
-            poster="/hero-bg.jpg"
+            poster="/hero-room.jpg"
             className="w-full h-full object-cover"
           >
             <source src="/hero.mp4" type="video/mp4" />
