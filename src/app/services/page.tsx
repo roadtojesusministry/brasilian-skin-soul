@@ -28,7 +28,6 @@ const signature = [
     badge: "BEST SELLER",
     img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
     addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
-    series: "Illuminate Series",
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -39,7 +38,6 @@ const signature = [
     badge: "ADVANCED",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
-    series: "Lift & Sculpt Series",
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -50,7 +48,6 @@ const signature = [
     badge: "POPULAR",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
-    series: "Lift & Sculpt Series",
   },
   {
     name: "Therma-Lift Sculpting Facial",
@@ -60,7 +57,6 @@ const signature = [
     duration: "80 min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
-    series: "Lift & Sculpt Series",
   },
   {
     name: "Gua Sha Oxygen Facial",
@@ -70,7 +66,6 @@ const signature = [
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
-    series: "Cellular Renewal Series",
   },
   {
     name: "Lift & Firm Facial",
@@ -89,7 +84,6 @@ const signature = [
     duration: "60 min",
     img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
     addons: ["Dermaplane", "LED Light Therapy", "Glow Mask"],
-    series: "Illuminate Series",
   },
   {
     name: "Dermaplane Glow Facial",
@@ -99,7 +93,6 @@ const signature = [
     duration: "60+ min",
     img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
     addons: ["Glycolic Peel", "Oxygen Therapy O2", "Glow Mask"],
-    series: "Resurface & Refine Series",
   },
   {
     name: "Acne Facial",
@@ -118,7 +111,6 @@ const signature = [
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
     addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
-    series: "Cellular Renewal Series",
   },
   {
     name: "LED Photo Facial",
@@ -128,7 +120,6 @@ const signature = [
     duration: "45+ min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
     addons: ["Deep Extractions", "CO2 Lift", "Glow Mask"],
-    series: "Illuminate Series",
   },
   {
     name: "Teen Glow Facial",
@@ -375,16 +366,6 @@ export default function Services() {
                 <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1">{s.tagline}</p>
                 <h3 className="font-serif text-xl text-forest mb-2 leading-tight">{s.name}</h3>
                 <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
-                {s.series && (
-                  <div className="mt-3 pt-3 border-t border-forest-50">
-                    <Link href="#transformation-series" className="inline-flex items-center gap-1 text-xs text-gold/70 hover:text-gold transition-colors group">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3 flex-shrink-0">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                      </svg>
-                      Part of <span className="font-medium group-hover:underline">{s.series}</span> →
-                    </Link>
-                  </div>
-                )}
                 {s.addons && (
                   <div className="mt-2">
                     <p className="text-xs text-forest-300 mb-1.5">Enhance with:</p>
