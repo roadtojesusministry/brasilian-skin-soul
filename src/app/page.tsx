@@ -362,20 +362,18 @@ export default function Home() {
               <div
                 className="gold-hover group bg-white rounded-2xl border border-forest-100 transition-all duration-300 hover:-translate-y-2"
               >
-                {/* Title block — warm gold tint */}
-                <div className="px-6 pt-5 pb-4 bg-gold/8 border-b border-gold/20">
+                {/* Slim green strip */}
+                <div className="relative bg-forest flex flex-col items-center justify-center py-5 px-4 text-center">
+                  <s.icon className="w-6 h-6 text-gold mb-2 opacity-90" strokeWidth={1.5} />
+                  <h3 className="font-serif text-lg text-cream-100 leading-tight">{s.name}</h3>
                   {s.badge && (
-                    <span className={`inline-block text-xs font-bold px-2 py-0.5 rounded-full mb-2 ${badgeColors[s.badge]}`}>
+                    <span className={`absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-full ${badgeColors[s.badge]}`}>
                       {s.badge}
                     </span>
                   )}
-                  <p className="text-xs text-gold font-medium uppercase tracking-wide mb-1.5">{s.tagline}</p>
-                  <div className="flex items-center gap-2">
-                    <s.icon className="w-4 h-4 text-gold shrink-0" strokeWidth={1.5} />
-                    <h3 className="font-serif text-xl text-forest leading-tight">{s.name}</h3>
-                  </div>
                 </div>
                 <div className="p-6">
+                  <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
                   <p className="text-sm text-forest-500 leading-relaxed mb-4">{s.desc}</p>
                   <div className="flex items-center justify-between text-xs pt-3 border-t border-forest-100">
                     <span className="font-bold text-forest text-base">{s.price}</span>
