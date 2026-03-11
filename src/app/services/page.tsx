@@ -12,7 +12,7 @@ const signature = [
   {
     name: "Royal Glow Facial",
     tagline: "The Ultimate Luxury Experience",
-    desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. You'll leave looking and feeling transformed.",
+    desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you'll leave looking and feeling genuinely transformed.",
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
@@ -22,7 +22,7 @@ const signature = [
   {
     name: "The Brasilian Ritual",
     tagline: "Where Beauty Meets Ritual",
-    desc: "The most complete and immersive treatment on our entire menu — and our most uniquely Brazilian one. A full sensory journey: papaya enzyme exfoliation and a glycolic peel resurface and renew, steam and extractions deeply purify, pressurized oxygen therapy floods the skin with nutrients, and a CO2 carboxytherapy mask firms and brightens instantly. A heated seaweed hand treatment and reflexology foot massage melt away every point of tension. Ends with a full face, neck, and shoulder massage. 90 minutes of pure ritual.",
+    desc: "The most complete and immersive treatment on our menu — and our most uniquely Brazilian one. Papaya exfoliation, glycolic peel, oxygen therapy, CO2 firming mask, seaweed hand treatment, reflexology foot massage, and a full face, neck and shoulder massage. 90 minutes of pure ritual.",
     price: "$215",
     duration: "90+ min",
     badge: "RITUAL",
@@ -32,7 +32,7 @@ const signature = [
   {
     name: "Intraceuticals Oxygen Facial",
     tagline: "Hydrate · Lift · Rejuvenate",
-    desc: "Intraceuticals is the gold standard in oxygen-based skin therapy — trusted by celebrities and skin professionals worldwide. Pressurized oxygen propels customized serums packed with hyaluronic acid, vitamins, and peptides deep into the skin layers that topical products can never reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift. Includes eye mask, extractions, décolleté treatment, and shoulder massage.",
+    desc: "The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Pressurized oxygen drives customized serums deep into layers no topical product can reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift.",
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
@@ -42,7 +42,7 @@ const signature = [
   {
     name: "Cold Plasma Rejuvenation",
     tagline: "Science Meets Skin",
-    desc: "13,000 volts of cold plasma technology stimulate collagen and elastin production, amplifying absorption of skin boosters by up to 120×. A powerful non-invasive treatment with visible results.",
+    desc: "13,000 volts of cold plasma stimulate collagen and elastin while amplifying absorption of skin boosters by up to 120×. Opens micro-channels that drive active ingredients deeper than any topical product can reach. Non-invasive, with visible results from the very first session.",
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
@@ -52,7 +52,7 @@ const signature = [
   {
     name: "Microcurrent Lifting Facial",
     tagline: "The Non-Surgical Facelift",
-    desc: "Gentle microcurrent waves stimulate facial muscles and boost collagen, delivering a natural lift and firming effect. Think of it as a workout for your face — the more sessions, the more defined and sculpted the result. Visible lift from the very first visit.",
+    desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
     price: "$165",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
@@ -61,7 +61,7 @@ const signature = [
   {
     name: "Therma-Lift Sculpting Facial",
     tagline: "Tighten · Tone · Sculpt",
-    desc: "Combines Therma-Lift sculpting technology with microdermabrasion and oxygen infusion to visibly tighten, firm, and smooth the skin. Each treatment leaves your face feeling noticeably lifted — and looking like it was sculpted from the outside in.",
+    desc: "Uses targeted heat to contour and tighten the skin from the surface — where Microcurrent trains the muscles from within, Therma-Lift sculpts from the outside. Combined with microdermabrasion and oxygen infusion, each session leaves your face visibly lifted, firmed, and refined.",
     price: "$185",
     duration: "80 min",
     img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
@@ -97,7 +97,7 @@ const signature = [
   {
     name: "Stem Cell Facial",
     tagline: "Deep Cellular Renewal",
-    desc: "Cutting-edge regenerative science for skin that feels reborn. Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen production, and repair damage at its source — not just the surface. This treatment rebuilds your skin from within, improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can't achieve. Transformative results for anyone seeking deep, lasting regeneration.",
+    desc: "Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen, and repair damage at its source — improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can't achieve. For anyone seeking deep, lasting regeneration.",
     price: "$185",
     duration: "90 min",
     img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
@@ -106,7 +106,7 @@ const signature = [
   {
     name: "Teen Glow Facial",
     tagline: "Gentle · Balancing · Fresh",
-    desc: "Designed specifically for teenage skin — gentle enough for sensitive, developing complexions, effective enough to make a real difference. A thorough deep cleanse clears impurities and excess oil, careful extractions target congestion without trauma, and a soothing balancing masque restores harmony. Claudia works with teens the same way she works with every client — with patience, care, and 28 years of expertise. A perfect introduction to healthy skincare habits that last a lifetime.",
+    desc: "Designed for teenage skin — gentle enough for sensitive, developing complexions, effective enough to make a real difference. A deep cleanse, careful extractions, and a balancing masque address real concerns without stripping or irritating. A perfect first step into healthy skincare habits.",
     price: "$95",
     duration: "50 min",
     img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
@@ -115,7 +115,7 @@ const signature = [
   {
     name: "The Power Facial",
     tagline: "Maximum Results · Zero Downtime",
-    desc: "Built for the busy professional who doesn't compromise on results. Surgical-grade Dermaplane exfoliation, deep cleanse, extractions, and targeted hydration — all in under an hour. Leave looking polished, fresh, and camera-ready.",
+    desc: "Built for the professional who demands results without downtime. Deep cleanse, surgical-grade Dermaplane exfoliation, extractions, and targeted hydration — all delivered in under an hour. No fuss, no recovery time. Just polished, refreshed, camera-ready skin.",
     price: "$165",
     duration: "60 min",
     img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
@@ -127,7 +127,7 @@ const advancedPackages = [
   {
     name: "Lift & Sculpt Series",
     group: "Non-Surgical Lifting",
-    desc: "The ultimate non-surgical lifting protocol. Three progressive sessions combining microcurrent muscle training, Therma-Lift contouring, and Cold Plasma collagen stimulation. Each session builds on the last — the cumulative effect is a visibly lifted, firmed, and sculpted face.",
+    desc: "The ultimate non-surgical lifting protocol. All three technologies are delivered together in every session — not rotated, not split. Three progressive sessions combining microcurrent muscle training, Therma-Lift contouring, and Cold Plasma collagen stimulation. Each session builds on the last — the cumulative effect is a visibly lifted, firmed, and sculpted face.",
     technologies: ["Microcurrent Lifting", "Therma-Lift Technology", "Cold Plasma (13,000V)"],
     price: "$495",
     sessions: 3,
@@ -140,7 +140,7 @@ const advancedPackages = [
   {
     name: "Illuminate Series",
     group: "Radiance & Healing",
-    desc: "Heal, hydrate, and brighten from within. Three sessions layering targeted LED light therapy, pressurized oxygen infusion (Intraceuticals), and CO2 carboxytherapy firming. Perfect for dull, uneven, or inflamed skin that needs a deep reset.",
+    desc: "Heal, hydrate, and brighten from within. Three sessions layering targeted LED light therapy, pressurized oxygen infusion (Intraceuticals), and CO2 carboxytherapy firming. All three delivered together every session — healing, flooding, and firming the skin in one complete protocol. Each session compounds on the last — by session three, the radiance is undeniable.",
     technologies: ["LED Photo Therapy", "Oxygen Infusion (Intraceuticals)", "CO2 Carboxytherapy"],
     price: "$435",
     sessions: 3,
@@ -166,7 +166,7 @@ const advancedPackages = [
   {
     name: "Cellular Renewal Series",
     group: "Cellular Science",
-    desc: "Deep regeneration from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, far-infrared promotes circulation and natural detox, and Gua Sha lymphatic drainage sculpts and restores your skin's natural radiance.",
+    desc: "Deep regeneration from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, far-infrared promotes circulation and natural detox, and Gua Sha lymphatic drainage sculpts and restores your skin's natural radiance. The three work together in every session — stem cells trigger the repair, infrared accelerates it, Gua Sha flushes what's been broken down. Three sessions of that compounding is transformation at the cellular level.",
     technologies: ["Plant Stem Cell Therapy", "Far-Infrared Technology", "Gua Sha Lymphatic Drainage"],
     price: "$420",
     sessions: 3,
