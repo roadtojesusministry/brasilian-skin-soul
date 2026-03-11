@@ -11,6 +11,7 @@ export const metadata = {
 
 const signature = [
   {
+    id: "facial-royal-glow",
     name: "Royal Glow Facial",
     tagline: "The Ultimate Luxury Experience",
     desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you'll leave looking and feeling genuinely transformed.",
@@ -21,6 +22,7 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
+    id: "facial-brasilian-ritual",
     name: "The Brasilian Ritual",
     tagline: "Where Beauty Meets Ritual",
     desc: "The most complete and immersive treatment on our menu — and our most uniquely Brazilian one. Papaya exfoliation, glycolic peel, oxygen therapy, CO2 firming mask, seaweed hand treatment, reflexology foot massage, and a full face, neck and shoulder massage. 90 minutes of pure ritual.",
@@ -31,6 +33,7 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "Divine Décolleté", "LED Light Therapy"],
   },
   {
+    id: "facial-intraceuticals",
     name: "Intraceuticals Oxygen Facial",
     tagline: "Hydrate · Lift · Rejuvenate",
     desc: "The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Pressurized oxygen drives customized serums deep into layers no topical product can reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift.",
@@ -41,6 +44,7 @@ const signature = [
     addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
   },
   {
+    id: "facial-cold-plasma",
     name: "Cold Plasma Rejuvenation",
     tagline: "Science Meets Skin",
     desc: "13,000 volts of cold plasma stimulate collagen and elastin while amplifying absorption of skin boosters by up to 120×. Opens micro-channels that drive active ingredients deeper than any topical product can reach. Non-invasive, with visible results from the very first session.",
@@ -51,6 +55,7 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
   },
   {
+    id: "facial-microcurrent",
     name: "Microcurrent Lifting Facial",
     tagline: "The Non-Surgical Facelift",
     desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
@@ -60,6 +65,7 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
+    id: "facial-therma-lift",
     name: "Therma-Lift Sculpting Facial",
     tagline: "Tighten · Tone · Sculpt",
     desc: "Uses targeted heat to contour and tighten the skin from the surface — where Microcurrent trains the muscles from within, Therma-Lift sculpts from the outside. Combined with microdermabrasion and oxygen infusion, each session leaves your face visibly lifted, firmed, and refined.",
@@ -69,6 +75,7 @@ const signature = [
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
+    id: "facial-lymph-glow",
     name: "Lymph & Glow",
     tagline: "Detox · Sculpt · Radiate",
     desc: "The ultimate detox facial. Traditional Gua Sha lymphatic drainage sculpts and de-puffs, pressurized oxygen infusion floods skin with nutrients, and targeted LED light therapy accelerates healing and brightens from within. Three powerful modalities — one deeply restorative ritual.",
@@ -78,6 +85,7 @@ const signature = [
     addons: ["Deep Extractions", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
+    id: "facial-smooth-bright",
     name: "Smooth & Bright Facial",
     tagline: "Silky Smooth · Luminous · Renewed",
     desc: "Double exfoliation at its finest. Surgical-grade Dermaplane removes dead skin cells and peach fuzz for a silky-smooth canvas, then a Glycolic Peel resurfaces and brightens for lasting tone transformation. Makeup applies flawlessly. Skin glows for days.",
@@ -87,6 +95,7 @@ const signature = [
     addons: ["Oxygen Therapy O2", "LED Light Therapy", "Glow Mask"],
   },
   {
+    id: "facial-clear-skin",
     name: "Clear Skin Protocol",
     tagline: "Cleanse · Heal · Balance",
     desc: "A clinical-grade acne treatment that goes beyond the surface. Deep extractions clear congestion, LED light therapy kills acne-causing bacteria and reduces inflammation, and a targeted balancing masque restores skin harmony. Designed for real results, not just a temporary fix.",
@@ -96,6 +105,7 @@ const signature = [
     addons: ["Deep Extractions", "Glycolic Peel", "Glow Mask"],
   },
   {
+    id: "facial-stem-cell",
     name: "Stem Cell Facial",
     tagline: "Deep Cellular Renewal",
     desc: "Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen, and repair damage at its source — improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can't achieve. For anyone seeking deep, lasting regeneration.",
@@ -105,6 +115,7 @@ const signature = [
     addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
   },
   {
+    id: "facial-teen-glow",
     name: "Teen Glow Facial",
     tagline: "Gentle · Balancing · Fresh",
     desc: "Designed for teenage skin — gentle enough for sensitive, developing complexions, effective enough to make a real difference. A deep cleanse, careful extractions, and a balancing masque address real concerns without stripping or irritating. A perfect first step into healthy skincare habits.",
@@ -114,6 +125,7 @@ const signature = [
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
   },
   {
+    id: "facial-power",
     name: "The Power Facial",
     tagline: "Maximum Results · Zero Downtime",
     desc: "Built for the professional who demands results without downtime. Deep cleanse, surgical-grade Dermaplane exfoliation, extractions, and targeted hydration — all delivered in under an hour. No fuss, no recovery time. Just polished, refreshed, camera-ready skin.",
@@ -333,18 +345,22 @@ export default function Services() {
               className="gold-hover group bg-white rounded-2xl border border-forest-100 transition-all duration-300 hover:-translate-y-2 flex flex-col"
             >
               <div className="flex flex-col flex-1">
-                {/* Slim green strip */}
-                <div className="relative bg-forest flex flex-col items-center justify-center py-5 px-4 text-center">
-                  <s.icon className="w-6 h-6 text-gold mb-2 opacity-90" strokeWidth={1.5} />
-                  <h3 className="font-serif text-lg text-cream-100 leading-tight">{s.name}</h3>
+                {/* Image header */}
+                <div className="relative h-44 overflow-hidden">
+                  <Image src={`/${s.id}.jpg`} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-forest/30" />
                   {s.badge && (
-                    <span className={`absolute top-2 right-2 text-xs font-bold px-2 py-0.5 rounded-full ${badgeColors[s.badge]}`}>
+                    <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
                       {s.badge}
                     </span>
                   )}
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                 <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <s.icon className="w-4 h-4 text-gold shrink-0" strokeWidth={1.5} />
+                  <h3 className="font-serif text-xl text-forest leading-tight">{s.name}</h3>
+                </div>
                 <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.desc}</p>
                 {s.addons && (
                   <div className="mt-2">
@@ -365,8 +381,8 @@ export default function Services() {
                 <Link href="/booking" className="mt-3 block text-center bg-forest text-cream-100 py-2.5 rounded-full text-xs font-medium hover:bg-forest-700 transition-colors">
                   Book This Treatment
                 </Link>
-                </div>{/* end inner p-5 */}
-              </div>
+                </div>{/* end p-5 */}
+              </div>{/* end flex flex-col flex-1 */}
             </div>
           ))}
         </div>
