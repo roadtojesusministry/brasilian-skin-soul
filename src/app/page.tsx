@@ -61,14 +61,7 @@ const serviceCategories = [
       </svg>
     ),
   },
-  {
-    label: "Massage & Add-ons",
-    svg: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-7 h-7">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-      </svg>
-    ),
-  },
+
   {
     label: "Waxing Services",
     svg: (
@@ -258,15 +251,12 @@ export default function Home() {
                 <p className="font-serif text-2xl text-white">Brasilian Skin Soul</p>
                 <p className="text-xs text-white/60 tracking-widest uppercase mt-1">by Claudia Pieri</p>
               </div>
-              <div className="w-full border-t border-white/15 pt-2 flex flex-col gap-1">
-                {[
-                  { label: "Services", href: "/services" },
-                  { label: "About", href: "/about" },
-                  { label: "Contact", href: "/contact" },
-                ].map((l) => (
-                  <Link key={l.href} href={l.href}
-                    className="text-white/70 hover:text-white text-sm text-center py-2.5 rounded-xl hover:bg-white/10 transition-colors tracking-wide">
-                    {l.label}
+              <div className="w-full border-t border-white/15 pt-3 flex flex-col gap-1">
+                {serviceCategories.map((c) => (
+                  <Link key={c.label} href="/services"
+                    className="flex items-center gap-3 text-white/70 hover:text-white text-xs py-2 px-3 rounded-xl hover:bg-white/10 transition-colors">
+                    <span className="text-gold/70 [&>svg]:w-4 [&>svg]:h-4">{c.svg}</span>
+                    {c.label}
                   </Link>
                 ))}
               </div>
@@ -280,17 +270,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SERVICE CATEGORIES STRIP ─────────────────────────── */}
-      <section className="bg-forest py-10">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {serviceCategories.map((c) => (
-              <div key={c.label}
-                className="flex flex-col items-center gap-3 p-5 rounded-xl text-center">
-                <span className="text-gold/80">{c.svg}</span>
-                <span className="text-xs text-white/70 font-medium leading-tight">{c.label}</span>
-              </div>
-            ))}
+      {/* ── PHILOSOPHY BRIDGE ────────────────────────────────── */}
+      <section className="bg-forest py-16 border-t border-white/10">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <p className="text-xs uppercase tracking-[0.25em] text-gold/70 mb-6">The BSS Difference</p>
+          <p className="font-serif text-2xl md:text-3xl text-white font-light leading-relaxed mb-3">
+            Most spas offer one technology at a time.
+          </p>
+          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12">
+            Claudia builds protocols — four curated programs that layer the most powerful modalities together in every session, each amplifying the others for results no single treatment can achieve.
+          </p>
+          <div className="grid grid-cols-3 gap-6 border-t border-white/10 pt-10">
+            <div className="text-center">
+              <p className="font-serif text-4xl text-gold font-light mb-1">28</p>
+              <p className="text-xs text-white/50 uppercase tracking-widest">Years of Mastery</p>
+            </div>
+            <div className="text-center border-x border-white/10">
+              <p className="font-serif text-4xl text-gold font-light mb-1">4</p>
+              <p className="text-xs text-white/50 uppercase tracking-widest">Technology Protocols</p>
+              <p className="text-xs text-white/30 mt-1">Science-backed · Exclusively bundled</p>
+            </div>
+            <div className="text-center">
+              <p className="font-serif text-4xl text-gold font-light mb-1">12</p>
+              <p className="text-xs text-white/50 uppercase tracking-widest">Signature Facials</p>
+            </div>
           </div>
         </div>
       </section>
@@ -389,6 +392,17 @@ export default function Home() {
               className="inline-block border border-forest text-forest px-10 py-4 rounded-full text-sm font-medium hover:bg-forest hover:text-cream-100 transition-colors">
               Explore All Treatments
             </Link>
+          </div>
+
+          {/* Service category icons */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-14 pt-10 border-t border-forest-100">
+            {serviceCategories.map((c) => (
+              <Link key={c.label} href="/services"
+                className="flex flex-col items-center gap-3 p-5 rounded-xl text-center hover:bg-forest-50 transition-colors group">
+                <span className="text-gold/70 group-hover:text-gold transition-colors [&>svg]:w-7 [&>svg]:h-7">{c.svg}</span>
+                <span className="text-xs text-forest-400 font-medium leading-tight group-hover:text-forest transition-colors">{c.label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
