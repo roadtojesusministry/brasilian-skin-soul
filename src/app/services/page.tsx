@@ -16,7 +16,7 @@ const signature = [
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
-    img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
+    img: "/facial-royal-glow.jpg",
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
@@ -26,7 +26,7 @@ const signature = [
     price: "$215",
     duration: "90+ min",
     badge: "RITUAL",
-    img: "https://images.unsplash.com/photo-1552693673-1bf958298935?w=600&q=80",
+    img: "/facial-brasilian-ritual.jpg",
     addons: ["Eye Lift — Stem Cell", "Divine Décolleté", "LED Light Therapy"],
   },
   {
@@ -36,7 +36,7 @@ const signature = [
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
-    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+    img: "/facial-intraceuticals.jpg",
     addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
   },
   {
@@ -46,7 +46,7 @@ const signature = [
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
-    img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
+    img: "/facial-cold-plasma.jpg",
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
   },
   {
@@ -55,7 +55,7 @@ const signature = [
     desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
     price: "$165",
     duration: "90 min",
-    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
+    img: "/facial-therma-lift.jpg",
     addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
   },
   {
@@ -64,7 +64,7 @@ const signature = [
     desc: "Uses targeted heat to contour and tighten the skin from the surface — where Microcurrent trains the muscles from within, Therma-Lift sculpts from the outside. Combined with microdermabrasion and oxygen infusion, each session leaves your face visibly lifted, firmed, and refined.",
     price: "$185",
     duration: "80 min",
-    img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=600&q=80",
+    img: "/facial-microcurrent.jpg",
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
@@ -73,7 +73,7 @@ const signature = [
     desc: "The ultimate detox facial. Traditional Gua Sha lymphatic drainage sculpts and de-puffs, pressurized oxygen infusion floods skin with nutrients, and targeted LED light therapy accelerates healing and brightens from within. Three powerful modalities — one deeply restorative ritual.",
     price: "$185",
     duration: "90 min",
-    img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80",
+    img: "/facial-lymph-glow.jpg",
     addons: ["Deep Extractions", "Eye Lift — Stem Cell", "CO2 Lift"],
   },
   {
@@ -82,7 +82,7 @@ const signature = [
     desc: "Double exfoliation at its finest. Surgical-grade Dermaplane removes dead skin cells and peach fuzz for a silky-smooth canvas, then a Glycolic Peel resurfaces and brightens for lasting tone transformation. Makeup applies flawlessly. Skin glows for days.",
     price: "$175",
     duration: "70+ min",
-    img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
+    img: "/facial-royal-glow.jpg",
     addons: ["Oxygen Therapy O2", "LED Light Therapy", "Glow Mask"],
   },
   {
@@ -91,7 +91,7 @@ const signature = [
     desc: "A clinical-grade acne treatment that goes beyond the surface. Deep extractions clear congestion, LED light therapy kills acne-causing bacteria and reduces inflammation, and a targeted balancing masque restores skin harmony. Designed for real results, not just a temporary fix.",
     price: "$165",
     duration: "65 min",
-    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+    img: "/facial-clear-skin.jpg",
     addons: ["Deep Extractions", "Glycolic Peel", "Glow Mask"],
   },
   {
@@ -100,7 +100,7 @@ const signature = [
     desc: "Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen, and repair damage at its source — improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can't achieve. For anyone seeking deep, lasting regeneration.",
     price: "$185",
     duration: "90 min",
-    img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
+    img: "/facial-stem-cell.jpg",
     addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
   },
   {
@@ -109,7 +109,7 @@ const signature = [
     desc: "Designed for teenage skin — gentle enough for sensitive, developing complexions, effective enough to make a real difference. A deep cleanse, careful extractions, and a balancing masque address real concerns without stripping or irritating. A perfect first step into healthy skincare habits.",
     price: "$95",
     duration: "50 min",
-    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
+    img: "/facial-smooth-bright.jpg",
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
   },
   {
@@ -118,7 +118,7 @@ const signature = [
     desc: "Built for the professional who demands results without downtime. Deep cleanse, surgical-grade Dermaplane exfoliation, extractions, and targeted hydration — all delivered in under an hour. No fuss, no recovery time. Just polished, refreshed, camera-ready skin.",
     price: "$165",
     duration: "60 min",
-    img: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=600&q=80",
+    img: "/facial-power.jpg",
     addons: ["Microcurrent Lifting", "Glycolic Peel", "CO2 Lift"],
   },
 ];
@@ -240,7 +240,7 @@ export default function Services() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1800&q=80" alt="Spa" fill className="object-cover" />
+          <Image src="/hero-bg.jpg" alt="Spa" fill className="object-cover" />
           <div className="absolute inset-0 bg-forest/80" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">

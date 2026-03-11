@@ -13,7 +13,7 @@ const featuredServices = [
     price: "$295",
     duration: "2 hr",
     badge: "FLAGSHIP",
-    img: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80",
+    img: "/facial-royal-glow.jpg",
   },
   {
     name: "Intraceuticals Oxygen Facial",
@@ -22,7 +22,7 @@ const featuredServices = [
     price: "$195",
     duration: "60+ min",
     badge: "BEST SELLER",
-    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+    img: "/facial-intraceuticals.jpg",
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -31,7 +31,7 @@ const featuredServices = [
     price: "$175",
     duration: "60+ min",
     badge: "ADVANCED",
-    img: "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=80",
+    img: "/facial-cold-plasma.jpg",
   },
   {
     name: "Microcurrent Lifting Facial",
@@ -40,7 +40,7 @@ const featuredServices = [
     price: "$165",
     duration: "90 min",
     badge: "POPULAR",
-    img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80",
+    img: "/facial-microcurrent.jpg",
   },
 ];
 
@@ -212,7 +212,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <ParallaxHero>
           <Image
-            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1800&q=85"
+            src="/hero-bg.jpg"
             alt="Spa ambiance"
             fill className="object-cover" priority
           />
@@ -458,7 +458,7 @@ export default function Home() {
       {/* ── CTA BANNER ──────────────────────────────────────── */}
       <section className="relative py-28 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1800&q=85" alt="Spa treatment" fill className="object-cover" />
+          <Image src="/cta-bg.jpg" alt="Spa treatment" fill className="object-cover" />
           <div className="absolute inset-0 bg-forest/80" />
         </div>
         <div className="relative z-10 max-w-2xl mx-auto px-6 text-center">
