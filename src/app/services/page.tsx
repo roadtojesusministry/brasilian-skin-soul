@@ -240,7 +240,16 @@ export default function Services() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="/hero-bg.jpg" alt="Spa" fill className="object-cover" />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/hero-bg.jpg"
+            className="w-full h-full object-cover"
+          >
+            <source src="/services-hero.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-forest/80" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
