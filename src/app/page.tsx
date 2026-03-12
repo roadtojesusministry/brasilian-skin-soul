@@ -352,16 +352,16 @@ export default function Home() {
                 {/* Image header */}
                 <div className="relative h-44 w-full overflow-hidden">
                   <Image src={s.image} alt={s.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/20 to-transparent" />
+                  <div className="absolute inset-0 bg-forest/30" />
                   {s.badge && (
-                    <span className={`absolute top-3 right-3 text-xs font-bold px-2 py-0.5 rounded-full ${badgeColors[s.badge]}`}>
+                    <span className={`absolute top-3 left-3 text-xs font-bold px-2 py-1 rounded-full ${badgeColors[s.badge]}`}>
                       {s.badge}
                     </span>
                   )}
-                  <h3 className="absolute bottom-3 left-4 right-4 font-serif text-lg text-cream-100 leading-tight">{s.name}</h3>
                 </div>
                 <div className="p-6">
                   <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
+                  <h3 className="font-serif text-xl text-forest leading-tight mb-2">{s.name}</h3>
                   <p className="text-sm text-forest-500 leading-relaxed mb-4">{s.desc}</p>
                   <div className="flex items-center justify-between text-xs pt-3 border-t border-forest-100">
                     <span className="font-bold text-forest text-base">{s.price}</span>
