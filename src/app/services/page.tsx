@@ -34,7 +34,7 @@ const signature = [
   },
   {
     id: "facial-therma-lift",
-    name: "Microderm Therma-Lift Facial",
+    name: "Therma-Lift Sculpting Facial",
     tagline: "Resurface · Sculpt · Illuminate",
     desc: "The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a fresh, smooth canvas — then Therma-Lift heat technology sculpts and tightens from the outside in. Two powerful modalities in one session: resurface the skin, then contour and lift it. Visible refinement and firmness from the very first visit.",
     price: "$185",
@@ -42,6 +42,16 @@ const signature = [
     badge: "POPULAR",
     icon: Flame,
     addons: ["LED Light Therapy", "Eye Lift — Stem Cell", "CO2 Lift"],
+  },
+  {
+    id: "facial-microcurrent",
+    name: "Microcurrent Lifting Facial",
+    tagline: "Bioelectric Lift · Sculpt · Firm",
+    desc: "Microcurrent technology sends gentle bioelectric signals that re-train and re-educate facial muscles — the same way exercise builds strength, but targeted and precise. Lifts contours, firms skin, and improves muscle tone with zero downtime. Results are visible immediately and improve with each session.",
+    price: "$165",
+    duration: "90 min",
+    icon: Activity,
+    addons: ["Eye Lift — Stem Cell", "LED Light Therapy", "CO2 Lift"],
   },
   {
     id: "facial-cold-plasma",
@@ -104,6 +114,16 @@ const signature = [
     duration: "90 min",
     icon: Dna,
     addons: ["Eye Lift — Stem Cell", "Microcurrent Lifting", "CO2 Lift"],
+  },
+  {
+    id: "facial-power",
+    name: "The Power Facial",
+    tagline: "Focused · Results-Driven · Essential",
+    desc: "The highest-impact essentials in 60 minutes. Deep cleanse, professional extractions, targeted treatment serum, and a results-focused masque — nothing unnecessary, everything that works. The go-to for regular maintenance between advanced treatments or for anyone who wants real results in a focused session.",
+    price: "$165",
+    duration: "60 min",
+    icon: Award,
+    addons: ["LED Light Therapy", "Glow Mask", "Deep Extractions"],
   },
   {
     id: "facial-teen-glow",
@@ -171,7 +191,7 @@ const advancedPackages = [
     ),
   },
   {
-    name: "Detox & Cellular Renewal Series",
+    name: "Cellular Renewal Series",
     group: "Detox & Cellular Renewal",
     desc: "Deep regeneration and detox from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, ultrasound waves amplify product absorption and stimulate cellular activity, and Gua Sha lymphatic drainage sculpts and restores your skin's natural radiance. The three work together in every session — stem cells trigger the repair, ultrasound drives it deeper, Gua Sha flushes what's been broken down. Three sessions of that compounding is transformation at the cellular level.",
     technologies: ["Plant Stem Cell Therapy", "Ultrasound Therapy", "Gua Sha Lymphatic Drainage"],

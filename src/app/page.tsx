@@ -25,7 +25,7 @@ const featuredServices = [
     image: "/facial-brasilian-ritual.jpg",
   },
   {
-    name: "Microderm Therma-Lift Facial",
+    name: "Therma-Lift Sculpting Facial",
     tagline: "Resurface · Sculpt · Illuminate",
     desc: "The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a smooth, fresh canvas — then Therma-Lift heat technology sculpts and tightens from the outside in. Two powerful modalities in one session.",
     price: "$185",
