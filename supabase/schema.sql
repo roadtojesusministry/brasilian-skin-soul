@@ -37,7 +37,7 @@ create table if not exists blocked_times (
 -- Bookings
 create table if not exists bookings (
   id                   uuid        primary key default gen_random_uuid(),
-  service_id           text        references services(id),
+  service_id           text,
   service_name         text        not null,
   service_duration_min int         not null,
   service_price        int         not null,

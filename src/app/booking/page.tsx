@@ -24,6 +24,11 @@ const ADDONS = [
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
+interface SeriesSession {
+  date: string;  // YYYY-MM-DD
+  time: string;  // display "H:MM AM/PM"
+}
+
 interface BookingState {
   step: 1 | 2 | 3 | 4 | 5 | 6;
   selectedService: Service | null;
@@ -37,6 +42,9 @@ interface BookingState {
   clientPhone: string;
   notes: string;
   bookingId: string;
+  // Series-specific
+  seriesSessions: SeriesSession[];
+  currentSessionIndex: number;
 }
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -227,12 +235,10 @@ function StepIndicator({ step, selectedService }: { step: number; selectedServic
     : allSteps;
 
   // Map actual step number → display position
-  // actual: 1=Service, 2=Add-Ons, 3=Date, 4=Time, 5=Details, (6=Confirm)
-  // When skipping: actual 3→display 2, 4→display 3, 5→display 4
   function toDisplayStep(actual: number): number {
     if (!skipAddons) return actual;
     if (actual <= 1) return actual;
-    return actual - 1; // shift everything after step 1 down by 1
+    return actual - 1;
   }
 
   const displayStep = toDisplayStep(step);
@@ -299,6 +305,8 @@ export default function BookingPage() {
     clientPhone: '',
     notes: '',
     bookingId: '',
+    seriesSessions: [],
+    currentSessionIndex: 0,
   });
 
   const [slots, setSlots]       = useState<string[]>([]);
@@ -315,6 +323,9 @@ export default function BookingPage() {
 
   const set = (patch: Partial<BookingState>) =>
     setState(prev => ({ ...prev, ...patch }));
+
+  // Derived: is this a Transformation Series booking?
+  const isSeries = state.selectedService?.category === 'Transformation Series';
 
   // Fetch slots when we reach step 4 (time selection)
   const fetchSlots = useCallback(async () => {
@@ -357,34 +368,80 @@ export default function BookingPage() {
     set({ selectedAddons: newAddons, addonTotal: newTotal, addonDuration: newDuration });
   }
 
+  // Handle time slot selection — different logic for series vs single
+  function handleTimeSelect(slot: string) {
+    if (isSeries) {
+      const newSessions = [...state.seriesSessions];
+      newSessions[state.currentSessionIndex] = { date: state.selectedDate, time: slot };
+
+      if (state.currentSessionIndex < 2) {
+        // Move to next session's date picker
+        set({
+          seriesSessions: newSessions,
+          currentSessionIndex: state.currentSessionIndex + 1,
+          selectedDate: '',
+          selectedTime: '',
+          step: 3,
+        });
+      } else {
+        // All 3 sessions scheduled — move to client info
+        set({
+          seriesSessions: newSessions,
+          selectedTime: slot,
+          step: 5,
+        });
+      }
+    } else {
+      set({ selectedTime: slot, step: 5 });
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitError('');
     setSubmitLoading(true);
     try {
-      const selectedAddonNames = state.selectedAddons.map(id => {
-        const a = ADDONS.find(x => x.id === id);
-        return a ? a.name : id;
-      });
+      let payload: Record<string, unknown>;
+
+      if (isSeries) {
+        payload = {
+          service_id:   state.selectedService!.id,
+          client_name:  state.clientName,
+          client_email: state.clientEmail,
+          client_phone: state.clientPhone,
+          is_series:    true,
+          sessions:     state.seriesSessions,
+          notes:        state.notes || undefined,
+        };
+      } else {
+        const selectedAddonNames = state.selectedAddons.map(id => {
+          const a = ADDONS.find(x => x.id === id);
+          return a ? a.name : id;
+        });
+        payload = {
+          service_id:     state.selectedService!.id,
+          client_name:    state.clientName,
+          client_email:   state.clientEmail,
+          client_phone:   state.clientPhone,
+          booking_date:   state.selectedDate,
+          start_time:     state.selectedTime,
+          addons:         state.selectedAddons,
+          addon_names:    selectedAddonNames,
+          addon_duration: state.addonDuration,
+          notes:          state.notes || undefined,
+        };
+      }
+
       const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          service_id:    state.selectedService!.id,
-          client_name:   state.clientName,
-          client_email:  state.clientEmail,
-          client_phone:  state.clientPhone,
-          booking_date:  state.selectedDate,
-          start_time:    state.selectedTime,
-          addons:        state.selectedAddons,
-          addon_names:   selectedAddonNames,
-          addon_duration: state.addonDuration,
-          notes:         state.notes || undefined,
-        }),
+        body: JSON.stringify(payload),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Booking failed');
-      set({ bookingId: json.booking_id, step: 6 });
+
+      // For series, bookingId stores the series_id; for single, the booking_id
+      set({ bookingId: isSeries ? json.series_id : json.booking_id, step: 6 });
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
@@ -528,7 +585,6 @@ export default function BookingPage() {
 
               <StepIndicator step={2} selectedService={state.selectedService} />
 
-              {/* Add-on grid — only show add-ons recommended for this service */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {ADDONS.filter(addon => state.selectedService?.addons?.includes(addon.name)).map(addon => {
                   const selected = state.selectedAddons.includes(addon.id);
@@ -544,9 +600,7 @@ export default function BookingPage() {
                       ].join(' ')}
                     >
                       <div className="flex items-start justify-between gap-1 mb-1">
-                        <p className={`font-medium text-sm leading-tight ${selected ? 'text-[#1B4D2E]' : 'text-[#1B4D2E]'}`}>
-                          {addon.name}
-                        </p>
+                        <p className="font-medium text-sm leading-tight text-[#1B4D2E]">{addon.name}</p>
                         <span className="text-[#C9A96E] font-semibold text-xs flex-shrink-0">+${addon.price}</span>
                       </div>
                       <p className="text-xs text-[#65a07e] leading-relaxed">{addon.desc}</p>
@@ -555,7 +609,6 @@ export default function BookingPage() {
                 })}
               </div>
 
-              {/* Running total */}
               <div className="bg-white border border-[#e0ede5] rounded-2xl p-5 mb-6 text-center">
                 <p className="text-sm text-[#65a07e] mb-1">
                   Treatment total:{' '}
@@ -569,7 +622,6 @@ export default function BookingPage() {
                 </p>
               </div>
 
-              {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button
                   onClick={() => set({ step: 3 })}
@@ -594,8 +646,20 @@ export default function BookingPage() {
             <div>
               <button
                 onClick={() => {
-                  const backFromDate = SKIP_ADDON_CATEGORIES.includes(state.selectedService?.category ?? '') ? 1 : 2;
-                  setState(prev => ({ ...prev, step: backFromDate, selectedDate: '', selectedTime: '' }));
+                  if (isSeries && state.currentSessionIndex > 0) {
+                    // Go back to previous session's time picker
+                    const prevIdx = state.currentSessionIndex - 1;
+                    const prevSession = state.seriesSessions[prevIdx];
+                    set({
+                      currentSessionIndex: prevIdx,
+                      selectedDate: prevSession?.date ?? '',
+                      selectedTime: '',
+                      step: 4,
+                    });
+                  } else {
+                    const backTo = SKIP_ADDON_CATEGORIES.includes(state.selectedService?.category ?? '') ? 1 : 2;
+                    setState(prev => ({ ...prev, step: backTo as BookingState['step'], selectedDate: '', selectedTime: '' }));
+                  }
                 }}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
@@ -603,14 +667,43 @@ export default function BookingPage() {
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 3 of 5</p>
-                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Select a Date</h2>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">
+                  {isSeries ? `Session ${state.currentSessionIndex + 1} of 3` : 'Step 3 of 5'}
+                </p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">
+                  {isSeries ? `Choose a Date — Session ${state.currentSessionIndex + 1}` : 'Select a Date'}
+                </h2>
                 <div className="flex flex-wrap justify-center gap-2">
                   <Pill label="Service" value={state.selectedService!.name} />
+                  {isSeries && state.currentSessionIndex > 0 && (
+                    <Pill
+                      label={`Session ${state.currentSessionIndex}`}
+                      value={`${formatDisplayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')} · ${state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}`}
+                    />
+                  )}
                 </div>
               </div>
 
               <StepIndicator step={3} selectedService={state.selectedService} />
+
+              {/* Series progress dots */}
+              {isSeries && (
+                <div className="flex justify-center gap-2 mb-6">
+                  {[0, 1, 2].map(i => (
+                    <div
+                      key={i}
+                      className={[
+                        'rounded-full transition-all',
+                        i < state.currentSessionIndex
+                          ? 'w-3 h-3 bg-[#1B4D2E]'
+                          : i === state.currentSessionIndex
+                          ? 'w-3 h-3 bg-[#C9A96E]'
+                          : 'w-3 h-3 bg-[#e0ede5]',
+                      ].join(' ')}
+                    />
+                  ))}
+                </div>
+              )}
 
               <div className="flex justify-center">
                 <Calendar
@@ -622,6 +715,11 @@ export default function BookingPage() {
               <p className="text-center text-xs text-[#65a07e] mt-4">
                 Open Tuesday – Friday 9am–6pm · Saturday 9am–5pm
               </p>
+              {isSeries && (
+                <p className="text-center text-xs text-[#C9A96E] mt-2">
+                  We recommend spacing sessions 1–2 weeks apart for best results
+                </p>
+              )}
             </div>
           )}
 
@@ -636,15 +734,38 @@ export default function BookingPage() {
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 4 of 5</p>
-                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Select a Time</h2>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">
+                  {isSeries ? `Session ${state.currentSessionIndex + 1} of 3` : 'Step 4 of 5'}
+                </p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">
+                  {isSeries ? `Choose a Time — Session ${state.currentSessionIndex + 1}` : 'Select a Time'}
+                </h2>
                 <div className="flex flex-wrap justify-center gap-2">
                   <Pill label="Service" value={state.selectedService!.name} />
-                  <Pill label="Date" value={formatDisplayDate(state.selectedDate)} />
+                  <Pill label={isSeries ? `Session ${state.currentSessionIndex + 1} Date` : 'Date'} value={formatDisplayDate(state.selectedDate)} />
                 </div>
               </div>
 
               <StepIndicator step={4} selectedService={state.selectedService} />
+
+              {/* Series progress dots */}
+              {isSeries && (
+                <div className="flex justify-center gap-2 mb-6">
+                  {[0, 1, 2].map(i => (
+                    <div
+                      key={i}
+                      className={[
+                        'rounded-full transition-all',
+                        i < state.currentSessionIndex
+                          ? 'w-3 h-3 bg-[#1B4D2E]'
+                          : i === state.currentSessionIndex
+                          ? 'w-3 h-3 bg-[#C9A96E]'
+                          : 'w-3 h-3 bg-[#e0ede5]',
+                      ].join(' ')}
+                    />
+                  ))}
+                </div>
+              )}
 
               {slotsLoading && (
                 <div className="flex flex-col items-center gap-3 py-16">
@@ -671,7 +792,7 @@ export default function BookingPage() {
                   {slots.map(slot => (
                     <button
                       key={slot}
-                      onClick={() => set({ selectedTime: slot, step: 5 })}
+                      onClick={() => handleTimeSelect(slot)}
                       className="bg-white border-2 border-[#e0ede5] rounded-xl py-3 text-sm font-medium text-[#1B4D2E] hover:border-[#C9A96E] hover:bg-[#f4efe3] transition-all"
                     >
                       {slot}
@@ -686,7 +807,19 @@ export default function BookingPage() {
           {state.step === 5 && (
             <div>
               <button
-                onClick={() => set({ step: 4 })}
+                onClick={() => {
+                  if (isSeries) {
+                    // Go back to last session's time picker
+                    set({
+                      step: 4,
+                      currentSessionIndex: 2,
+                      selectedDate: state.seriesSessions[2]?.date ?? '',
+                      selectedTime: '',
+                    });
+                  } else {
+                    set({ step: 4 });
+                  }
+                }}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
                 <ChevronLeft size={16} /> Back
@@ -707,31 +840,51 @@ export default function BookingPage() {
                     <span className="text-[#65a07e]">Service</span>
                     <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
                   </div>
-                  {state.selectedAddons.length > 0 && (
-                    <div className="flex justify-between items-start">
-                      <span className="text-[#65a07e]">Add-Ons</span>
-                      <div className="text-right">
-                        {state.selectedAddons.map(id => {
-                          const a = ADDONS.find(x => x.id === id);
-                          return a ? (
-                            <p key={id} className="text-[#1B4D2E] font-medium">{a.name} <span className="text-[#C9A96E]">+${a.price}</span></p>
-                          ) : null;
-                        })}
-                      </div>
+
+                  {/* Series sessions list */}
+                  {isSeries ? (
+                    <div className="space-y-2 pt-1">
+                      {state.seriesSessions.map((s, i) => (
+                        <div key={i} className="flex justify-between items-baseline">
+                          <span className="text-[#65a07e]">Session {i + 1}</span>
+                          <span className="text-[#1B4D2E] font-medium text-right ml-4">
+                            {formatDisplayDate(s.date)} at {s.time}
+                          </span>
+                        </div>
+                      ))}
                     </div>
+                  ) : (
+                    <>
+                      {state.selectedAddons.length > 0 && (
+                        <div className="flex justify-between items-start">
+                          <span className="text-[#65a07e]">Add-Ons</span>
+                          <div className="text-right">
+                            {state.selectedAddons.map(id => {
+                              const a = ADDONS.find(x => x.id === id);
+                              return a ? (
+                                <p key={id} className="text-[#1B4D2E] font-medium">{a.name} <span className="text-[#C9A96E]">+${a.price}</span></p>
+                              ) : null;
+                            })}
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex justify-between">
+                        <span className="text-[#65a07e]">Date</span>
+                        <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-[#65a07e]">Time</span>
+                        <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
+                      </div>
+                    </>
                   )}
-                  <div className="flex justify-between">
-                    <span className="text-[#65a07e]">Date</span>
-                    <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#65a07e]">Time</span>
-                    <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
-                  </div>
+
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
                     <span className="text-[#65a07e]">Investment</span>
                     <span className="font-serif text-xl text-[#1B4D2E]">
-                      ${state.selectedService!.price + state.addonTotal}
+                      {isSeries
+                        ? `$${state.selectedService!.price} / session`
+                        : `$${state.selectedService!.price + state.addonTotal}`}
                     </span>
                   </div>
                 </div>
@@ -804,7 +957,7 @@ export default function BookingPage() {
                   {submitLoading ? (
                     <><Loader2 size={18} className="animate-spin" /> Confirming…</>
                   ) : (
-                    'Confirm & Book'
+                    isSeries ? 'Confirm All 3 Sessions →' : 'Confirm & Book'
                   )}
                 </button>
 
@@ -826,7 +979,7 @@ export default function BookingPage() {
 
               <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">All Set!</p>
               <h2 className="font-serif text-5xl text-[#1B4D2E] font-light mb-2">
-                You&apos;re booked! ✨
+                {isSeries ? 'Your series is booked! ✨' : 'You\'re booked! ✨'}
               </h2>
               <p className="text-[#42825e] mb-8">
                 A confirmation email has been sent to <strong>{state.clientEmail}</strong>
@@ -834,37 +987,58 @@ export default function BookingPage() {
 
               {/* Confirmation card */}
               <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-8 mb-8 text-left max-w-md mx-auto">
-                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-5">Your Appointment</p>
+                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-5">
+                  {isSeries ? 'Your 3-Session Journey' : 'Your Appointment'}
+                </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-[#65a07e]">Service</span>
                     <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
                   </div>
-                  {state.selectedAddons.length > 0 && (
-                    <div className="flex justify-between items-start">
-                      <span className="text-[#65a07e]">Add-Ons</span>
-                      <div className="text-right">
-                        {state.selectedAddons.map(id => {
-                          const a = ADDONS.find(x => x.id === id);
-                          return a ? (
-                            <p key={id} className="text-[#1B4D2E] font-medium">{a.name}</p>
-                          ) : null;
-                        })}
-                      </div>
+
+                  {isSeries ? (
+                    <div className="space-y-2 pt-1">
+                      {state.seriesSessions.map((s, i) => (
+                        <div key={i} className="flex justify-between items-baseline">
+                          <span className="text-[#65a07e]">Session {i + 1}</span>
+                          <span className="text-[#1B4D2E] font-medium text-right ml-4">
+                            {formatDisplayDate(s.date)} at {s.time}
+                          </span>
+                        </div>
+                      ))}
                     </div>
+                  ) : (
+                    <>
+                      {state.selectedAddons.length > 0 && (
+                        <div className="flex justify-between items-start">
+                          <span className="text-[#65a07e]">Add-Ons</span>
+                          <div className="text-right">
+                            {state.selectedAddons.map(id => {
+                              const a = ADDONS.find(x => x.id === id);
+                              return a ? (
+                                <p key={id} className="text-[#1B4D2E] font-medium">{a.name}</p>
+                              ) : null;
+                            })}
+                          </div>
+                        </div>
+                      )}
+                      <div className="flex justify-between">
+                        <span className="text-[#65a07e]">Date</span>
+                        <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-[#65a07e]">Time</span>
+                        <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
+                      </div>
+                    </>
                   )}
-                  <div className="flex justify-between">
-                    <span className="text-[#65a07e]">Date</span>
-                    <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#65a07e]">Time</span>
-                    <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
-                  </div>
+
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
                     <span className="text-[#65a07e]">Investment</span>
                     <span className="font-serif text-xl text-[#1B4D2E]">
-                      ${state.selectedService!.price + state.addonTotal}
+                      {isSeries
+                        ? `$${state.selectedService!.price} / session`
+                        : `$${state.selectedService!.price + state.addonTotal}`}
                     </span>
                   </div>
                 </div>
@@ -877,20 +1051,22 @@ export default function BookingPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a
-                  href={toGoogleCalendarUrl(
-                    `Brasilian Skin Soul — ${state.selectedService!.name}`,
-                    state.selectedDate,
-                    state.selectedTime,
-                    state.selectedService!.duration_min + state.addonDuration,
-                    '5303 Comercio Lane Suite #2, Woodland Hills, CA 91364'
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-[#f2f7f4] border border-[#c2daca] text-[#1B4D2E] font-medium px-6 py-3 rounded-full text-sm hover:bg-[#e0ede5] transition-colors"
-                >
-                  📅 Add to Google Calendar
-                </a>
+                {!isSeries && (
+                  <a
+                    href={toGoogleCalendarUrl(
+                      `Brasilian Skin Soul — ${state.selectedService!.name}`,
+                      state.selectedDate,
+                      state.selectedTime,
+                      state.selectedService!.duration_min + state.addonDuration,
+                      '5303 Comercio Lane Suite #2, Woodland Hills, CA 91364'
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#f2f7f4] border border-[#c2daca] text-[#1B4D2E] font-medium px-6 py-3 rounded-full text-sm hover:bg-[#e0ede5] transition-colors"
+                  >
+                    📅 Add to Google Calendar
+                  </a>
+                )}
                 <a
                   href="/"
                   className="bg-[#1B4D2E] text-white font-medium px-6 py-3 rounded-full text-sm hover:bg-[#27533c] transition-colors"

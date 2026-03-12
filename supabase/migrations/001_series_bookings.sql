@@ -1,0 +1,4 @@
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS series_id UUID;
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS session_number INT DEFAULT 1;
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS total_sessions INT DEFAULT 1;
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS reschedule_token UUID UNIQUE DEFAULT gen_random_uuid();
