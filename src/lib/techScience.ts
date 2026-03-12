@@ -60,6 +60,11 @@ export const techScience: Record<string, TechInfo> = {
     body: "Far-infrared (FIR) waves sit just beyond visible light and penetrate 1.5–3 inches beneath the skin's surface — reaching muscle, fascia, and connective tissue no topical treatment can access. At this depth, FIR increases microcirculation, accelerates lymphatic drainage, promotes cellular detoxification, and supports collagen remodeling through gentle tissue warming. Used in both clinical dermatology and elite sports recovery.",
     source: "Journal of Photochemistry and Photobiology · Evidence-Based Complementary Medicine",
   },
+  "Ultrasound Therapy": {
+    headline: "Sound waves that reach where nothing else can — and make everything work harder.",
+    body: "Ultrasound therapy uses high-frequency sound waves (typically 1–3 MHz) to create micro-vibrations deep within the skin's layers. This achieves three things simultaneously: cavitation — the gentle disruption of surface debris and congestion for a deeper cleanse; thermal effect — a controlled warming of deeper tissue to stimulate collagen production and cellular metabolism; and enhanced penetration — temporarily increasing the permeability of cell membranes so active ingredients absorb up to 400% more effectively. Used in clinical dermatology and physiotherapy for decades.",
+    source: "Journal of Cosmetic Dermatology · Ultrasound in Medicine & Biology",
+  },
   "Gua Sha Lymphatic Drainage": {
     headline: "Ancient technique. Clinically confirmed mechanism.",
     body: "Gua Sha applies precise directional pressure along facial fascia lines to stimulate lymphatic flow — the body's natural waste-removal system. When lymphatic circulation stagnates, fluid, toxins, and inflammatory byproducts accumulate in facial tissue, causing puffiness, dullness, and loss of definition. Clinical research confirms that manual lymphatic drainage reduces facial edema, improves microcirculation, and enhances the skin's natural healing response.",
