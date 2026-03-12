@@ -54,16 +54,7 @@ const signature = [
     icon: Zap,
     addons: ["Eye Lift — Stem Cell", "Oxygen Therapy O2", "Glow Mask"],
   },
-  {
-    id: "facial-microcurrent",
-    name: "Microcurrent Lifting Facial",
-    tagline: "The Non-Surgical Facelift",
-    desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
-    price: "$165",
-    duration: "90 min",
-    icon: Activity,
-    addons: ["Eye Lift — Stem Cell", "CO2 Lift", "Divine Décolleté"],
-  },
+
   {
     id: "facial-intraceuticals",
     name: "Intraceuticals Oxygen Facial",
@@ -124,16 +115,7 @@ const signature = [
     icon: Flower,
     addons: ["LED Light Therapy", "Deep Extractions", "Glow Mask"],
   },
-  {
-    id: "facial-power",
-    name: "The Power Facial",
-    tagline: "Maximum Results · Zero Downtime",
-    desc: "Built for the professional who demands results without downtime. Deep cleanse, surgical-grade Dermaplane exfoliation, extractions, and targeted hydration — all delivered in under an hour. No fuss, no recovery time. Just polished, refreshed, camera-ready skin.",
-    price: "$165",
-    duration: "60 min",
-    icon: Award,
-    addons: ["Microcurrent Lifting", "Glycolic Peel", "CO2 Lift"],
-  },
+
 ];
 
 const advancedPackages = [
@@ -335,8 +317,8 @@ export default function Services() {
       {/* ── SIGNATURE FACIALS ────────────────────────────────── */}
       <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Most Popular</p>
-          <h2 className="font-serif text-5xl text-forest font-light">Signature Facials</h2>
+          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Single Session</p>
+          <h2 className="font-serif text-5xl text-forest font-light">Signature Treatments</h2>
           <p className="text-forest-500 mt-3 max-w-lg mx-auto">Our core menu — each treatment a unique experience designed to transform your skin.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
