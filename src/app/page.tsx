@@ -126,7 +126,7 @@ const advancedTech = [
     ],
   },
   {
-    group: "Cellular Science",
+    group: "Detox & Cellular Renewal",
     series: "Detox & Cellular Renewal Series",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
