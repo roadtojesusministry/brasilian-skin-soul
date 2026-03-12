@@ -278,10 +278,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs uppercase tracking-[0.25em] text-gold/70 mb-6">The BSS Difference</p>
           <p className="font-serif text-2xl md:text-3xl text-white font-light leading-relaxed mb-3">
-            Most spas offer one technology at a time.
+            Advanced skincare by Claudia Pieri — 28 years of experience and a personal journey of transformation that deepens every treatment she gives.
           </p>
           <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            Claudia builds protocols — four curated programs that layer the most powerful modalities together in every session, each amplifying the others for results no single treatment can achieve.
+            Most spas offer one technology at a time. Claudia builds protocols — four curated programs that layer the most powerful modalities together in every session, each amplifying the others for results no single treatment can achieve.
           </p>
         </div>
       </section>
@@ -297,11 +297,25 @@ export default function Home() {
               <p className="text-xs uppercase tracking-[0.25em] font-medium">What Sets Us Apart</p>
             </div>
             <h2 className="font-serif text-5xl md:text-6xl text-white font-light mb-4">
-              Advanced Technology
+              Precision Protocols
             </h2>
-            <p className="text-white/60 max-w-2xl mx-auto text-base leading-relaxed">
-              Claudia combines 28 years of hands-on mastery with cutting-edge skincare technology — giving you results you simply cannot get at a standard spa. Each protocol layers multiple technologies in a single session — amplifying results no single treatment can achieve.
+            <p className="text-white/60 max-w-2xl mx-auto text-base leading-relaxed mb-8">
+              Four meticulously engineered programs — each one a precision stack of complementary technologies working in unison. No filler. No single-modality guesswork. Just compounding results.
             </p>
+            {/* Core 4 Protocol Pills */}
+            <div className="flex flex-wrap justify-center gap-3">
+              {[
+                { label: "Lift & Sculpt", num: "01" },
+                { label: "Illuminate", num: "02" },
+                { label: "Resurface & Refine", num: "03" },
+                { label: "Cellular Renewal", num: "04" },
+              ].map((p) => (
+                <span key={p.label} className="inline-flex items-center gap-2 border border-gold/40 text-gold/90 text-xs font-medium px-4 py-2 rounded-full tracking-wide">
+                  <span className="text-gold/40 font-mono text-[10px]">{p.num}</span>
+                  {p.label}
+                </span>
+              ))}
+            </div>
           </div></FadeIn>
 
 
