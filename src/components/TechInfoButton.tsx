@@ -63,7 +63,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
           onClick={() => setOpen(false)}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/75 backdrop-blur-md" />
+          <div className="absolute inset-0 bg-black/95" />
 
           {/* Modal */}
           <div
