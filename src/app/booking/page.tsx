@@ -528,9 +528,9 @@ export default function BookingPage() {
 
               <StepIndicator step={2} selectedService={state.selectedService} />
 
-              {/* Add-on grid */}
+              {/* Add-on grid — only show add-ons recommended for this service */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
-                {ADDONS.map(addon => {
+                {ADDONS.filter(addon => state.selectedService?.addons?.includes(addon.name)).map(addon => {
                   const selected = state.selectedAddons.includes(addon.id);
                   return (
                     <button
