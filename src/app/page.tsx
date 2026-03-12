@@ -3,46 +3,17 @@ import Link from "next/link";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import TechInfoButton from "@/components/TechInfoButton";
 import FadeIn from "@/components/FadeIn";
+import { getServicesByCategory } from "@/lib/services-data";
 
-
-const featuredServices = [
-  {
-    name: "Royal Glow Facial",
-    tagline: "The Ultimate Experience",
-    desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you'll leave looking and feeling genuinely transformed.",
-    price: "$350",
-    duration: "2 hr",
-    badge: "FLAGSHIP",
-    image: "/facial-royal-glow.jpg",
-  },
-  {
-    name: "The Brasilian Ritual",
-    tagline: "Ancient Wisdom · Brazilian Soul",
-    desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure, Brazilian lymphatic lifting massage, reflexology, jade eye mask, bamboo face mask, and scalp massage — every layer of face, feet, and scalp brought back into balance.",
-    price: "$285",
-    duration: "90+ min",
-    badge: "HOLISTIC",
-    image: "/facial-brasilian-ritual.jpg",
-  },
-  {
-    name: "Therma-Lift Sculpting Facial",
-    tagline: "Resurface · Sculpt · Illuminate",
-    desc: "The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a smooth, fresh canvas — then Therma-Lift heat technology sculpts and tightens from the outside in. Two powerful modalities in one session.",
-    price: "$185",
-    duration: "80 min",
-    badge: "POPULAR",
-    image: "/facial-therma-lift.jpg",
-  },
-  {
-    name: "Cold Plasma Rejuvenation",
-    tagline: "Science Meets Skin",
-    desc: "13,000 volts of cold plasma stimulate collagen and elastin while amplifying absorption of skin boosters by up to 120×. Opens micro-channels that drive active ingredients deeper than any topical product can reach. Non-invasive, with visible results from the very first session.",
-    price: "$175",
-    duration: "60+ min",
-    badge: "ADVANCED",
-    image: "/facial-cold-plasma.jpg",
-  },
-];
+// Pull top 4 Signature Facials directly from the single source of truth
+const featuredServices = getServicesByCategory('Signature Facials').slice(0, 4).map(s => ({
+  name: s.name,
+  tagline: s.tagline ?? '',
+  desc: s.fullDesc ?? s.description,
+  duration: s.displayDuration ?? `${s.duration_min} min`,
+  badge: s.badge,
+  image: s.imagePath ?? '',
+}));
 
 const serviceCategories = [
   {
