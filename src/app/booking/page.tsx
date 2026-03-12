@@ -887,11 +887,14 @@ export default function BookingPage() {
 
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
                     <span className="text-[#65a07e]">Investment</span>
-                    <span className="font-serif text-xl text-[#1B4D2E]">
-                      {isSeries
-                        ? `$${state.selectedService!.price} / session`
-                        : `$${state.selectedService!.price + state.addonTotal}`}
-                    </span>
+                    <div className="text-right">
+                      <span className="font-serif text-xl text-[#1B4D2E]">
+                        {isSeries
+                          ? `$${state.selectedService!.price}`
+                          : `$${state.selectedService!.price + state.addonTotal}`}
+                      </span>
+                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">3-session package</p>}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1041,11 +1044,14 @@ export default function BookingPage() {
 
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
                     <span className="text-[#65a07e]">Investment</span>
-                    <span className="font-serif text-xl text-[#1B4D2E]">
-                      {isSeries
-                        ? `$${state.selectedService!.price} / session`
-                        : `$${state.selectedService!.price + state.addonTotal}`}
-                    </span>
+                    <div className="text-right">
+                      <span className="font-serif text-xl text-[#1B4D2E]">
+                        {isSeries
+                          ? `$${state.selectedService!.price}`
+                          : `$${state.selectedService!.price + state.addonTotal}`}
+                      </span>
+                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">3-session package</p>}
+                    </div>
                   </div>
                 </div>
 
