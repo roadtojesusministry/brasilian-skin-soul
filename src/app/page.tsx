@@ -16,13 +16,13 @@ const featuredServices = [
     image: "/facial-royal-glow.jpg",
   },
   {
-    name: "Intraceuticals Oxygen Facial",
-    tagline: "Hydrate · Lift · Rejuvenate",
-    desc: "The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Pressurized oxygen drives customized serums deep into layers no topical product can reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift.",
-    price: "$195",
-    duration: "60+ min",
-    badge: "BEST SELLER",
-    image: "/facial-intraceuticals.jpg",
+    name: "Microderm Therma-Lift Facial",
+    tagline: "Resurface · Sculpt · Illuminate",
+    desc: "The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a smooth, fresh canvas — then Therma-Lift heat technology sculpts and tightens from the outside in. Two powerful modalities in one session: resurface the skin, then contour and firm it.",
+    price: "$185",
+    duration: "80 min",
+    badge: "POPULAR",
+    image: "/facial-therma-lift.jpg",
   },
   {
     name: "Cold Plasma Rejuvenation",
@@ -127,7 +127,7 @@ const advancedTech = [
   },
   {
     group: "Cellular Science",
-    series: "Cellular Renewal Series",
+    series: "Detox & Cellular Renewal Series",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
@@ -135,8 +135,8 @@ const advancedTech = [
     ),
     items: [
       { name: "Plant Stem Cell Therapy", desc: "Triggers skin renewal and repair at the deepest cellular layer" },
-      { name: "Far-Infrared Technology", desc: "Promotes circulation, eases tension, and supports natural detox" },
-      { name: "Gua Sha Lymphatic Drainage", desc: "Ancient technique enhanced with modern oxygen infusion for deep detox" },
+      { name: "Ultrasound Therapy", desc: "Sound wave technology that deeply cleanses, enhances product absorption, and stimulates cellular renewal" },
+      { name: "Gua Sha Lymphatic Drainage", desc: "Ancient sculpting technique to detox, de-puff, and restore natural radiance" },
     ],
   },
 ];
@@ -273,18 +273,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PHILOSOPHY BRIDGE ────────────────────────────────── */}
-      <section className="bg-forest py-16 border-t border-white/10">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold/70 mb-6">The BSS Difference</p>
-          <p className="font-serif text-2xl md:text-3xl text-white font-light leading-relaxed mb-3">
-            Advanced skincare by Claudia Pieri — 28 years of experience and a personal journey of transformation that deepens every treatment she gives.
-          </p>
-          <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            Most spas offer one technology at a time. Claudia builds protocols — four curated programs that layer the most powerful modalities together in every session, each amplifying the others for results no single treatment can achieve.
-          </p>
-        </div>
-      </section>
+
 
       {/* ── ADVANCED TECHNOLOGY ──────────────────────────────── */}
       <section className="py-24 bg-forest border-t border-white/10">
@@ -302,20 +291,7 @@ export default function Home() {
             <p className="text-white/60 max-w-2xl mx-auto text-base leading-relaxed mb-8">
               Four meticulously engineered programs — each one a precision stack of complementary technologies working in unison. No filler. No single-modality guesswork. Just compounding results.
             </p>
-            {/* Core 4 Protocol Pills */}
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                { label: "Lift & Sculpt", num: "01" },
-                { label: "Illuminate", num: "02" },
-                { label: "Resurface & Refine", num: "03" },
-                { label: "Cellular Renewal", num: "04" },
-              ].map((p) => (
-                <span key={p.label} className="inline-flex items-center gap-2 border border-gold/40 text-gold/90 text-xs font-medium px-4 py-2 rounded-full tracking-wide">
-                  <span className="text-gold/40 font-mono text-[10px]">{p.num}</span>
-                  {p.label}
-                </span>
-              ))}
-            </div>
+
           </div></FadeIn>
 
 
