@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { techScience } from "@/lib/techScience";
 
 interface Props {
@@ -11,7 +12,10 @@ interface Props {
 
 export default function TechInfoButton({ techNames, groupName, iconOnly }: Props) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const instanceId = useRef(Math.random().toString(36));
+
+  useEffect(() => setMounted(true), []);
 
   // Close this modal when any other one opens
   useEffect(() => {
@@ -57,7 +61,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
         </button>
       )}
 
-      {open && (
+      {open && mounted && createPortal(
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={() => setOpen(false)}
@@ -113,7 +117,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
             </div>
           </div>
         </div>
-      )}
+      , document.body)}
     </>
   );
 }
