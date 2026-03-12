@@ -84,7 +84,7 @@ export const SERVICES: Service[] = [
     category: 'Transformation Series',
     duration_min: 60,
     price: 460,
-    description: 'Stem Cell + Far-Infrared + Gua Sha',
+    description: 'Stem Cell + Ultrasound + Gua Sha',
     fullDesc: 'Deep regeneration and detox from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, ultrasound waves amplify product absorption and stimulate cellular activity, and Gua Sha lymphatic drainage sculpts and restores your skin\'s natural radiance. The three work together in every session — stem cells trigger the repair, ultrasound drives it deeper, Gua Sha flushes what\'s been broken down. Three sessions of that compounding is transformation at the cellular level.',
     sessions: 3,
     seriesGroup: 'Detox & Cellular Renewal',
