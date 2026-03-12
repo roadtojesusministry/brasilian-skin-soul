@@ -214,16 +214,35 @@ function Calendar({
   );
 }
 
+const SKIP_ADDON_CATEGORIES = ['Body & Massage', 'Waxing'];
+
 // ─── Step Indicator ──────────────────────────────────────────────────────────
 
-function StepIndicator({ step }: { step: number }) {
-  const steps = ['Service', 'Add-Ons', 'Date', 'Time', 'Details'];
+function StepIndicator({ step, selectedService }: { step: number; selectedService?: Service | null }) {
+  const skipAddons = SKIP_ADDON_CATEGORIES.includes(selectedService?.category ?? '');
+  // When skipping add-ons, hide step 2 — show steps 1, 3, 4, 5 as 1, 2, 3, 4
+  const allSteps = ['Service', 'Add-Ons', 'Date', 'Time', 'Details'];
+  const visibleSteps = skipAddons
+    ? allSteps.filter(s => s !== 'Add-Ons')
+    : allSteps;
+
+  // Map actual step number → display position
+  // actual: 1=Service, 2=Add-Ons, 3=Date, 4=Time, 5=Details, (6=Confirm)
+  // When skipping: actual 3→display 2, 4→display 3, 5→display 4
+  function toDisplayStep(actual: number): number {
+    if (!skipAddons) return actual;
+    if (actual <= 1) return actual;
+    return actual - 1; // shift everything after step 1 down by 1
+  }
+
+  const displayStep = toDisplayStep(step);
+
   return (
     <div className="flex items-center justify-center gap-2 mb-10">
-      {steps.map((label, i) => {
+      {visibleSteps.map((label, i) => {
         const num = i + 1;
-        const active = step === num;
-        const done = step > num;
+        const active = displayStep === num;
+        const done = displayStep > num;
         return (
           <div key={label} className="flex items-center gap-2">
             <div className="flex flex-col items-center gap-1">
@@ -243,7 +262,7 @@ function StepIndicator({ step }: { step: number }) {
                 {label}
               </span>
             </div>
-            {i < steps.length - 1 && (
+            {i < visibleSteps.length - 1 && (
               <div className={`w-6 sm:w-10 h-px mb-5 ${done ? 'bg-[#1B4D2E]' : 'bg-[#e0ede5]'}`} />
             )}
           </div>
@@ -385,54 +404,94 @@ export default function BookingPage() {
                 <p className="text-[#42825e]">Choose a service to begin</p>
               </div>
 
-              <StepIndicator step={1} />
+              <StepIndicator step={1} selectedService={state.selectedService} />
 
-              {Object.entries(grouped).map(([category, services]) => (
-                <div key={category} className="mb-10">
-                  <p className="text-xs uppercase tracking-[0.2em] text-[#C9A96E] mb-4">{category}</p>
-                  <div className="grid gap-3">
-                    {services.map(svc => {
-                      const selected = state.selectedService?.id === svc.id;
-                      return (
-                        <button
-                          key={svc.id}
-                          onClick={() => set({ selectedService: svc })}
-                          className={[
-                            'w-full text-left rounded-2xl p-5 border-2 transition-all',
-                            selected
-                              ? 'border-[#C9A96E] bg-[#1B4D2E] text-white'
-                              : 'border-[#e0ede5] bg-white hover:border-[#C9A96E] hover:shadow-md',
-                          ].join(' ')}
-                        >
-                          <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1 min-w-0">
-                              <p className={`font-serif text-xl font-light mb-1 ${selected ? 'text-white' : 'text-[#1B4D2E]'}`}>
+              {Object.entries(grouped).map(([category, services]) => {
+                const isWaxing = category === 'Waxing';
+                return (
+                  <div key={category} className="mb-10">
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#C9A96E] mb-4">{category}</p>
+                    {isWaxing ? (
+                      /* Compact grid for Waxing — 2 col mobile, 4 col desktop */
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+                        {services.map(svc => {
+                          const selected = state.selectedService?.id === svc.id;
+                          return (
+                            <button
+                              key={svc.id}
+                              onClick={() => set({ selectedService: svc })}
+                              className={[
+                                'w-full text-left rounded-xl p-3 border-2 transition-all',
+                                selected
+                                  ? 'border-[#C9A96E] bg-[#1B4D2E] text-white'
+                                  : 'border-[#e0ede5] bg-white hover:border-[#C9A96E] hover:shadow-sm',
+                              ].join(' ')}
+                            >
+                              <p className={`font-medium text-sm leading-snug mb-1 ${selected ? 'text-white' : 'text-[#1B4D2E]'}`}>
                                 {svc.name}
                               </p>
-                              <p className={`text-sm ${selected ? 'text-[#C9A96E]' : 'text-[#65a07e]'}`}>
-                                {svc.description}
-                              </p>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                              <p className={`font-serif text-2xl font-light ${selected ? 'text-[#C9A96E]' : 'text-[#1B4D2E]'}`}>
-                                ${svc.price}
-                              </p>
-                              <p className={`text-xs mt-0.5 ${selected ? 'text-white/70' : 'text-[#65a07e]'}`}>
-                                {formatDuration(svc.duration_min)}
-                              </p>
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
+                              <div className="flex items-center justify-between gap-1">
+                                <span className={`text-xs ${selected ? 'text-white/70' : 'text-[#65a07e]'}`}>
+                                  {formatDuration(svc.duration_min)}
+                                </span>
+                                <span className={`font-semibold text-sm ${selected ? 'text-[#C9A96E]' : 'text-[#1B4D2E]'}`}>
+                                  ${svc.price}
+                                </span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      /* Standard full cards for other categories */
+                      <div className="grid gap-3">
+                        {services.map(svc => {
+                          const selected = state.selectedService?.id === svc.id;
+                          return (
+                            <button
+                              key={svc.id}
+                              onClick={() => set({ selectedService: svc })}
+                              className={[
+                                'w-full text-left rounded-2xl p-5 border-2 transition-all',
+                                selected
+                                  ? 'border-[#C9A96E] bg-[#1B4D2E] text-white'
+                                  : 'border-[#e0ede5] bg-white hover:border-[#C9A96E] hover:shadow-md',
+                              ].join(' ')}
+                            >
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="flex-1 min-w-0">
+                                  <p className={`font-serif text-xl font-light mb-1 ${selected ? 'text-white' : 'text-[#1B4D2E]'}`}>
+                                    {svc.name}
+                                  </p>
+                                  <p className={`text-sm ${selected ? 'text-[#C9A96E]' : 'text-[#65a07e]'}`}>
+                                    {svc.description}
+                                  </p>
+                                </div>
+                                <div className="text-right flex-shrink-0">
+                                  <p className={`font-serif text-2xl font-light ${selected ? 'text-[#C9A96E]' : 'text-[#1B4D2E]'}`}>
+                                    ${svc.price}
+                                  </p>
+                                  <p className={`text-xs mt-0.5 ${selected ? 'text-white/70' : 'text-[#65a07e]'}`}>
+                                    {formatDuration(svc.duration_min)}
+                                  </p>
+                                </div>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
 
               {state.selectedService && (
                 <div className="sticky bottom-6 flex justify-center">
                   <button
-                    onClick={() => set({ step: 2 })}
+                    onClick={() => {
+                      const skipAddons = SKIP_ADDON_CATEGORIES.includes(state.selectedService!.category);
+                      setState(prev => ({ ...prev, step: skipAddons ? 3 : 2 }));
+                    }}
                     className="bg-[#C9A96E] text-[#1B4D2E] font-semibold px-10 py-4 rounded-full shadow-lg hover:bg-[#D4B87A] transition-colors"
                   >
                     Continue →
@@ -460,7 +519,7 @@ export default function BookingPage() {
                 </p>
               </div>
 
-              <StepIndicator step={2} />
+              <StepIndicator step={2} selectedService={state.selectedService} />
 
               {/* Add-on grid */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
@@ -527,7 +586,10 @@ export default function BookingPage() {
           {state.step === 3 && (
             <div>
               <button
-                onClick={() => set({ step: 2, selectedDate: '', selectedTime: '' })}
+                onClick={() => {
+                  const backFromDate = SKIP_ADDON_CATEGORIES.includes(state.selectedService?.category ?? '') ? 1 : 2;
+                  setState(prev => ({ ...prev, step: backFromDate, selectedDate: '', selectedTime: '' }));
+                }}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
                 <ChevronLeft size={16} /> Back
@@ -541,7 +603,7 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              <StepIndicator step={3} />
+              <StepIndicator step={3} selectedService={state.selectedService} />
 
               <div className="flex justify-center">
                 <Calendar
@@ -575,7 +637,7 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              <StepIndicator step={4} />
+              <StepIndicator step={4} selectedService={state.selectedService} />
 
               {slotsLoading && (
                 <div className="flex flex-col items-center gap-3 py-16">
@@ -628,7 +690,7 @@ export default function BookingPage() {
                 <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Complete Your Booking</h2>
               </div>
 
-              <StepIndicator step={5} />
+              <StepIndicator step={5} selectedService={state.selectedService} />
 
               {/* Booking summary card */}
               <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-6 mb-8">
