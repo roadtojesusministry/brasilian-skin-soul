@@ -45,18 +45,27 @@ function formatDate(dateStr: string): string {
 }
 
 export async function POST(req: NextRequest) {
-  let body: Record<string, string>;
+  let body: Record<string, unknown>;
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const { service_id, client_name, client_email, client_phone, booking_date, start_time, notes } = body;
+  const service_id    = body.service_id as string;
+  const client_name   = body.client_name as string;
+  const client_email  = body.client_email as string;
+  const client_phone  = body.client_phone as string;
+  const booking_date  = body.booking_date as string;
+  const start_time    = body.start_time as string;
+  const notes         = body.notes as string | undefined;
+  const addonIds      = (body.addons as string[]) ?? [];
+  const addonNames    = (body.addon_names as string[]) ?? [];
+  const addonDuration = parseInt(String(body.addon_duration ?? '0'), 10) || 0;
 
   // Validate required fields
-  const missing = ['service_id', 'client_name', 'client_email', 'client_phone', 'booking_date', 'start_time']
-    .filter((f) => !body[f]);
+  const required = { service_id, client_name, client_email, client_phone, booking_date, start_time };
+  const missing = Object.entries(required).filter(([, v]) => !v).map(([k]) => k);
   if (missing.length) {
     return NextResponse.json({ error: `Missing required fields: ${missing.join(', ')}` }, { status: 400 });
   }
@@ -67,6 +76,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unknown service' }, { status: 400 });
   }
 
+  // Calculate addon price total (basic lookup by name match)
+  const ADDON_PRICES: Record<string, number> = {
+    dermaplane: 45, 'glycolic-peel': 35, led: 40, co2: 45, 'eye-lift': 50,
+    oxygen: 40, microderm: 55, 'microcurrent-addon': 55, 'therma-addon': 60,
+    extractions: 30, decollete: 45, 'glow-mask': 25,
+  };
+  const addonPriceTotal = addonIds.reduce((sum, id) => sum + (ADDON_PRICES[id] ?? 0), 0);
+  const totalPrice = service.price + addonPriceTotal;
+
   // Calculate end_time (start_time may be "H:MM AM/PM" from slot display)
   let start24: string;
   try {
@@ -75,7 +93,14 @@ export async function POST(req: NextRequest) {
     // Already in 24h format
     start24 = start_time;
   }
-  const end24 = addMinutes(start24, service.duration_min);
+  const totalDuration = service.duration_min + addonDuration;
+  const end24 = addMinutes(start24, totalDuration);
+
+  // Build notes field including addons if selected
+  const addonNoteSection = addonNames.length > 0
+    ? `\n\nAdd-Ons Selected:\n${addonNames.map(n => `• ${n}`).join('\n')}`
+    : '';
+  const fullNotes = (notes ? notes + addonNoteSection : addonNoteSection.trim()) || null;
 
   // Insert booking
   const { data: booking, error: insertError } = await supabaseAdmin
@@ -83,8 +108,8 @@ export async function POST(req: NextRequest) {
     .insert({
       service_id,
       service_name:         service.name,
-      service_duration_min: service.duration_min,
-      service_price:        service.price,
+      service_duration_min: totalDuration,
+      service_price:        totalPrice,
       client_name,
       client_email,
       client_phone,
@@ -93,7 +118,7 @@ export async function POST(req: NextRequest) {
       end_time:      end24,
       status:        'confirmed',
       payment_status:'pending',
-      notes:         notes || null,
+      notes:         fullNotes,
     })
     .select()
     .single();
@@ -152,10 +177,17 @@ export async function POST(req: NextRequest) {
                       <strong style="color:#1B4D2E;font-size:16px;">${displayStart}</strong>
                     </td>
                   </tr>
+                  ${addonNames.length > 0 ? `
+                  <tr>
+                    <td style="padding:10px 0;border-bottom:1px solid #ece3d0;">
+                      <span style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#C9A96E;">Add-Ons</span><br>
+                      <strong style="color:#1B4D2E;font-size:15px;">${addonNames.join(', ')}</strong>
+                    </td>
+                  </tr>` : ''}
                   <tr>
                     <td style="padding:10px 0;">
                       <span style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#C9A96E;">Investment</span><br>
-                      <strong style="color:#1B4D2E;font-size:20px;font-family:Georgia,serif;">$${service.price}</strong>
+                      <strong style="color:#1B4D2E;font-size:20px;font-family:Georgia,serif;">$${totalPrice}</strong>
                     </td>
                   </tr>
                 </table>
@@ -199,11 +231,11 @@ export async function POST(req: NextRequest) {
 Client:   ${client_name}
 Email:    ${client_email}
 Phone:    ${client_phone}
-Service:  ${service.name}
+Service:  ${service.name}${addonNames.length > 0 ? `\nAdd-Ons:  ${addonNames.join(', ')}` : ''}
 Date:     ${displayDate}
 Time:     ${displayStart}
-Price:    $${service.price}
-Duration: ${service.duration_min} min
+Price:    $${totalPrice}${addonPriceTotal > 0 ? ` (service $${service.price} + add-ons $${addonPriceTotal})` : ''}
+Duration: ${totalDuration} min
 ${notes ? `Notes:    ${notes}` : ''}
 
 Booking ID: ${booking.id}

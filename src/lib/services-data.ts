@@ -56,7 +56,7 @@ export const SERVICES: Service[] = [
     name: 'The Brasilian Ritual',
     category: 'Signature Facials',
     duration_min: 95,
-    price: 215,
+    price: 285,
     description: 'Brand signature ritual treatment',
   },
   {

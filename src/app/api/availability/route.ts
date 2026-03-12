@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const date = searchParams.get('date');       // YYYY-MM-DD
   const serviceId = searchParams.get('service_id');
+  const extraDuration = parseInt(searchParams.get('extra_duration') ?? '0', 10) || 0;
 
   if (!date || !serviceId) {
     return NextResponse.json({ error: 'date and service_id are required' }, { status: 400 });
@@ -31,7 +32,7 @@ export async function GET(req: NextRequest) {
   if (!service) {
     return NextResponse.json({ error: 'Unknown service' }, { status: 400 });
   }
-  const durationMin = service.duration_min;
+  const durationMin = service.duration_min + extraDuration;
 
   // 2. Get day_of_week for the date (parse as UTC to avoid timezone shifts)
   const [year, month, day] = date.split('-').map(Number);

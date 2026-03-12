@@ -3,13 +3,33 @@
 import { useState, useEffect, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import { CheckCircle, ChevronLeft, Loader2 } from 'lucide-react';
-import { SERVICES, getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
+import { getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
+
+// ─── Add-Ons Data ────────────────────────────────────────────────────────────
+
+const ADDONS = [
+  { id: 'dermaplane', name: 'Dermaplane', price: 45, duration_min: 15, desc: 'Removes dead skin & peach fuzz for a silky canvas' },
+  { id: 'glycolic-peel', name: 'Glycolic Peel', price: 35, duration_min: 10, desc: 'Resurfaces and brightens tone' },
+  { id: 'led', name: 'LED Light Therapy', price: 40, duration_min: 15, desc: 'Healing, collagen boost, or acne control' },
+  { id: 'co2', name: 'CO2 Lift', price: 45, duration_min: 10, desc: 'Instant firming and brightening mask' },
+  { id: 'eye-lift', name: 'Eye Lift — Stem Cell', price: 50, duration_min: 15, desc: 'Lifts and firms the delicate eye area' },
+  { id: 'oxygen', name: 'Oxygen Therapy O2', price: 40, duration_min: 10, desc: 'Deep hydration boost with pure oxygen' },
+  { id: 'microderm', name: 'Microdermabrasion', price: 55, duration_min: 15, desc: 'Physical resurfacing for smooth even skin' },
+  { id: 'microcurrent-addon', name: 'Microcurrent Lifting', price: 55, duration_min: 20, desc: 'Electrical muscle stimulation for lift' },
+  { id: 'therma-addon', name: 'Therma-Lift', price: 60, duration_min: 20, desc: 'Heat sculpting to tighten and contour' },
+  { id: 'extractions', name: 'Deep Extractions', price: 30, duration_min: 15, desc: 'Professional deep pore cleansing' },
+  { id: 'decollete', name: 'Divine Décolleté', price: 45, duration_min: 20, desc: 'Targeted neck and chest treatment' },
+  { id: 'glow-mask', name: 'Glow Mask', price: 25, duration_min: 10, desc: 'Brightening and hydrating masque' },
+];
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
 interface BookingState {
-  step: 1 | 2 | 3 | 4 | 5;
+  step: 1 | 2 | 3 | 4 | 5 | 6;
   selectedService: Service | null;
+  selectedAddons: string[];
+  addonTotal: number;
+  addonDuration: number;
   selectedDate: string;    // YYYY-MM-DD
   selectedTime: string;    // display "H:MM AM/PM"
   clientName: string;
@@ -30,6 +50,14 @@ function formatDisplayDate(yyyy: string): string {
   });
 }
 
+function formatTotalDuration(totalMin: number): string {
+  const h = Math.floor(totalMin / 60);
+  const m = totalMin % 60;
+  if (h === 0) return `${m} min`;
+  if (m === 0) return `${h} hr`;
+  return `${h} hr ${m} min`;
+}
+
 function toGoogleCalendarUrl(
   title: string,
   dateStr: string,
@@ -37,7 +65,6 @@ function toGoogleCalendarUrl(
   durationMin: number,
   location: string
 ): string {
-  // Parse start
   const match = startTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
   if (!match) return '#';
   let h = parseInt(match[1], 10);
@@ -90,7 +117,6 @@ function Calendar({
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
-  // Pad to complete last row
   while (cells.length % 7 !== 0) cells.push(null);
 
   function isDisabled(dayNum: number): boolean {
@@ -125,7 +151,6 @@ function Calendar({
     else setViewMonth(m => m + 1);
   }
 
-  // Don't go before current month
   const canGoPrev = viewYear > today.getFullYear() || viewMonth > today.getMonth();
 
   return (
@@ -192,7 +217,7 @@ function Calendar({
 // ─── Step Indicator ──────────────────────────────────────────────────────────
 
 function StepIndicator({ step }: { step: number }) {
-  const steps = ['Service', 'Date', 'Time', 'Details'];
+  const steps = ['Service', 'Add-Ons', 'Date', 'Time', 'Details'];
   return (
     <div className="flex items-center justify-center gap-2 mb-10">
       {steps.map((label, i) => {
@@ -219,7 +244,7 @@ function StepIndicator({ step }: { step: number }) {
               </span>
             </div>
             {i < steps.length - 1 && (
-              <div className={`w-8 sm:w-12 h-px mb-5 ${done ? 'bg-[#1B4D2E]' : 'bg-[#e0ede5]'}`} />
+              <div className={`w-6 sm:w-10 h-px mb-5 ${done ? 'bg-[#1B4D2E]' : 'bg-[#e0ede5]'}`} />
             )}
           </div>
         );
@@ -245,6 +270,9 @@ export default function BookingPage() {
   const [state, setState] = useState<BookingState>({
     step: 1,
     selectedService: null,
+    selectedAddons: [],
+    addonTotal: 0,
+    addonDuration: 0,
     selectedDate: '',
     selectedTime: '',
     clientName: '',
@@ -262,14 +290,14 @@ export default function BookingPage() {
   const set = (patch: Partial<BookingState>) =>
     setState(prev => ({ ...prev, ...patch }));
 
-  // Fetch slots when we reach step 3
+  // Fetch slots when we reach step 4 (time selection)
   const fetchSlots = useCallback(async () => {
     if (!state.selectedDate || !state.selectedService) return;
     setSlotsLoading(true);
     setSlots([]);
     try {
       const res = await fetch(
-        `/api/availability?date=${state.selectedDate}&service_id=${state.selectedService.id}`
+        `/api/availability?date=${state.selectedDate}&service_id=${state.selectedService.id}&extra_duration=${state.addonDuration}`
       );
       const json = await res.json();
       setSlots(json.slots ?? []);
@@ -278,17 +306,40 @@ export default function BookingPage() {
     } finally {
       setSlotsLoading(false);
     }
-  }, [state.selectedDate, state.selectedService]);
+  }, [state.selectedDate, state.selectedService, state.addonDuration]);
 
   useEffect(() => {
-    if (state.step === 3) fetchSlots();
+    if (state.step === 4) fetchSlots();
   }, [state.step, fetchSlots]);
+
+  // Toggle an add-on and recalculate totals
+  function toggleAddon(id: string) {
+    const addon = ADDONS.find(a => a.id === id);
+    if (!addon) return;
+    const isSelected = state.selectedAddons.includes(id);
+    const newAddons = isSelected
+      ? state.selectedAddons.filter(a => a !== id)
+      : [...state.selectedAddons, id];
+    const newTotal = newAddons.reduce((sum, addonId) => {
+      const a = ADDONS.find(x => x.id === addonId);
+      return sum + (a ? a.price : 0);
+    }, 0);
+    const newDuration = newAddons.reduce((sum, addonId) => {
+      const a = ADDONS.find(x => x.id === addonId);
+      return sum + (a ? a.duration_min : 0);
+    }, 0);
+    set({ selectedAddons: newAddons, addonTotal: newTotal, addonDuration: newDuration });
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitError('');
     setSubmitLoading(true);
     try {
+      const selectedAddonNames = state.selectedAddons.map(id => {
+        const a = ADDONS.find(x => x.id === id);
+        return a ? a.name : id;
+      });
       const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -299,12 +350,15 @@ export default function BookingPage() {
           client_phone:  state.clientPhone,
           booking_date:  state.selectedDate,
           start_time:    state.selectedTime,
+          addons:        state.selectedAddons,
+          addon_names:   selectedAddonNames,
+          addon_duration: state.addonDuration,
           notes:         state.notes || undefined,
         }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Booking failed');
-      set({ bookingId: json.booking_id, step: 5 });
+      set({ bookingId: json.booking_id, step: 6 });
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
@@ -388,30 +442,111 @@ export default function BookingPage() {
             </div>
           )}
 
-          {/* ── Step 2: Select Date ────────────────────────────────────── */}
+          {/* ── Step 2: Select Add-Ons ─────────────────────────────────── */}
           {state.step === 2 && (
             <div>
               <button
-                onClick={() => set({ step: 1, selectedDate: '', selectedTime: '' })}
+                onClick={() => set({ step: 1 })}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
                 <ChevronLeft size={16} /> Back
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 2 of 4</p>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 2 of 5</p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-2">Enhance Your Treatment</h2>
+                <p className="text-sm text-[#65a07e]">
+                  Optional — add targeted boosters to your {state.selectedService!.name}
+                </p>
+              </div>
+
+              <StepIndicator step={2} />
+
+              {/* Add-on grid */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                {ADDONS.map(addon => {
+                  const selected = state.selectedAddons.includes(addon.id);
+                  return (
+                    <button
+                      key={addon.id}
+                      onClick={() => toggleAddon(addon.id)}
+                      className={[
+                        'text-left rounded-2xl p-4 border-2 transition-all',
+                        selected
+                          ? 'border-[#C9A96E] bg-[#fdf6e9]'
+                          : 'border-[#e0ede5] bg-white hover:border-[#C9A96E] hover:shadow-sm',
+                      ].join(' ')}
+                    >
+                      <div className="flex items-start justify-between gap-1 mb-1">
+                        <p className={`font-medium text-sm leading-tight ${selected ? 'text-[#1B4D2E]' : 'text-[#1B4D2E]'}`}>
+                          {addon.name}
+                        </p>
+                        <span className="text-[#C9A96E] font-semibold text-xs flex-shrink-0">+${addon.price}</span>
+                      </div>
+                      <p className="text-xs text-[#65a07e] leading-relaxed">{addon.desc}</p>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Running total */}
+              <div className="bg-white border border-[#e0ede5] rounded-2xl p-5 mb-6 text-center">
+                <p className="text-sm text-[#65a07e] mb-1">
+                  Treatment total:{' '}
+                  <span className="font-serif text-xl text-[#1B4D2E] font-light">
+                    ${state.selectedService!.price + state.addonTotal}
+                  </span>
+                </p>
+                <p className="text-xs text-[#96c0a6]">
+                  Est. duration:{' '}
+                  {formatTotalDuration(state.selectedService!.duration_min + state.addonDuration)}
+                </p>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={() => set({ step: 3 })}
+                  className="border border-[#c2daca] text-[#42825e] font-medium px-8 py-3 rounded-full hover:bg-[#f2f7f4] transition-colors text-sm"
+                >
+                  Skip Add-Ons →
+                </button>
+                {state.selectedAddons.length > 0 && (
+                  <button
+                    onClick={() => set({ step: 3 })}
+                    className="bg-[#C9A96E] text-[#1B4D2E] font-semibold px-8 py-3 rounded-full hover:bg-[#D4B87A] transition-colors text-sm shadow-md"
+                  >
+                    Continue with Add-Ons →
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* ── Step 3: Select Date ────────────────────────────────────── */}
+          {state.step === 3 && (
+            <div>
+              <button
+                onClick={() => set({ step: 2, selectedDate: '', selectedTime: '' })}
+                className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
+              >
+                <ChevronLeft size={16} /> Back
+              </button>
+
+              <div className="text-center mb-8">
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 3 of 5</p>
                 <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Select a Date</h2>
                 <div className="flex flex-wrap justify-center gap-2">
                   <Pill label="Service" value={state.selectedService!.name} />
                 </div>
               </div>
 
-              <StepIndicator step={2} />
+              <StepIndicator step={3} />
 
               <div className="flex justify-center">
                 <Calendar
                   selectedDate={state.selectedDate}
-                  onSelect={(d) => set({ selectedDate: d, selectedTime: '', step: 3 })}
+                  onSelect={(d) => set({ selectedDate: d, selectedTime: '', step: 4 })}
                 />
               </div>
 
@@ -421,18 +556,18 @@ export default function BookingPage() {
             </div>
           )}
 
-          {/* ── Step 3: Select Time ────────────────────────────────────── */}
-          {state.step === 3 && (
+          {/* ── Step 4: Select Time ────────────────────────────────────── */}
+          {state.step === 4 && (
             <div>
               <button
-                onClick={() => set({ step: 2, selectedTime: '' })}
+                onClick={() => set({ step: 3, selectedTime: '' })}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
                 <ChevronLeft size={16} /> Back
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 3 of 4</p>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 4 of 5</p>
                 <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Select a Time</h2>
                 <div className="flex flex-wrap justify-center gap-2">
                   <Pill label="Service" value={state.selectedService!.name} />
@@ -440,7 +575,7 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              <StepIndicator step={3} />
+              <StepIndicator step={4} />
 
               {slotsLoading && (
                 <div className="flex flex-col items-center gap-3 py-16">
@@ -454,7 +589,7 @@ export default function BookingPage() {
                   <p className="text-[#1B4D2E] font-serif text-2xl font-light mb-2">No availability</p>
                   <p className="text-[#65a07e] text-sm">There are no open slots on this date. Please choose another day.</p>
                   <button
-                    onClick={() => set({ step: 2 })}
+                    onClick={() => set({ step: 3 })}
                     className="mt-6 text-[#C9A96E] border border-[#C9A96E] px-6 py-2 rounded-full text-sm hover:bg-[#C9A96E] hover:text-white transition-colors"
                   >
                     Pick a Different Date
@@ -467,7 +602,7 @@ export default function BookingPage() {
                   {slots.map(slot => (
                     <button
                       key={slot}
-                      onClick={() => set({ selectedTime: slot, step: 4 })}
+                      onClick={() => set({ selectedTime: slot, step: 5 })}
                       className="bg-white border-2 border-[#e0ede5] rounded-xl py-3 text-sm font-medium text-[#1B4D2E] hover:border-[#C9A96E] hover:bg-[#f4efe3] transition-all"
                     >
                       {slot}
@@ -478,22 +613,22 @@ export default function BookingPage() {
             </div>
           )}
 
-          {/* ── Step 4: Client Info ────────────────────────────────────── */}
-          {state.step === 4 && (
+          {/* ── Step 5: Client Info ────────────────────────────────────── */}
+          {state.step === 5 && (
             <div>
               <button
-                onClick={() => set({ step: 3 })}
+                onClick={() => set({ step: 4 })}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
                 <ChevronLeft size={16} /> Back
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 4 of 4</p>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 5 of 5</p>
                 <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Complete Your Booking</h2>
               </div>
 
-              <StepIndicator step={4} />
+              <StepIndicator step={5} />
 
               {/* Booking summary card */}
               <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-6 mb-8">
@@ -503,6 +638,19 @@ export default function BookingPage() {
                     <span className="text-[#65a07e]">Service</span>
                     <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
                   </div>
+                  {state.selectedAddons.length > 0 && (
+                    <div className="flex justify-between items-start">
+                      <span className="text-[#65a07e]">Add-Ons</span>
+                      <div className="text-right">
+                        {state.selectedAddons.map(id => {
+                          const a = ADDONS.find(x => x.id === id);
+                          return a ? (
+                            <p key={id} className="text-[#1B4D2E] font-medium">{a.name} <span className="text-[#C9A96E]">+${a.price}</span></p>
+                          ) : null;
+                        })}
+                      </div>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span className="text-[#65a07e]">Date</span>
                     <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
@@ -513,7 +661,9 @@ export default function BookingPage() {
                   </div>
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
                     <span className="text-[#65a07e]">Investment</span>
-                    <span className="font-serif text-xl text-[#1B4D2E]">${state.selectedService!.price}</span>
+                    <span className="font-serif text-xl text-[#1B4D2E]">
+                      ${state.selectedService!.price + state.addonTotal}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -596,8 +746,8 @@ export default function BookingPage() {
             </div>
           )}
 
-          {/* ── Step 5: Confirmation ───────────────────────────────────── */}
-          {state.step === 5 && (
+          {/* ── Step 6: Confirmation ───────────────────────────────────── */}
+          {state.step === 6 && (
             <div className="text-center">
               <div className="flex justify-center mb-6">
                 <div className="w-20 h-20 rounded-full bg-[#f2f7f4] flex items-center justify-center">
@@ -621,6 +771,19 @@ export default function BookingPage() {
                     <span className="text-[#65a07e]">Service</span>
                     <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
                   </div>
+                  {state.selectedAddons.length > 0 && (
+                    <div className="flex justify-between items-start">
+                      <span className="text-[#65a07e]">Add-Ons</span>
+                      <div className="text-right">
+                        {state.selectedAddons.map(id => {
+                          const a = ADDONS.find(x => x.id === id);
+                          return a ? (
+                            <p key={id} className="text-[#1B4D2E] font-medium">{a.name}</p>
+                          ) : null;
+                        })}
+                      </div>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span className="text-[#65a07e]">Date</span>
                     <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
@@ -631,7 +794,9 @@ export default function BookingPage() {
                   </div>
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
                     <span className="text-[#65a07e]">Investment</span>
-                    <span className="font-serif text-xl text-[#1B4D2E]">${state.selectedService!.price}</span>
+                    <span className="font-serif text-xl text-[#1B4D2E]">
+                      ${state.selectedService!.price + state.addonTotal}
+                    </span>
                   </div>
                 </div>
 
@@ -648,7 +813,7 @@ export default function BookingPage() {
                     `Brasilian Skin Soul — ${state.selectedService!.name}`,
                     state.selectedDate,
                     state.selectedTime,
-                    state.selectedService!.duration_min,
+                    state.selectedService!.duration_min + state.addonDuration,
                     '5303 Comercio Lane Suite #2, Woodland Hills, CA 91364'
                   )}
                   target="_blank"

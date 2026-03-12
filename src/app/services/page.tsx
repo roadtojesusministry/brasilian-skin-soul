@@ -26,7 +26,7 @@ const signature = [
     name: "The Brasilian Ritual",
     tagline: "Ancient Wisdom · Brazilian Soul",
     desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure awakens energy points to lift and release deep tension. Brazilian lymphatic lifting massage sculpts and de-puffs. A reflexology session stimulates the body's healing pathways through targeted foot pressure points. A cooling jade eye mask de-puffs and restores the delicate eye area, while a nourishing bamboo face mask renews the complexion. Finished with a scalp massage to melt stress from the roots down. Every layer — face, feet, scalp — brought back into balance.",
-    price: "$215",
+    price: "$285",
     duration: "90+ min",
     badge: "HOLISTIC",
     icon: Leaf,
@@ -205,32 +205,32 @@ const addons = [
 ];
 
 const bodyMassage = [
-  { name: "Back Facial", desc: "Everything your face gets — but for your back. Deep cleanse, exfoliation, steam, extractions, and masque.", price: "$120", duration: "60 min" },
-  { name: "Salt Glow Back Treatment", desc: "Exfoliating salt scrub followed by nourishing body butter application for silky-smooth skin.", price: "$95", duration: "45 min" },
-  { name: "Detox Aromawrap", desc: "Full-body detox wrap infused with essential oils to draw out impurities and deeply nourish.", price: "$115", duration: "60 min" },
-  { name: "Infrared Wellness Wrap", desc: "Far-infrared technology promotes circulation, eases tension, and supports a natural detox.", price: "$105", duration: "60 min" },
-  { name: "Reflexology", desc: "Therapeutic foot reflexology targeting pressure points that correspond to organs and systems throughout the body — promoting circulation, reducing stress, and supporting the body's natural healing response.", price: "$85", duration: "45 min" },
-  { name: "Sculpt & Release Facial Massage", desc: "A full facial and scalp massage ritual that does it all. Facial acupressure targets energy points to dissolve tension, stimulate circulation, and restore natural vitality — then the Hadado lifting technique sculpts, firms, and brings a luminous glow. Finished with a deep scalp massage for complete head-to-treatment relaxation. Two powerful techniques in one seamless session.", price: "$130", duration: "75 min" },
+  { name: "Back Facial", desc: "Everything your face gets — but for your back. Deep cleanse, exfoliation, steam, extractions, and masque.", price: "$120", duration: "60 min", addons: ["Glow Mask", "LED Light Therapy", "Deep Extractions"] },
+  { name: "Salt Glow Back Treatment", desc: "Exfoliating salt scrub followed by nourishing body butter application for silky-smooth skin.", price: "$95", duration: "45 min", addons: ["Infrared Wellness Wrap", "Detox Aromawrap"] },
+  { name: "Detox Aromawrap", desc: "Full-body detox wrap infused with essential oils to draw out impurities and deeply nourish.", price: "$115", duration: "60 min", addons: ["Reflexology", "Infrared Wellness Wrap"] },
+  { name: "Infrared Wellness Wrap", desc: "Far-infrared technology promotes circulation, eases tension, and supports a natural detox.", price: "$105", duration: "60 min", addons: ["Detox Aromawrap", "Reflexology"] },
+  { name: "Reflexology", desc: "Therapeutic foot reflexology targeting pressure points that correspond to organs and systems throughout the body — promoting circulation, reducing stress, and supporting the body's natural healing response.", price: "$85", duration: "45 min", addons: ["Sculpt & Release Facial Massage"] },
+  { name: "Sculpt & Release Facial Massage", desc: "A full facial and scalp massage ritual that does it all. Facial acupressure targets energy points to dissolve tension, stimulate circulation, and restore natural vitality — then the Hadado lifting technique sculpts, firms, and brings a luminous glow. Finished with a deep scalp massage for complete head-to-treatment relaxation. Two powerful techniques in one seamless session.", price: "$130", duration: "75 min", addons: ["Reflexology", "Eye Lift — Stem Cell"] },
 ];
 
 const waxing = [
-  { name: "Eyebrow Shaping & Wax", price: "$25" },
-  { name: "Eyebrow Tinting", price: "$25" },
-  { name: "Lash Tinting", price: "$30" },
-  { name: "Full Face Wax", price: "$65" },
-  { name: "Lip Wax", price: "$15" },
-  { name: "Chin Wax", price: "$15" },
-  { name: "Cheeks Wax", price: "$20" },
-  { name: "Nose Wax", price: "$15" },
-  { name: "Underarm Wax", price: "$30" },
-  { name: "Leg Wax", price: "$70" },
-  { name: "French Bikini", price: "$55" },
-  { name: "Brazilian Wax", price: "$65" },
-  { name: "Playboy Wax", price: "$75" },
-  { name: "Back Wax", price: "$65" },
-  { name: "Chest Wax", price: "$55" },
-  { name: "Arm Wax", price: "$50" },
-  { name: "Shoulder Waxing", price: "$35" },
+  { name: "Eyebrow Shaping & Wax", price: "$25", duration: "15 min" },
+  { name: "Eyebrow Tinting", price: "$25", duration: "15 min" },
+  { name: "Lash Tinting", price: "$30", duration: "20 min" },
+  { name: "Full Face Wax", price: "$65", duration: "30 min" },
+  { name: "Lip Wax", price: "$15", duration: "10 min" },
+  { name: "Chin Wax", price: "$15", duration: "10 min" },
+  { name: "Cheeks Wax", price: "$20", duration: "15 min" },
+  { name: "Nose Wax", price: "$15", duration: "10 min" },
+  { name: "Underarm Wax", price: "$30", duration: "15 min" },
+  { name: "Leg Wax", price: "$70", duration: "45 min" },
+  { name: "French Bikini", price: "$55", duration: "30 min" },
+  { name: "Brazilian Wax", price: "$65", duration: "45 min" },
+  { name: "Playboy Wax", price: "$75", duration: "45 min" },
+  { name: "Back Wax", price: "$65", duration: "30 min" },
+  { name: "Chest Wax", price: "$55", duration: "30 min" },
+  { name: "Arm Wax", price: "$50", duration: "25 min" },
+  { name: "Shoulder Waxing", price: "$35", duration: "20 min" },
 ];
 
 const badgeColors: Record<string, string> = {
@@ -433,6 +433,18 @@ export default function Services() {
               <div key={s.name} className="bg-white/10 border border-white/10 rounded-2xl p-6 hover:bg-white/15 transition-colors">
                 <h3 className="font-serif text-xl text-white mb-2">{s.name}</h3>
                 <p className="text-sm text-white/60 leading-relaxed mb-4">{s.desc}</p>
+                {s.addons && s.addons.length > 0 && (
+                  <div className="mt-2 mb-3">
+                    <p className="text-xs text-white/30 mb-1.5">Pair with:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {s.addons.map((addon) => (
+                        <span key={addon} className="text-xs bg-gold/10 text-gold/70 border border-gold/25 px-2 py-0.5 rounded-full">
+                          + {addon}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-center justify-between text-sm pt-3 border-t border-white/10">
                   <span className="font-bold text-gold">{s.price}</span>
                   <span className="text-white/40 text-xs">{s.duration}</span>
@@ -452,9 +464,12 @@ export default function Services() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {waxing.map((w) => (
-              <div key={w.name} className="bg-white rounded-xl p-4 border border-forest-100 flex items-center justify-between hover:border-forest-300 transition-colors">
-                <span className="text-sm text-forest font-medium">{w.name}</span>
-                <span className="text-sm text-gold font-semibold ml-2 flex-shrink-0">{w.price}</span>
+              <div key={w.name} className="bg-white rounded-xl p-4 border border-forest-100 flex flex-col gap-1 hover:border-forest-300 transition-colors">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-forest font-medium">{w.name}</span>
+                  <span className="text-sm text-gold font-semibold ml-2 flex-shrink-0">{w.price}</span>
+                </div>
+                <span className="text-xs text-forest-400">{w.duration}</span>
               </div>
             ))}
           </div>
