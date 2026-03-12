@@ -15,7 +15,7 @@ const signature = [
     name: "Royal Glow Facial",
     tagline: "The Ultimate Luxury Experience",
     desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you'll leave looking and feeling genuinely transformed.",
-    price: "$295",
+    price: "$350",
     duration: "2 hr",
     badge: "FLAGSHIP",
     icon: Crown,
@@ -145,7 +145,7 @@ const advancedPackages = [
       headline: "Why the glow deepens with every visit.",
       body: "LED phototherapy activates chromophores inside skin cells — and cells already activated respond more strongly to the next exposure. Oxygen infusion in session two is flooding tissue that session one left more hydrated and receptive. CO2 carboxytherapy progressively trains your skin's microcirculation — with each session, your skin's baseline ability to deliver nutrients and flush waste improves not just during treatment but in the weeks between. By session three, you're illuminating skin that has been built to glow.",
     },
-    price: "$435",
+    price: "$470",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
@@ -162,7 +162,7 @@ const advancedPackages = [
       headline: "Why the smoothness compounds across sessions.",
       body: "The first session removes years of surface buildup — but the real transformation begins in session two, when the same modalities meet fresher, more responsive skin. Microdermabrasion triggers a collagen stimulus that thickens and strengthens the dermis, so session two's resurfacing goes deeper on healthier tissue. Glycolic acid's effectiveness increases with regular use as cellular turnover accelerates — by session three, your skin is in an active renewal cycle, not passively receiving treatment. Three sessions don't just resurface. They rebuild.",
     },
-    price: "$360",
+    price: "$425",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">
@@ -179,7 +179,7 @@ const advancedPackages = [
       headline: "Why cellular renewal multiplies with repetition.",
       body: "Plant stem cell factors don't work once and disappear — they accumulate, layering signals that progressively wake up more of your skin's dormant renewal capacity. Ultrasound creates a transient permeability effect that deepens with each session, meaning actives penetrate further because the tissue has already been conditioned. Gua Sha lymphatic pathways stay progressively clearer between sessions — meaning session three achieves a depth of detox that session one never could. The science isn't just adding up. It's compounding.",
     },
-    price: "$420",
+    price: "$460",
     sessions: 3,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6">

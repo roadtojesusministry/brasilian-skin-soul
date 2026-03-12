@@ -22,7 +22,7 @@ export const SERVICES: Service[] = [
     name: 'Illuminate Series',
     category: 'Transformation Series',
     duration_min: 90,
-    price: 435,
+    price: 470,
     description: 'LED + Oxygen + CO2',
   },
   {
@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
     name: 'Resurface & Refine Series',
     category: 'Transformation Series',
     duration_min: 90,
-    price: 360,
+    price: 425,
     description: 'Microdermabrasion + Dermaplane + Glycolic Peel',
   },
   {
@@ -38,7 +38,7 @@ export const SERVICES: Service[] = [
     name: 'Cellular Renewal Series',
     category: 'Transformation Series',
     duration_min: 90,
-    price: 420,
+    price: 460,
     description: 'Stem Cell + Far-Infrared + Gua Sha',
   },
 
@@ -48,7 +48,7 @@ export const SERVICES: Service[] = [
     name: 'Royal Glow Facial',
     category: 'Signature Facials',
     duration_min: 120,
-    price: 295,
+    price: 350,
     description: 'Our signature 2-hour luxury treatment',
   },
   {
