@@ -25,7 +25,7 @@ const signature = [
     id: "facial-brasilian-ritual",
     name: "The Brasilian Ritual",
     tagline: "Ancient Wisdom · Brazilian Soul",
-    desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure awakens energy points to lift, release tension, and restore natural radiance. Brazilian lymphatic lifting massage sculpts and de-puffs using Claudia's signature techniques. A deeply relaxing scalp massage melts stress from the roots down. The ritual closes with a purifying detox aroma wrap — essential oils grounding and nourishing the skin from within. Skin, mind, and spirit — all renewed.",
+    desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure awakens energy points to lift and release deep tension. Brazilian lymphatic lifting massage sculpts and de-puffs using Claudia's signature techniques. A reflexology session stimulates the body's healing pathways through targeted foot pressure points. A cooling jade eye mask de-puffs and restores the delicate eye area, while a nourishing bamboo face mask renews the complexion. Finished with a scalp massage to melt stress from the roots down. Every layer — face, feet, scalp — brought back into balance.",
     price: "$215",
     duration: "90+ min",
     badge: "HOLISTIC",
@@ -211,6 +211,7 @@ const bodyMassage = [
   { name: "Salt Glow Back Treatment", desc: "Exfoliating salt scrub followed by nourishing body butter application for silky-smooth skin.", price: "$95", duration: "45 min" },
   { name: "Detox Aromawrap", desc: "Full-body detox wrap infused with essential oils to draw out impurities and deeply nourish.", price: "$115", duration: "60 min" },
   { name: "Infrared Wellness Wrap", desc: "Far-infrared technology promotes circulation, eases tension, and supports a natural detox.", price: "$105", duration: "60 min" },
+  { name: "Reflexology", desc: "Therapeutic foot reflexology targeting pressure points that correspond to organs and systems throughout the body — promoting circulation, reducing stress, and supporting the body's natural healing response.", price: "$85", duration: "45 min" },
   { name: "Sculpt & Release Facial Massage", desc: "A full facial and scalp massage ritual that does it all. Facial acupressure targets energy points to dissolve tension, stimulate circulation, and restore natural vitality — then the Hadado lifting technique sculpts, firms, and brings a luminous glow. Finished with a deep scalp massage for complete head-to-treatment relaxation. Two powerful techniques in one seamless session.", price: "$130", duration: "75 min" },
 ];
 

@@ -18,7 +18,7 @@ const featuredServices = [
   {
     name: "The Brasilian Ritual",
     tagline: "Ancient Wisdom · Brazilian Soul",
-    desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure, Brazilian lymphatic lifting massage, scalp therapy, and a detoxifying aroma wrap — balancing energy, sculpting contour, and awakening the skin from within.",
+    desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure, Brazilian lymphatic lifting massage, reflexology, jade eye mask, bamboo face mask, and scalp massage — every layer of face, feet, and scalp brought back into balance.",
     price: "$215",
     duration: "90+ min",
     badge: "HOLISTIC",
