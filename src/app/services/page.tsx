@@ -211,9 +211,7 @@ const bodyMassage = [
   { name: "Salt Glow Back Treatment", desc: "Exfoliating salt scrub followed by nourishing body butter application for silky-smooth skin.", price: "$95", duration: "45 min" },
   { name: "Detox Aromawrap", desc: "Full-body detox wrap infused with essential oils to draw out impurities and deeply nourish.", price: "$115", duration: "60 min" },
   { name: "Infrared Wellness Wrap", desc: "Far-infrared technology promotes circulation, eases tension, and supports a natural detox.", price: "$105", duration: "60 min" },
-  { name: "Reflexology + Foot Scrub", desc: "Therapeutic reflexology massage paired with a pampering pineapple enzyme foot scrub.", price: "$85", duration: "45 min" },
-  { name: "Acupressure Face & Scalp Massage", desc: "Ancient pressure point therapy on the face and scalp to release tension and promote circulation.", price: "$80", duration: "45 min" },
-  { name: "Hadado Japanese Facelift Massage", desc: "Traditional Japanese lifting massage technique that firms, sculpts, and brings a natural glow.", price: "$110", duration: "60 min" },
+  { name: "Sculpt & Release Facial Massage", desc: "A full facial and scalp massage ritual that does it all. Facial acupressure targets energy points to dissolve tension, stimulate circulation, and restore natural vitality — then the Hadado lifting technique sculpts, firms, and brings a luminous glow. Finished with a deep scalp massage for complete head-to-treatment relaxation. Two powerful techniques in one seamless session.", price: "$130", duration: "75 min" },
 ];
 
 const waxing = [
