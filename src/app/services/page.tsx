@@ -124,6 +124,10 @@ const advancedPackages = [
     group: "Non-Surgical Lifting",
     desc: "The ultimate non-surgical lifting protocol. All three technologies are delivered together in every session — not rotated, not split. Three progressive sessions combining microcurrent muscle training, Therma-Lift contouring, and Cold Plasma collagen stimulation. Each session builds on the last — the cumulative effect is a visibly lifted, firmed, and sculpted face.",
     technologies: ["Microcurrent Lifting", "Therma-Lift Technology", "Cold Plasma (13,000V)"],
+    compound: {
+      headline: "Why three sessions compounds the lift.",
+      body: "Microcurrent re-educates facial muscles the same way the gym builds strength — each session, the muscle responds faster and holds longer because it remembers the signal. Meanwhile, Therma-Lift triggers a collagen remodeling wave that takes weeks to fully develop. When session two begins, session one's collagen is still maturing — two separate waves of new collagen building simultaneously. By session three, you have three overlapping repair cycles on top of each other. The lift after three sessions isn't three times one session. It's exponential.",
+    },
     price: "$495",
     sessions: 3,
     icon: (
@@ -137,6 +141,10 @@ const advancedPackages = [
     group: "Radiance & Healing",
     desc: "Heal, hydrate, and brighten from within. Three sessions layering targeted LED light therapy, pressurized oxygen infusion (Intraceuticals), and CO2 carboxytherapy firming. All three delivered together every session — healing, flooding, and firming the skin in one complete protocol. Each session compounds on the last — by session three, the radiance is undeniable.",
     technologies: ["LED Photo Therapy", "Oxygen Infusion (Intraceuticals)", "CO2 Carboxytherapy"],
+    compound: {
+      headline: "Why the glow deepens with every visit.",
+      body: "LED phototherapy activates chromophores inside skin cells — and cells already activated respond more strongly to the next exposure. Oxygen infusion in session two is flooding tissue that session one left more hydrated and receptive. CO2 carboxytherapy progressively trains your skin's microcirculation — with each session, your skin's baseline ability to deliver nutrients and flush waste improves not just during treatment but in the weeks between. By session three, you're illuminating skin that has been built to glow.",
+    },
     price: "$435",
     sessions: 3,
     icon: (
@@ -150,6 +158,10 @@ const advancedPackages = [
     group: "Texture & Tone",
     desc: "Three progressive sessions that strip away years of texture buildup and reveal the smoothest, most even-toned skin of your life. Diamond microdermabrasion resurfaces deep layers, surgical-grade Dermaplane clears peach fuzz and dead skin for a flawless canvas, and a professional glycolic peel dissolves surface damage to reveal bright, renewed skin beneath. Each session goes deeper — the cumulative result is a complexion that genuinely glows.",
     technologies: ["Microdermabrasion", "Dermaplane Exfoliation", "Glycolic Peel"],
+    compound: {
+      headline: "Why the smoothness compounds across sessions.",
+      body: "The first session removes years of surface buildup — but the real transformation begins in session two, when the same modalities meet fresher, more responsive skin. Microdermabrasion triggers a collagen stimulus that thickens and strengthens the dermis, so session two's resurfacing goes deeper on healthier tissue. Glycolic acid's effectiveness increases with regular use as cellular turnover accelerates — by session three, your skin is in an active renewal cycle, not passively receiving treatment. Three sessions don't just resurface. They rebuild.",
+    },
     price: "$360",
     sessions: 3,
     icon: (
@@ -160,9 +172,13 @@ const advancedPackages = [
   },
   {
     name: "Detox & Cellular Renewal Series",
-    group: "Cellular Science",
+    group: "Detox & Cellular Renewal",
     desc: "Deep regeneration and detox from the inside out. Plant stem cell therapy triggers renewal at the deepest skin layer, ultrasound waves amplify product absorption and stimulate cellular activity, and Gua Sha lymphatic drainage sculpts and restores your skin's natural radiance. The three work together in every session — stem cells trigger the repair, ultrasound drives it deeper, Gua Sha flushes what's been broken down. Three sessions of that compounding is transformation at the cellular level.",
     technologies: ["Plant Stem Cell Therapy", "Ultrasound Therapy", "Gua Sha Lymphatic Drainage"],
+    compound: {
+      headline: "Why cellular renewal multiplies with repetition.",
+      body: "Plant stem cell factors don't work once and disappear — they accumulate, layering signals that progressively wake up more of your skin's dormant renewal capacity. Ultrasound creates a transient permeability effect that deepens with each session, meaning actives penetrate further because the tissue has already been conditioned. Gua Sha lymphatic pathways stay progressively clearer between sessions — meaning session three achieves a depth of detox that session one never could. The science isn't just adding up. It's compounding.",
+    },
     price: "$420",
     sessions: 3,
     icon: (
@@ -302,6 +318,13 @@ export default function Services() {
                 <div className="mb-5">
                   <TechInfoButton techNames={p.technologies} groupName={p.group} />
                 </div>
+                {p.compound && (
+                  <div className="border-t border-white/10 pt-5 mt-2 mb-5">
+                    <p className="text-xs uppercase tracking-[0.15em] text-gold/70 font-semibold mb-2">Why It Compounds</p>
+                    <p className="text-gold font-serif text-base italic leading-snug mb-2">&ldquo;{p.compound.headline}&rdquo;</p>
+                    <p className="text-white/50 text-xs leading-relaxed">{p.compound.body}</p>
+                  </div>
+                )}
                 <div className="flex items-center justify-between pt-5 border-t border-white/10">
                   <span className="font-bold text-gold text-xl">{p.price}</span>
                   <Link href="/booking" className="bg-gold text-forest px-6 py-2.5 rounded-full text-xs font-semibold hover:bg-gold-light transition-colors">
