@@ -71,7 +71,6 @@ const signature = [
     desc: "The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Pressurized oxygen drives customized serums deep into layers no topical product can reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift.",
     price: "$195",
     duration: "60+ min",
-    badge: "BEST SELLER",
     icon: Wind,
     addons: ["LED Light Therapy", "Dermaplane", "CO2 Lift"],
   },
