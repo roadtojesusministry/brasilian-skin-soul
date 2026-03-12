@@ -716,9 +716,15 @@ export default function BookingPage() {
                 Open Tuesday – Friday 9am–6pm · Saturday 9am–5pm
               </p>
               {isSeries && (
-                <p className="text-center text-xs text-[#C9A96E] mt-2">
-                  We recommend spacing sessions 1–2 weeks apart for best results
-                </p>
+                <div className="mt-4 bg-[#f2f7f4] border border-[#c2daca] rounded-xl px-5 py-4 max-w-sm mx-auto text-center">
+                  <p className="text-xs text-[#C9A96E] font-medium mb-1">No pressure on dates 🌿</p>
+                  <p className="text-xs text-[#42825e] leading-relaxed">
+                    Pick something that works for now — you can reschedule any session anytime using the link in your confirmation email.
+                  </p>
+                  <p className="text-xs text-[#65a07e] mt-2">
+                    We recommend spacing sessions 1–2 weeks apart for best results.
+                  </p>
+                </div>
               )}
             </div>
           )}
