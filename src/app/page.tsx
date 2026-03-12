@@ -10,7 +10,7 @@ const featuredServices = [
     name: "Royal Glow Facial",
     tagline: "The Ultimate Experience",
     desc: "Our most indulgent treatment. A full 2-hour journey combining oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you'll leave looking and feeling genuinely transformed.",
-    price: "$295",
+    price: "$350",
     duration: "2 hr",
     badge: "FLAGSHIP",
     image: "/facial-royal-glow.jpg",
@@ -19,7 +19,7 @@ const featuredServices = [
     name: "The Brasilian Ritual",
     tagline: "Ancient Wisdom · Brazilian Soul",
     desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure, Brazilian lymphatic lifting massage, reflexology, jade eye mask, bamboo face mask, and scalp massage — every layer of face, feet, and scalp brought back into balance.",
-    price: "$215",
+    price: "$285",
     duration: "90+ min",
     badge: "HOLISTIC",
     image: "/facial-brasilian-ritual.jpg",
@@ -363,8 +363,7 @@ export default function Home() {
                   <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
                   <h3 className="font-serif text-xl text-forest leading-tight mb-2">{s.name}</h3>
                   <p className="text-sm text-forest-500 leading-relaxed mb-4">{s.desc}</p>
-                  <div className="flex items-center justify-between text-xs pt-3 border-t border-forest-100">
-                    <span className="font-bold text-forest text-base">{s.price}</span>
+                  <div className="flex items-center justify-end text-xs pt-3 border-t border-forest-100">
                     <span className="text-forest-400">{s.duration}</span>
                   </div>
                 </div>
