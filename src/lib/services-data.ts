@@ -35,7 +35,7 @@ export const SERVICES: Service[] = [
   },
   {
     id: 'cellular-renewal',
-    name: 'Cellular Renewal Series',
+    name: 'Detox & Cellular Renewal Series',
     category: 'Transformation Series',
     duration_min: 90,
     price: 460,
@@ -77,20 +77,13 @@ export const SERVICES: Service[] = [
   },
   {
     id: 'therma-lift',
-    name: 'Therma-Lift Sculpting Facial',
+    name: 'Microderm Therma-Lift Facial',
     category: 'Signature Facials',
     duration_min: 80,
     price: 185,
     description: 'Radiofrequency lifting',
   },
-  {
-    id: 'microcurrent',
-    name: 'Microcurrent Lifting Facial',
-    category: 'Signature Facials',
-    duration_min: 90,
-    price: 165,
-    description: 'Bioelectric lifting',
-  },
+
   {
     id: 'lymph-glow',
     name: 'Lymph & Glow',
@@ -123,14 +116,7 @@ export const SERVICES: Service[] = [
     price: 165,
     description: 'Acne + clarifying',
   },
-  {
-    id: 'power-facial',
-    name: 'The Power Facial',
-    category: 'Signature Facials',
-    duration_min: 60,
-    price: 165,
-    description: 'Results-driven essentials',
-  },
+
   {
     id: 'teen-glow',
     name: 'Teen Glow Facial',
