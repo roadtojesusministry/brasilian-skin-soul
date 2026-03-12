@@ -1,15 +1,674 @@
-import Navbar from "@/components/Navbar";
+'use client';
 
-export default function Booking() {
+import { useState, useEffect, useCallback } from 'react';
+import Navbar from '@/components/Navbar';
+import { CheckCircle, ChevronLeft, Loader2 } from 'lucide-react';
+import { SERVICES, getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
+
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+interface BookingState {
+  step: 1 | 2 | 3 | 4 | 5;
+  selectedService: Service | null;
+  selectedDate: string;    // YYYY-MM-DD
+  selectedTime: string;    // display "H:MM AM/PM"
+  clientName: string;
+  clientEmail: string;
+  clientPhone: string;
+  notes: string;
+  bookingId: string;
+}
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function formatDisplayDate(yyyy: string): string {
+  const [y, m, d] = yyyy.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  return dt.toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+
+function toGoogleCalendarUrl(
+  title: string,
+  dateStr: string,
+  startTime: string,
+  durationMin: number,
+  location: string
+): string {
+  // Parse start
+  const match = startTime.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return '#';
+  let h = parseInt(match[1], 10);
+  const min = parseInt(match[2], 10);
+  const period = match[3].toUpperCase();
+  if (period === 'AM' && h === 12) h = 0;
+  if (period === 'PM' && h !== 12) h += 12;
+
+  const [y, mo, d] = dateStr.split('-').map(Number);
+  const start = new Date(Date.UTC(y, mo - 1, d, h, min));
+  const end = new Date(start.getTime() + durationMin * 60 * 1000);
+
+  const fmt = (dt: Date) =>
+    dt.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
   return (
-    <>
-    <Navbar />
-    <div className="pt-32 pb-20 bg-cream-100 min-h-screen">
-      <div className="max-w-6xl mx-auto px-6">
-        <h1 className="font-serif text-5xl text-forest mb-4">Book an Appointment</h1>
-        <p className="text-forest-500">Booking system coming soon.</p>
+    `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+    `&text=${encodeURIComponent(title)}` +
+    `&dates=${fmt(start)}/${fmt(end)}` +
+    `&location=${encodeURIComponent(location)}`
+  );
+}
+
+// ─── Mini Calendar ───────────────────────────────────────────────────────────
+
+function Calendar({
+  selectedDate,
+  onSelect,
+}: {
+  selectedDate: string;
+  onSelect: (d: string) => void;
+}) {
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0, 10);
+
+  const [viewYear, setViewYear] = useState(today.getFullYear());
+  const [viewMonth, setViewMonth] = useState(today.getMonth()); // 0-based
+
+  const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  const MONTHS = [
+    'January','February','March','April','May','June',
+    'July','August','September','October','November','December',
+  ];
+
+  const firstDow = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  const cells: (number | null)[] = [
+    ...Array(firstDow).fill(null),
+    ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+  ];
+
+  // Pad to complete last row
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  function isDisabled(dayNum: number): boolean {
+    const d = new Date(Date.UTC(viewYear, viewMonth, dayNum));
+    const str = d.toISOString().slice(0, 10);
+    const dow = d.getUTCDay();
+    return str < todayStr || dow === 0 || dow === 1; // past, Sun, Mon
+  }
+
+  function isToday(dayNum: number): boolean {
+    const str = `${viewYear}-${String(viewMonth + 1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+    return str === todayStr;
+  }
+
+  function isSelected(dayNum: number): boolean {
+    const str = `${viewYear}-${String(viewMonth + 1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+    return str === selectedDate;
+  }
+
+  function handleClick(dayNum: number) {
+    if (isDisabled(dayNum)) return;
+    const str = `${viewYear}-${String(viewMonth + 1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+    onSelect(str);
+  }
+
+  function prevMonth() {
+    if (viewMonth === 0) { setViewYear(y => y - 1); setViewMonth(11); }
+    else setViewMonth(m => m - 1);
+  }
+  function nextMonth() {
+    if (viewMonth === 11) { setViewYear(y => y + 1); setViewMonth(0); }
+    else setViewMonth(m => m + 1);
+  }
+
+  // Don't go before current month
+  const canGoPrev = viewYear > today.getFullYear() || viewMonth > today.getMonth();
+
+  return (
+    <div className="bg-white rounded-2xl border border-[#e0ede5] shadow-sm p-6 max-w-sm mx-auto">
+      {/* Month nav */}
+      <div className="flex items-center justify-between mb-6">
+        <button
+          onClick={prevMonth}
+          disabled={!canGoPrev}
+          className="w-9 h-9 rounded-full flex items-center justify-center text-[#1B4D2E] hover:bg-[#f2f7f4] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <span className="font-serif text-lg text-[#1B4D2E]">
+          {MONTHS[viewMonth]} {viewYear}
+        </span>
+        <button
+          onClick={nextMonth}
+          className="w-9 h-9 rounded-full flex items-center justify-center text-[#1B4D2E] hover:bg-[#f2f7f4] transition-colors rotate-180"
+        >
+          <ChevronLeft size={18} />
+        </button>
+      </div>
+
+      {/* Day headers */}
+      <div className="grid grid-cols-7 mb-2">
+        {DAYS.map(d => (
+          <div key={d} className="text-center text-xs font-medium text-[#65a07e] py-1">{d}</div>
+        ))}
+      </div>
+
+      {/* Cells */}
+      <div className="grid grid-cols-7 gap-y-1">
+        {cells.map((day, i) => {
+          if (!day) return <div key={i} />;
+          const disabled = isDisabled(day);
+          const today_   = isToday(day);
+          const selected = isSelected(day);
+          return (
+            <button
+              key={i}
+              onClick={() => handleClick(day)}
+              disabled={disabled}
+              className={[
+                'w-9 h-9 mx-auto rounded-full text-sm transition-colors flex items-center justify-center',
+                selected
+                  ? 'bg-[#C9A96E] text-white font-semibold'
+                  : today_
+                  ? 'border-2 border-[#C9A96E] text-[#1B4D2E] font-semibold hover:bg-[#f4efe3]'
+                  : disabled
+                  ? 'text-[#c2daca] cursor-not-allowed'
+                  : 'text-[#1B4D2E] hover:bg-[#f2f7f4]',
+              ].join(' ')}
+            >
+              {day}
+            </button>
+          );
+        })}
       </div>
     </div>
+  );
+}
+
+// ─── Step Indicator ──────────────────────────────────────────────────────────
+
+function StepIndicator({ step }: { step: number }) {
+  const steps = ['Service', 'Date', 'Time', 'Details'];
+  return (
+    <div className="flex items-center justify-center gap-2 mb-10">
+      {steps.map((label, i) => {
+        const num = i + 1;
+        const active = step === num;
+        const done = step > num;
+        return (
+          <div key={label} className="flex items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
+              <div
+                className={[
+                  'w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors',
+                  done
+                    ? 'bg-[#1B4D2E] text-white'
+                    : active
+                    ? 'bg-[#C9A96E] text-white'
+                    : 'bg-[#e0ede5] text-[#65a07e]',
+                ].join(' ')}
+              >
+                {done ? '✓' : num}
+              </div>
+              <span className={`text-xs hidden sm:block ${active ? 'text-[#1B4D2E] font-medium' : 'text-[#65a07e]'}`}>
+                {label}
+              </span>
+            </div>
+            {i < steps.length - 1 && (
+              <div className={`w-8 sm:w-12 h-px mb-5 ${done ? 'bg-[#1B4D2E]' : 'bg-[#e0ede5]'}`} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Summary Pills ───────────────────────────────────────────────────────────
+
+function Pill({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 bg-[#f2f7f4] border border-[#c2daca] rounded-full px-4 py-1.5 text-sm">
+      <span className="text-[#65a07e] text-xs uppercase tracking-wider">{label}</span>
+      <span className="text-[#1B4D2E] font-medium">{value}</span>
+    </div>
+  );
+}
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
+
+export default function BookingPage() {
+  const [state, setState] = useState<BookingState>({
+    step: 1,
+    selectedService: null,
+    selectedDate: '',
+    selectedTime: '',
+    clientName: '',
+    clientEmail: '',
+    clientPhone: '',
+    notes: '',
+    bookingId: '',
+  });
+
+  const [slots, setSlots]       = useState<string[]>([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitError, setSubmitError]     = useState('');
+
+  const set = (patch: Partial<BookingState>) =>
+    setState(prev => ({ ...prev, ...patch }));
+
+  // Fetch slots when we reach step 3
+  const fetchSlots = useCallback(async () => {
+    if (!state.selectedDate || !state.selectedService) return;
+    setSlotsLoading(true);
+    setSlots([]);
+    try {
+      const res = await fetch(
+        `/api/availability?date=${state.selectedDate}&service_id=${state.selectedService.id}`
+      );
+      const json = await res.json();
+      setSlots(json.slots ?? []);
+    } catch {
+      setSlots([]);
+    } finally {
+      setSlotsLoading(false);
+    }
+  }, [state.selectedDate, state.selectedService]);
+
+  useEffect(() => {
+    if (state.step === 3) fetchSlots();
+  }, [state.step, fetchSlots]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitError('');
+    setSubmitLoading(true);
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id:    state.selectedService!.id,
+          client_name:   state.clientName,
+          client_email:  state.clientEmail,
+          client_phone:  state.clientPhone,
+          booking_date:  state.selectedDate,
+          start_time:    state.selectedTime,
+          notes:         state.notes || undefined,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Booking failed');
+      set({ bookingId: json.booking_id, step: 5 });
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setSubmitLoading(false);
+    }
+  }
+
+  const grouped = getServicesGrouped();
+
+  return (
+    <>
+      <Navbar />
+      <div className="pt-32 pb-20 bg-[#FAF8F2] min-h-screen">
+        <div className="max-w-3xl mx-auto px-6">
+
+          {/* ── Step 1: Select Service ─────────────────────────────────── */}
+          {state.step === 1 && (
+            <div>
+              <div className="text-center mb-10">
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Online Booking</p>
+                <h1 className="font-serif text-5xl md:text-6xl text-[#1B4D2E] font-light mb-3">
+                  Book Your Treatment
+                </h1>
+                <p className="text-[#42825e]">Choose a service to begin</p>
+              </div>
+
+              <StepIndicator step={1} />
+
+              {Object.entries(grouped).map(([category, services]) => (
+                <div key={category} className="mb-10">
+                  <p className="text-xs uppercase tracking-[0.2em] text-[#C9A96E] mb-4">{category}</p>
+                  <div className="grid gap-3">
+                    {services.map(svc => {
+                      const selected = state.selectedService?.id === svc.id;
+                      return (
+                        <button
+                          key={svc.id}
+                          onClick={() => set({ selectedService: svc })}
+                          className={[
+                            'w-full text-left rounded-2xl p-5 border-2 transition-all',
+                            selected
+                              ? 'border-[#C9A96E] bg-[#1B4D2E] text-white'
+                              : 'border-[#e0ede5] bg-white hover:border-[#C9A96E] hover:shadow-md',
+                          ].join(' ')}
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex-1 min-w-0">
+                              <p className={`font-serif text-xl font-light mb-1 ${selected ? 'text-white' : 'text-[#1B4D2E]'}`}>
+                                {svc.name}
+                              </p>
+                              <p className={`text-sm ${selected ? 'text-[#C9A96E]' : 'text-[#65a07e]'}`}>
+                                {svc.description}
+                              </p>
+                            </div>
+                            <div className="text-right flex-shrink-0">
+                              <p className={`font-serif text-2xl font-light ${selected ? 'text-[#C9A96E]' : 'text-[#1B4D2E]'}`}>
+                                ${svc.price}
+                              </p>
+                              <p className={`text-xs mt-0.5 ${selected ? 'text-white/70' : 'text-[#65a07e]'}`}>
+                                {formatDuration(svc.duration_min)}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              {state.selectedService && (
+                <div className="sticky bottom-6 flex justify-center">
+                  <button
+                    onClick={() => set({ step: 2 })}
+                    className="bg-[#C9A96E] text-[#1B4D2E] font-semibold px-10 py-4 rounded-full shadow-lg hover:bg-[#D4B87A] transition-colors"
+                  >
+                    Continue →
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Step 2: Select Date ────────────────────────────────────── */}
+          {state.step === 2 && (
+            <div>
+              <button
+                onClick={() => set({ step: 1, selectedDate: '', selectedTime: '' })}
+                className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
+              >
+                <ChevronLeft size={16} /> Back
+              </button>
+
+              <div className="text-center mb-8">
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 2 of 4</p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Select a Date</h2>
+                <div className="flex flex-wrap justify-center gap-2">
+                  <Pill label="Service" value={state.selectedService!.name} />
+                </div>
+              </div>
+
+              <StepIndicator step={2} />
+
+              <div className="flex justify-center">
+                <Calendar
+                  selectedDate={state.selectedDate}
+                  onSelect={(d) => set({ selectedDate: d, selectedTime: '', step: 3 })}
+                />
+              </div>
+
+              <p className="text-center text-xs text-[#65a07e] mt-4">
+                Open Tuesday – Friday 9am–6pm · Saturday 9am–5pm
+              </p>
+            </div>
+          )}
+
+          {/* ── Step 3: Select Time ────────────────────────────────────── */}
+          {state.step === 3 && (
+            <div>
+              <button
+                onClick={() => set({ step: 2, selectedTime: '' })}
+                className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
+              >
+                <ChevronLeft size={16} /> Back
+              </button>
+
+              <div className="text-center mb-8">
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 3 of 4</p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Select a Time</h2>
+                <div className="flex flex-wrap justify-center gap-2">
+                  <Pill label="Service" value={state.selectedService!.name} />
+                  <Pill label="Date" value={formatDisplayDate(state.selectedDate)} />
+                </div>
+              </div>
+
+              <StepIndicator step={3} />
+
+              {slotsLoading && (
+                <div className="flex flex-col items-center gap-3 py-16">
+                  <Loader2 size={32} className="animate-spin text-[#C9A96E]" />
+                  <p className="text-[#42825e] text-sm">Checking availability…</p>
+                </div>
+              )}
+
+              {!slotsLoading && slots.length === 0 && (
+                <div className="text-center py-16">
+                  <p className="text-[#1B4D2E] font-serif text-2xl font-light mb-2">No availability</p>
+                  <p className="text-[#65a07e] text-sm">There are no open slots on this date. Please choose another day.</p>
+                  <button
+                    onClick={() => set({ step: 2 })}
+                    className="mt-6 text-[#C9A96E] border border-[#C9A96E] px-6 py-2 rounded-full text-sm hover:bg-[#C9A96E] hover:text-white transition-colors"
+                  >
+                    Pick a Different Date
+                  </button>
+                </div>
+              )}
+
+              {!slotsLoading && slots.length > 0 && (
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                  {slots.map(slot => (
+                    <button
+                      key={slot}
+                      onClick={() => set({ selectedTime: slot, step: 4 })}
+                      className="bg-white border-2 border-[#e0ede5] rounded-xl py-3 text-sm font-medium text-[#1B4D2E] hover:border-[#C9A96E] hover:bg-[#f4efe3] transition-all"
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Step 4: Client Info ────────────────────────────────────── */}
+          {state.step === 4 && (
+            <div>
+              <button
+                onClick={() => set({ step: 3 })}
+                className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
+              >
+                <ChevronLeft size={16} /> Back
+              </button>
+
+              <div className="text-center mb-8">
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 4 of 4</p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Complete Your Booking</h2>
+              </div>
+
+              <StepIndicator step={4} />
+
+              {/* Booking summary card */}
+              <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-6 mb-8">
+                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-4">Booking Summary</p>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-[#65a07e]">Service</span>
+                    <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#65a07e]">Date</span>
+                    <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#65a07e]">Time</span>
+                    <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
+                  </div>
+                  <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
+                    <span className="text-[#65a07e]">Investment</span>
+                    <span className="font-serif text-xl text-[#1B4D2E]">${state.selectedService!.price}</span>
+                  </div>
+                </div>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
+                    Full Name <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={state.clientName}
+                    onChange={e => set({ clientName: e.target.value })}
+                    placeholder="Jane Smith"
+                    className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
+                    Email <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={state.clientEmail}
+                    onChange={e => set({ clientEmail: e.target.value })}
+                    placeholder="jane@example.com"
+                    className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
+                    Phone <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={state.clientPhone}
+                    onChange={e => set({ clientPhone: e.target.value })}
+                    placeholder="(818) 555-0100"
+                    className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
+                    Notes (optional)
+                  </label>
+                  <textarea
+                    value={state.notes}
+                    onChange={e => set({ notes: e.target.value })}
+                    rows={3}
+                    placeholder="Any skin concerns, allergies, or special requests…"
+                    className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors resize-none"
+                  />
+                </div>
+
+                {submitError && (
+                  <p className="text-red-500 text-sm bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+                    {submitError}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitLoading}
+                  className="w-full bg-[#1B4D2E] text-white font-semibold py-4 rounded-xl hover:bg-[#27533c] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm tracking-wide"
+                >
+                  {submitLoading ? (
+                    <><Loader2 size={18} className="animate-spin" /> Confirming…</>
+                  ) : (
+                    'Confirm & Book'
+                  )}
+                </button>
+
+                <p className="text-center text-xs text-[#65a07e]">
+                  Payment is collected at the time of your appointment.
+                </p>
+              </form>
+            </div>
+          )}
+
+          {/* ── Step 5: Confirmation ───────────────────────────────────── */}
+          {state.step === 5 && (
+            <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 rounded-full bg-[#f2f7f4] flex items-center justify-center">
+                  <CheckCircle size={40} className="text-[#1B4D2E]" />
+                </div>
+              </div>
+
+              <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">All Set!</p>
+              <h2 className="font-serif text-5xl text-[#1B4D2E] font-light mb-2">
+                You&apos;re booked! ✨
+              </h2>
+              <p className="text-[#42825e] mb-8">
+                A confirmation email has been sent to <strong>{state.clientEmail}</strong>
+              </p>
+
+              {/* Confirmation card */}
+              <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-8 mb-8 text-left max-w-md mx-auto">
+                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-5">Your Appointment</p>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-[#65a07e]">Service</span>
+                    <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#65a07e]">Date</span>
+                    <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#65a07e]">Time</span>
+                    <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
+                  </div>
+                  <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
+                    <span className="text-[#65a07e]">Investment</span>
+                    <span className="font-serif text-xl text-[#1B4D2E]">${state.selectedService!.price}</span>
+                  </div>
+                </div>
+
+                <div className="mt-5 pt-5 border-t border-[#f4efe3] text-sm text-[#42825e]">
+                  <p>📍 5303 Comercio Lane, Suite #2</p>
+                  <p>Woodland Hills, CA 91364</p>
+                  <p className="mt-1">📞 (818) 577-5421</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a
+                  href={toGoogleCalendarUrl(
+                    `Brasilian Skin Soul — ${state.selectedService!.name}`,
+                    state.selectedDate,
+                    state.selectedTime,
+                    state.selectedService!.duration_min,
+                    '5303 Comercio Lane Suite #2, Woodland Hills, CA 91364'
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#f2f7f4] border border-[#c2daca] text-[#1B4D2E] font-medium px-6 py-3 rounded-full text-sm hover:bg-[#e0ede5] transition-colors"
+                >
+                  📅 Add to Google Calendar
+                </a>
+                <a
+                  href="/"
+                  className="bg-[#1B4D2E] text-white font-medium px-6 py-3 rounded-full text-sm hover:bg-[#27533c] transition-colors"
+                >
+                  Back to Home
+                </a>
+              </div>
+            </div>
+          )}
+
+        </div>
+      </div>
     </>
   );
 }
