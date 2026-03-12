@@ -16,9 +16,18 @@ const featuredServices = [
     image: "/facial-royal-glow.jpg",
   },
   {
+    name: "The Brasilian Ritual",
+    tagline: "Ancient Wisdom · Brazilian Soul",
+    desc: "A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure, Brazilian lymphatic lifting massage, scalp therapy, and a detoxifying aroma wrap — balancing energy, sculpting contour, and awakening the skin from within.",
+    price: "$215",
+    duration: "90+ min",
+    badge: "HOLISTIC",
+    image: "/facial-brasilian-ritual.jpg",
+  },
+  {
     name: "Microderm Therma-Lift Facial",
     tagline: "Resurface · Sculpt · Illuminate",
-    desc: "The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a smooth, fresh canvas — then Therma-Lift heat technology sculpts and tightens from the outside in. Two powerful modalities in one session: resurface the skin, then contour and firm it.",
+    desc: "The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a smooth, fresh canvas — then Therma-Lift heat technology sculpts and tightens from the outside in. Two powerful modalities in one session.",
     price: "$185",
     duration: "80 min",
     badge: "POPULAR",
@@ -32,15 +41,6 @@ const featuredServices = [
     duration: "60+ min",
     badge: "ADVANCED",
     image: "/facial-cold-plasma.jpg",
-  },
-  {
-    name: "Microcurrent Lifting Facial",
-    tagline: "The Non-Surgical Facelift",
-    desc: "Gentle microcurrent waves re-educate facial muscles, boosting collagen and delivering a natural lift from the muscle layer out. Where Therma-Lift sculpts from the outside, microcurrent rebuilds the foundation from within. Visible lift from the very first visit.",
-    price: "$165",
-    duration: "90 min",
-    badge: "POPULAR",
-    image: "/facial-microcurrent.jpg",
   },
 ];
 
@@ -146,6 +146,7 @@ const badgeColors: Record<string, string> = {
   "BEST SELLER": "bg-forest text-cream-100",
   ADVANCED:    "bg-forest-700 text-cream-100",
   POPULAR:     "bg-gold text-forest",
+  HOLISTIC:    "bg-gold text-forest",
 };
 
 // SVG icons for trust strip
