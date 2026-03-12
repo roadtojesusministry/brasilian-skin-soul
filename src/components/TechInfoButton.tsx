@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { techScience } from "@/lib/techScience";
 
 interface Props {
@@ -11,6 +11,21 @@ interface Props {
 
 export default function TechInfoButton({ techNames, groupName, iconOnly }: Props) {
   const [open, setOpen] = useState(false);
+  const instanceId = useRef(Math.random().toString(36));
+
+  // Close this modal when any other one opens
+  useEffect(() => {
+    const handler = (e: Event) => {
+      if ((e as CustomEvent).detail !== instanceId.current) setOpen(false);
+    };
+    window.addEventListener("tech-modal-open", handler);
+    return () => window.removeEventListener("tech-modal-open", handler);
+  }, []);
+
+  const handleOpen = () => {
+    window.dispatchEvent(new CustomEvent("tech-modal-open", { detail: instanceId.current }));
+    setOpen(true);
+  };
   const items = techNames.map((name) => ({ name, info: techScience[name] })).filter((t) => t.info);
   if (items.length === 0) return null;
 
@@ -18,7 +33,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
     <>
       {iconOnly ? (
         <button
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
           aria-label="Learn more about this treatment"
           className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-forest-200 text-forest-300 hover:text-gold hover:border-gold/50 transition-colors flex-shrink-0"
         >
@@ -28,7 +43,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
         </button>
       ) : (
         <button
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
           aria-label="How this treatment works"
           className="inline-flex items-center gap-1.5 text-xs text-white/40 hover:text-gold transition-colors flex-shrink-0 group"
         >
@@ -48,7 +63,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
           onClick={() => setOpen(false)}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-forest/85 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-md" />
 
           {/* Modal */}
           <div
