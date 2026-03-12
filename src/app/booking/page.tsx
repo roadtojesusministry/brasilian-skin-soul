@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import { CheckCircle, ChevronLeft, Loader2 } from 'lucide-react';
 import { getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
@@ -214,7 +214,7 @@ function Calendar({
   );
 }
 
-const SKIP_ADDON_CATEGORIES = ['Body & Massage', 'Waxing'];
+const SKIP_ADDON_CATEGORIES = ['Transformation Series', 'Body & Massage', 'Waxing'];
 
 // ─── Step Indicator ──────────────────────────────────────────────────────────
 
@@ -306,6 +306,13 @@ export default function BookingPage() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitError, setSubmitError]     = useState('');
 
+  const topRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top of booking section on every step change
+  useEffect(() => {
+    topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [state.step]);
+
   const set = (patch: Partial<BookingState>) =>
     setState(prev => ({ ...prev, ...patch }));
 
@@ -390,7 +397,7 @@ export default function BookingPage() {
   return (
     <>
       <Navbar />
-      <div className="pt-32 pb-20 bg-[#FAF8F2] min-h-screen">
+      <div ref={topRef} className="pt-32 pb-20 bg-[#FAF8F2] min-h-screen">
         <div className="max-w-3xl mx-auto px-6">
 
           {/* ── Step 1: Select Service ─────────────────────────────────── */}
