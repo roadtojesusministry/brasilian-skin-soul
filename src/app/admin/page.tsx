@@ -20,6 +20,7 @@ interface Booking {
   status: string;
   payment_status: string;
   notes?: string;
+  addon_names?: string | string[];
   created_at: string;
   series_id?: string | null;
 }
@@ -88,6 +89,13 @@ function formatDate(d: string) {
   const [y, m, day] = d.split('-').map(Number);
   return new Date(Date.UTC(y, m - 1, day)).toLocaleDateString('en-US', {
     weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  });
+}
+
+function formatFullDayDate(d: string) {
+  const [y, m, day] = d.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, day)).toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC',
   });
 }
 
@@ -198,6 +206,7 @@ function DashboardTab() {
 
   return (
     <div className="space-y-8">
+
       {/* Today's Schedule */}
       <section>
         <h2 className="font-serif text-xl text-[#1B4D2E] font-light mb-4">📅 Today&apos;s Schedule</h2>
@@ -225,97 +234,69 @@ function DashboardTab() {
         )}
       </section>
 
-      {/* Week at a Glance + Revenue Summary */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Week at a Glance */}
-        <section>
-          <h2 className="font-serif text-xl text-[#1B4D2E] font-light mb-4">📊 This Week</h2>
-          <div className="bg-white rounded-2xl border border-[#e0ede5] p-5 space-y-4">
-            <div className="grid grid-cols-3 gap-3">
-              <div className="text-center">
-                <p className="text-2xl font-semibold text-[#1B4D2E]">{data.weekBookings.length}</p>
-                <p className="text-xs text-[#96c0a6] mt-0.5">Total</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-semibold text-[#42825e]">{data.weekCompleted}</p>
-                <p className="text-xs text-[#96c0a6] mt-0.5">Completed</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-semibold text-[#C9A96E]">{data.weekUpcoming}</p>
-                <p className="text-xs text-[#96c0a6] mt-0.5">Upcoming</p>
-              </div>
-            </div>
-            <div className="border-t border-[#e0ede5] pt-4 text-center">
-              <p className="text-xs uppercase tracking-[0.12em] text-[#96c0a6] mb-1">Week Revenue</p>
-              <p className="text-3xl font-semibold text-[#1B4D2E]">${data.weekRevenue.toLocaleString()}</p>
-            </div>
+      {/* Compact Stats Bar */}
+      <div className="bg-white rounded-2xl border border-[#e0ede5] p-4">
+        {/* Month navigator */}
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={goToPrevMonth}
+            className="w-8 h-8 flex items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white transition-colors text-sm font-bold"
+            aria-label="Previous month"
+          >
+            ←
+          </button>
+          <span className="text-sm font-semibold text-[#1B4D2E]">
+            {MONTH_NAMES[navMonth - 1]} {navYear}
+          </span>
+          <button
+            onClick={goToNextMonth}
+            disabled={isCurrentMonth}
+            className="w-8 h-8 flex items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white transition-colors text-sm font-bold disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[#C9A96E]"
+            aria-label="Next month"
+          >
+            →
+          </button>
+        </div>
+
+        {/* 6-stat row */}
+        <div className="flex divide-x divide-[#e0ede5]">
+          {/* This Week */}
+          <div className="flex-1 text-center px-2">
+            <p className="text-xl font-semibold text-[#1B4D2E]">{data.weekBookings.length}</p>
+            <p className="text-xs text-[#96c0a6] mt-0.5">This Week</p>
           </div>
-        </section>
-
-        {/* Revenue Summary */}
-        <section>
-          <h2 className="font-serif text-xl text-[#1B4D2E] font-light mb-4">💰 Revenue</h2>
-          <div className="bg-white rounded-2xl border border-[#e0ede5] p-5 space-y-4">
-
-            {/* Month Navigator */}
-            <div className="bg-[#FAF8F2] rounded-xl border border-[#e0ede5] px-4 py-4">
-              {/* Arrow row */}
-              <div className="flex items-center justify-between mb-2">
-                <button
-                  onClick={goToPrevMonth}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white transition-colors text-sm font-bold"
-                  aria-label="Previous month"
-                >
-                  ←
-                </button>
-                <span className="text-sm font-semibold text-[#1B4D2E]">
-                  {MONTH_NAMES[navMonth - 1]} {navYear}
-                </span>
-                <button
-                  onClick={goToNextMonth}
-                  disabled={isCurrentMonth}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white transition-colors text-sm font-bold disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[#C9A96E]"
-                  aria-label="Next month"
-                >
-                  →
-                </button>
-              </div>
-
-              {/* Revenue display */}
-              <div className="text-center">
-                {navLoading ? (
-                  <div className="flex justify-center py-2">
-                    <Loader2 size={20} className="animate-spin text-[#C9A96E]" />
-                  </div>
-                ) : (
-                  <>
-                    <p className="text-2xl font-semibold text-[#1B4D2E]">
-                      ${(navRevenue ?? 0).toLocaleString()}
-                    </p>
-                    <p className="text-xs text-[#96c0a6] mt-0.5">
-                      {navBookingCount ?? 0} {(navBookingCount ?? 0) === 1 ? 'booking' : 'bookings'}
-                    </p>
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* Static stats */}
-            {[
-              { label: 'All Time',     value: data.allTimeRevenue, highlight: true },
-              { label: 'Avg. Booking', value: data.avgBookingValue },
-            ].map(row => (
-              <div key={row.label} className="flex items-center justify-between">
-                <span className={`text-sm ${row.highlight ? 'font-semibold text-[#1B4D2E]' : 'text-[#42825e]'}`}>
-                  {row.label}
-                </span>
-                <span className={`font-semibold ${row.highlight ? 'text-[#C9A96E] text-lg' : 'text-[#1B4D2E]'}`}>
-                  ${row.value.toLocaleString()}
-                </span>
-              </div>
-            ))}
+          {/* Done */}
+          <div className="flex-1 text-center px-2">
+            <p className="text-xl font-semibold text-[#42825e]">{data.weekCompleted}</p>
+            <p className="text-xs text-[#96c0a6] mt-0.5">Done</p>
           </div>
-        </section>
+          {/* Upcoming */}
+          <div className="flex-1 text-center px-2">
+            <p className="text-xl font-semibold text-[#1B4D2E]">{data.weekUpcoming}</p>
+            <p className="text-xs text-[#96c0a6] mt-0.5">Upcoming</p>
+          </div>
+          {/* Week Revenue */}
+          <div className="flex-1 text-center px-2">
+            <p className="text-xl font-semibold text-[#C9A96E]">${data.weekRevenue.toLocaleString()}</p>
+            <p className="text-xs text-[#96c0a6] mt-0.5">Week $</p>
+          </div>
+          {/* Month Revenue (navigable) */}
+          <div className="flex-1 text-center px-2">
+            {navLoading ? (
+              <div className="flex justify-center py-1">
+                <Loader2 size={16} className="animate-spin text-[#C9A96E]" />
+              </div>
+            ) : (
+              <p className="text-xl font-semibold text-[#1B4D2E]">${(navRevenue ?? 0).toLocaleString()}</p>
+            )}
+            <p className="text-xs text-[#96c0a6] mt-0.5">Month $</p>
+          </div>
+          {/* All Time */}
+          <div className="flex-1 text-center px-2">
+            <p className="text-xl font-semibold text-[#1B4D2E]">${data.allTimeRevenue.toLocaleString()}</p>
+            <p className="text-xs text-[#96c0a6] mt-0.5">All Time</p>
+          </div>
+        </div>
       </div>
 
       {/* Upcoming Birthdays */}
@@ -337,37 +318,237 @@ function DashboardTab() {
           </div>
         )}
       </section>
+    </div>
+  );
+}
 
-      {/* Recent Bookings */}
-      <section>
-        <h2 className="font-serif text-xl text-[#1B4D2E] font-light mb-4">🕐 Recent Bookings</h2>
-        {data.recentBookings.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-[#e0ede5] px-6 py-6 text-center">
-            <p className="text-[#96c0a6] text-sm">No bookings yet</p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {data.recentBookings.map(b => (
-              <div key={b.id} className="bg-white rounded-2xl border border-[#e0ede5] px-5 py-4 flex flex-wrap items-center gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-medium text-[#1B4D2E] text-sm">{b.client_name}</span>
-                    <span className="text-[#42825e] text-sm">· {b.service_name}</span>
-                  </div>
-                  <div className="flex gap-3 text-xs text-[#96c0a6] mt-0.5">
-                    <span>{formatDate(b.booking_date)}</span>
-                    <span>{formatTime24(b.start_time)}</span>
-                    <span>${b.service_price}</span>
-                  </div>
+// ─── Week Calendar helpers ────────────────────────────────────────────────────
+
+function getWeekDates(weekStart: Date): Date[] {
+  return Array.from({ length: 6 }, (_, i) => {
+    const d = new Date(weekStart);
+    d.setDate(d.getDate() + i);
+    return d;
+  });
+}
+
+function getMostRecentMonday(): Date {
+  const today = new Date();
+  const day = today.getDay(); // 0=Sun, 1=Mon
+  const diff = day === 0 ? -6 : 1 - day;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + diff);
+  monday.setHours(0, 0, 0, 0);
+  return monday;
+}
+
+function toDateStr(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function formatWeekRange(dates: Date[]): string {
+  const start = dates[0];
+  const end = dates[dates.length - 1];
+  const startMonth = start.toLocaleString('en-US', { month: 'long' });
+  const endMonth = end.toLocaleString('en-US', { month: 'long' });
+  const year = end.getFullYear();
+  if (startMonth === endMonth) {
+    return `${startMonth} ${start.getDate()} – ${end.getDate()}, ${year}`;
+  }
+  return `${startMonth} ${start.getDate()} – ${endMonth} ${end.getDate()}, ${year}`;
+}
+
+// ─── Week Calendar Component ──────────────────────────────────────────────────
+
+const CAL_DAY_SHORT = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+function WeekCalendar({
+  bookings,
+  selectedDay,
+  setSelectedDay,
+}: {
+  bookings: Booking[];
+  selectedDay: string | null;
+  setSelectedDay: (day: string | null) => void;
+}) {
+  const [weekStart, setWeekStart] = useState<Date>(() => getMostRecentMonday());
+  const weekDates = getWeekDates(weekStart);
+
+  function prevWeek() {
+    const d = new Date(weekStart);
+    d.setDate(d.getDate() - 7);
+    setWeekStart(d);
+  }
+
+  function nextWeek() {
+    const d = new Date(weekStart);
+    d.setDate(d.getDate() + 7);
+    setWeekStart(d);
+  }
+
+  return (
+    <div className="bg-white rounded-2xl border border-[#e0ede5] p-4 mb-6">
+      {/* Week nav */}
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={prevWeek}
+          className="text-sm text-[#C9A96E] hover:text-[#1B4D2E] transition-colors px-2 py-1"
+        >
+          ← Prev
+        </button>
+        <span className="text-sm font-semibold text-[#1B4D2E]">{formatWeekRange(weekDates)}</span>
+        <button
+          onClick={nextWeek}
+          className="text-sm text-[#C9A96E] hover:text-[#1B4D2E] transition-colors px-2 py-1"
+        >
+          Next →
+        </button>
+      </div>
+
+      {/* Day columns */}
+      <div className="overflow-x-auto">
+        <div className="flex gap-2" style={{ minWidth: '640px' }}>
+          {weekDates.map((date, i) => {
+            const dateStr = toDateStr(date);
+            const isMonday = i === 0;
+            const isSelected = selectedDay === dateStr;
+
+            const dayBookings = isMonday
+              ? []
+              : bookings.filter(b => b.booking_date === dateStr);
+
+            const apptCount = dayBookings.length;
+            const totalMinutes = dayBookings.reduce(
+              (sum, b) => sum + (b.service_duration_min ?? 0), 0
+            );
+            const totalHours = totalMinutes / 60;
+            const dayRevenue = dayBookings.reduce(
+              (sum, b) => sum + (b.service_price ?? 0), 0
+            );
+
+            // Sort by time for gap detection
+            const sorted = [...dayBookings].sort((a, b2) =>
+              a.start_time.localeCompare(b2.start_time)
+            );
+
+            // Build calendar blocks with gap indicators
+            type CalBlock =
+              | { type: 'booking'; booking: Booking }
+              | { type: 'gap'; minutes: number };
+
+            const calBlocks: CalBlock[] = [];
+            for (let j = 0; j < sorted.length; j++) {
+              calBlocks.push({ type: 'booking', booking: sorted[j] });
+              if (j < sorted.length - 1) {
+                const [h1, m1] = sorted[j].start_time.split(':').map(Number);
+                const dur1 = sorted[j].service_duration_min ?? 0;
+                const endMin1 = h1 * 60 + m1 + dur1;
+                const [h2, m2] = sorted[j + 1].start_time.split(':').map(Number);
+                const startMin2 = h2 * 60 + m2;
+                const gapMin = startMin2 - endMin1;
+                if (gapMin >= 90) {
+                  calBlocks.push({ type: 'gap', minutes: gapMin });
+                }
+              }
+            }
+
+            return (
+              <div
+                key={dateStr}
+                onClick={() => {
+                  if (!isMonday) setSelectedDay(isSelected ? null : dateStr);
+                }}
+                className={[
+                  'flex-1 min-w-0 rounded-xl border p-2 transition-colors',
+                  isMonday
+                    ? 'bg-gray-50 border-gray-200 cursor-default opacity-60'
+                    : isSelected
+                    ? 'bg-[#f2f7f4] border-[#1B4D2E] cursor-pointer'
+                    : 'border-[#e0ede5] cursor-pointer hover:border-[#C9A96E]',
+                ].join(' ')}
+              >
+                {/* Column header */}
+                <div className="text-center mb-2">
+                  <p className="text-[10px] font-bold text-[#96c0a6] tracking-wider">
+                    {CAL_DAY_SHORT[i]}
+                  </p>
+                  <p className="text-lg font-semibold text-[#1B4D2E] leading-tight">
+                    {date.getDate()}
+                  </p>
                 </div>
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColor(b.status)}`}>
-                  {b.status}
-                </span>
+
+                {isMonday ? (
+                  <p className="text-[10px] text-center text-gray-400 italic">Closed</p>
+                ) : (
+                  <>
+                    {/* Day stats */}
+                    <div className="text-center mb-2 space-y-0.5">
+                      <p className="text-[10px] text-[#96c0a6]">
+                        {apptCount === 0
+                          ? 'Free'
+                          : `${apptCount} appt${apptCount !== 1 ? 's' : ''}`}
+                      </p>
+                      {apptCount > 0 && (
+                        <>
+                          <p className="text-[10px] text-[#96c0a6]">
+                            {totalHours % 1 === 0
+                              ? `${totalHours}h`
+                              : `${totalHours.toFixed(1)}h`}
+                          </p>
+                          <p className="text-[10px] text-[#C9A96E] font-medium">
+                            ${dayRevenue.toLocaleString()}
+                          </p>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Appointment blocks */}
+                    <div className="space-y-1">
+                      {calBlocks.map((block, bi) => {
+                        if (block.type === 'gap') {
+                          const gapH = Math.round(block.minutes / 60);
+                          return (
+                            <p
+                              key={`gap-${bi}`}
+                              className="text-[10px] text-[#96c0a6] italic text-center"
+                            >
+                              · {gapH}h gap ·
+                            </p>
+                          );
+                        }
+                        const bk = block.booking;
+                        const bgClass =
+                          bk.status === 'confirmed' || bk.status === 'completed'
+                            ? 'bg-[#1B4D2E] text-white'
+                            : bk.status === 'cancelled' || bk.status === 'no-show'
+                            ? 'bg-gray-100 text-gray-400'
+                            : 'bg-[#C9A96E]/20 text-[#1B4D2E] border border-[#C9A96E]/40';
+                        const shortTime = formatTime24(bk.start_time)
+                          .replace(' AM', 'a')
+                          .replace(' PM', 'p');
+                        const firstName = bk.client_name.split(' ')[0];
+                        return (
+                          <div
+                            key={bk.id}
+                            className={`rounded px-1.5 py-1 ${bgClass}`}
+                          >
+                            <p className="text-[11px] leading-tight truncate">
+                              {shortTime} {firstName}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
               </div>
-            ))}
-          </div>
-        )}
-      </section>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
@@ -380,6 +561,7 @@ function BookingsTab() {
   const [filter, setFilter]     = useState<'all' | 'upcoming' | 'completed' | 'cancelled'>('upcoming');
   const [typeFilter, setTypeFilter] = useState<'all' | 'series' | 'single'>('all');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -409,15 +591,12 @@ function BookingsTab() {
 
   // Build display structure: series groups + single bookings
   const seriesMap = new Map<string, Booking[]>();
-  const singleBookings: Booking[] = [];
   const seenSeriesIds = new Set<string>();
 
   for (const b of typeFiltered) {
     if (b.series_id) {
       if (!seriesMap.has(b.series_id)) seriesMap.set(b.series_id, []);
       seriesMap.get(b.series_id)!.push(b);
-    } else {
-      singleBookings.push(b);
     }
   }
 
@@ -426,9 +605,8 @@ function BookingsTab() {
   interface SingleItem  { type: 'single'; booking: Booking }
   type DisplayItem = SeriesGroup | SingleItem;
 
-  const displayItems: DisplayItem[] = [];
+  const allDisplayItems: DisplayItem[] = [];
 
-  // Add series groups in order they first appear in the list
   for (const b of typeFiltered) {
     if (b.series_id && !seenSeriesIds.has(b.series_id)) {
       seenSeriesIds.add(b.series_id);
@@ -437,11 +615,19 @@ function BookingsTab() {
         if (a.booking_date !== b2.booking_date) return a.booking_date.localeCompare(b2.booking_date);
         return a.start_time.localeCompare(b2.start_time);
       });
-      displayItems.push({ type: 'series', id: b.series_id, bookings: sorted });
+      allDisplayItems.push({ type: 'series', id: b.series_id, bookings: sorted });
     } else if (!b.series_id) {
-      displayItems.push({ type: 'single', booking: b });
+      allDisplayItems.push({ type: 'single', booking: b });
     }
   }
+
+  // Apply selected day filter
+  const displayItems: DisplayItem[] = selectedDay
+    ? allDisplayItems.filter(item => {
+        if (item.type === 'single') return item.booking.booking_date === selectedDay;
+        return item.bookings.some(b => b.booking_date === selectedDay);
+      })
+    : allDisplayItems;
 
   async function updateStatus(id: string, status: string) {
     setActionLoading(id + status);
@@ -452,18 +638,6 @@ function BookingsTab() {
     });
     await load();
     setActionLoading(null);
-  }
-
-  function getSessionIcon(status: string) {
-    if (status === 'completed') return '✓';
-    if (status === 'confirmed') return '→';
-    return '○';
-  }
-
-  function getSessionLabel(status: string) {
-    if (status === 'completed') return 'Completed';
-    if (status === 'confirmed') return 'Upcoming';
-    return status.charAt(0).toUpperCase() + status.slice(1);
   }
 
   const canRevert = (status: string) =>
@@ -510,41 +684,92 @@ function BookingsTab() {
     );
   }
 
-  function renderBookingCard(b: Booking, seriesInfo?: { session: number; total: number }) {
+  function renderBookingCard(
+    b: Booking,
+    seriesInfo?: { session: number; total: number }
+  ) {
+    // Parse addon_names — handle string, array, or undefined
+    const addons: string[] = (() => {
+      if (!b.addon_names) return [];
+      if (Array.isArray(b.addon_names)) return b.addon_names.filter(Boolean);
+      if (typeof b.addon_names === 'string' && b.addon_names.trim()) {
+        return b.addon_names.split(',').map(s => s.trim()).filter(Boolean);
+      }
+      return [];
+    })();
+
+    // Session progress badge
+    let sessionBadge: React.ReactNode = null;
+    if (seriesInfo) {
+      const dots = Array.from({ length: seriesInfo.total }, (_, i) => {
+        const isCurrentDot = i === seriesInfo.session - 1;
+        if (i < seriesInfo.session - 1) {
+          // Past session — assume completed
+          return <span key={i} className="text-purple-400">●</span>;
+        }
+        if (isCurrentDot) {
+          if (b.status === 'completed') return <span key={i} className="text-purple-400">●</span>;
+          if (b.status === 'confirmed') return <span key={i} className="text-[#C9A96E]">●</span>;
+          return <span key={i} className="text-gray-300">○</span>;
+        }
+        // Future session
+        return <span key={i} className="text-gray-300">○</span>;
+      });
+
+      sessionBadge = (
+        <span className="inline-flex items-center gap-0.5 bg-purple-50 border border-purple-200 text-purple-600 px-2 py-0.5 rounded-full text-[10px] font-medium ml-1">
+          {seriesInfo.session}/{seriesInfo.total}
+          <span className="ml-1 flex gap-px">{dots}</span>
+        </span>
+      );
+    }
+
     return (
-      <div key={b.id} className="bg-white rounded-2xl border border-[#e0ede5] p-5">
-        <div className="flex flex-wrap items-start justify-between gap-4">
+      <div key={b.id} className="bg-white rounded-2xl border border-[#e0ede5] p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
           {/* Left: booking info */}
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColor(b.status)}`}>
-                {b.status}
-              </span>
-              {seriesInfo && (
-                <span className="text-xs bg-purple-50 border border-purple-200 text-purple-600 px-2.5 py-1 rounded-full font-medium">
-                  Session {seriesInfo.session} of {seriesInfo.total} {getSessionIcon(b.status)} {getSessionLabel(b.status)}
-                </span>
-              )}
-              <span className="text-xs text-[#65a07e]">#{b.id.slice(0, 8)}</span>
+            {/* Row 1: name · treatment · session badge */}
+            <div className="flex flex-wrap items-center gap-1.5 mb-1">
+              <span className="font-semibold text-base text-[#1B4D2E]">{b.client_name}</span>
+              <span className="text-[#42825e] text-sm">· {b.service_name}</span>
+              {sessionBadge}
             </div>
-            <p className="font-serif text-lg text-[#1B4D2E] font-light mb-1">{b.service_name}</p>
-            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-[#42825e]">
-              <span>📅 {formatDate(b.booking_date)}</span>
-              <span>🕐 {formatTime24(b.start_time)}</span>
-              <span>⏱ {b.service_duration_min} min</span>
-              <span>💰 ${b.service_price}</span>
+
+            {/* Row 2: date · time · duration · price */}
+            <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-[#96c0a6] mb-1">
+              <span>{formatDate(b.booking_date)}</span>
+              <span>{formatTime24(b.start_time)}</span>
+              <span>{b.service_duration_min} min</span>
+              <span>${b.service_price}</span>
             </div>
-            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-[#65a07e] mt-1">
-              <span>👤 {b.client_name}</span>
-              <span>✉️ {b.client_email}</span>
-              <span>📞 {b.client_phone}</span>
-            </div>
+
+            {/* Row 3: add-ons (if any) */}
+            {addons.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-1">
+                {addons.map((a, ai) => (
+                  <span
+                    key={ai}
+                    className="bg-[#C9A96E]/10 text-[#C9A96E] border border-[#C9A96E]/30 text-xs px-2 py-0.5 rounded-full"
+                  >
+                    {a}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {b.notes && (
               <p className="text-xs text-[#96c0a6] mt-1 italic">{b.notes}</p>
             )}
           </div>
-          {/* Right: actions */}
-          {renderBookingActions(b)}
+
+          {/* Right: status badge + actions */}
+          <div className="flex flex-col items-end gap-2">
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColor(b.status)}`}>
+              {b.status}
+            </span>
+            {renderBookingActions(b)}
+          </div>
         </div>
       </div>
     );
@@ -555,6 +780,28 @@ function BookingsTab() {
 
   return (
     <div>
+      {/* Weekly Calendar */}
+      <WeekCalendar
+        bookings={bookings}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+      />
+
+      {/* Selected day filter pill */}
+      {selectedDay && (
+        <div className="flex items-center gap-2 mb-4">
+          <span className="inline-flex items-center gap-1 bg-[#FDF8EE] border border-[#C9A96E]/40 text-[#C9A96E] px-3 py-1.5 rounded-full text-xs font-medium">
+            Showing: {formatFullDayDate(selectedDay)}
+            <button
+              onClick={() => setSelectedDay(null)}
+              className="ml-1 hover:text-[#1B4D2E] transition-colors"
+            >
+              × Clear
+            </button>
+          </span>
+        </div>
+      )}
+
       {/* Status filter tabs */}
       <div className="flex gap-2 mb-3 flex-wrap">
         {(['upcoming', 'all', 'completed', 'cancelled'] as const).map(f => (
@@ -610,43 +857,74 @@ function BookingsTab() {
             if (item.type === 'single') {
               return renderBookingCard(item.booking);
             }
-            // Series group
+
+            // ── Series group ──
+            const totalSessions = item.bookings.length;
+            const completedCount = item.bookings.filter(
+              b => b.status === 'completed'
+            ).length;
+            const headerPrice = item.bookings[0]?.service_price ?? 0;
+            const clientName  = item.bookings[0]?.client_name ?? '';
+            const serviceName = item.bookings[0]?.service_name ?? '';
+
             return (
               <div key={item.id + idx} className="border-2 border-purple-200 rounded-2xl overflow-hidden">
                 {/* Series header */}
-                <div className="bg-purple-50 px-5 py-3 flex items-center gap-2">
-                  <span className="text-xs font-semibold bg-purple-600 text-white px-2.5 py-1 rounded-full">
-                    📦 Series
-                  </span>
-                  <span className="text-xs text-purple-700 font-medium">
-                    {item.bookings.length} sessions · {item.bookings[0]?.client_name}
-                  </span>
+                <div className="bg-purple-50 px-4 py-2.5 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="text-xs font-semibold bg-purple-600 text-white px-2.5 py-1 rounded-full flex-shrink-0">
+                      📦 Series
+                    </span>
+                    <span className="text-xs text-purple-700 font-medium truncate">
+                      {clientName} · {serviceName}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0 text-xs text-purple-700">
+                    <span className="font-semibold text-[#C9A96E]">${headerPrice}</span>
+                    <span>{completedCount}/{totalSessions} done</span>
+                  </div>
                 </div>
-                {/* Series sessions */}
+
+                {/* Series sessions — compact rows */}
                 <div className="divide-y divide-purple-100">
-                  {item.bookings.map((b, sIdx) => (
-                    <div key={b.id} className="bg-white p-4">
-                      <div className="flex flex-wrap items-start justify-between gap-4">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${statusColor(b.status)}`}>
-                              {b.status}
-                            </span>
-                            <span className="text-xs bg-purple-50 border border-purple-200 text-purple-700 px-2.5 py-1 rounded-full font-medium">
-                              Session {sIdx + 1} of {item.bookings.length} {getSessionIcon(b.status)} {getSessionLabel(b.status)}
-                            </span>
-                          </div>
-                          <p className="font-serif text-base text-[#1B4D2E] font-light mb-1">{b.service_name}</p>
-                          <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-[#42825e]">
-                            <span>📅 {formatDate(b.booking_date)}</span>
-                            <span>🕐 {formatTime24(b.start_time)}</span>
-                            <span>💰 ${b.service_price}</span>
-                          </div>
+                  {item.bookings.map((b, sIdx) => {
+                    // Build progress dots for this session
+                    const dots = Array.from({ length: totalSessions }, (_, di) => {
+                      const sessB = item.bookings[di];
+                      if (!sessB) return <span key={di} className="text-gray-300">○</span>;
+                      if (sessB.status === 'completed') return <span key={di} className="text-purple-400">●</span>;
+                      if (sessB.status === 'confirmed') {
+                        return di === sIdx
+                          ? <span key={di} className="text-[#C9A96E]">●</span>
+                          : <span key={di} className="text-purple-300">●</span>;
+                      }
+                      return <span key={di} className="text-gray-300">○</span>;
+                    });
+
+                    return (
+                      <div key={b.id} className="bg-white px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+                        {/* Left: session badge + date + time */}
+                        <div className="flex flex-wrap items-center gap-2 min-w-0">
+                          {/* Compact session badge */}
+                          <span className="inline-flex items-center gap-0.5 bg-purple-50 border border-purple-200 text-purple-600 px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">
+                            {sIdx + 1}/{totalSessions}
+                            <span className="ml-1 flex gap-px">{dots}</span>
+                          </span>
+                          <span className="text-xs text-[#96c0a6]">
+                            {formatDate(b.booking_date)}
+                          </span>
+                          <span className="text-xs text-[#96c0a6]">
+                            {formatTime24(b.start_time)}
+                          </span>
+                          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${statusColor(b.status)}`}>
+                            {b.status}
+                          </span>
                         </div>
+                        {/* Right: actions */}
                         {renderBookingActions(b)}
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );
