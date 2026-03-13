@@ -558,7 +558,8 @@ function WeekCalendar({
 function BookingsTab() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading]   = useState(true);
-  const [filter, setFilter]     = useState<'all' | 'upcoming' | 'completed' | 'cancelled'>('upcoming');
+  const [filter, setFilter]     = useState<'all' | 'upcoming' | 'completed' | 'cancelled' | 'no-show'>('upcoming');
+  const [expandedSeries, setExpandedSeries] = useState<Set<string>>(new Set());
   const [typeFilter, setTypeFilter] = useState<'all' | 'series' | 'single'>('all');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
@@ -578,9 +579,20 @@ function BookingsTab() {
 
   useEffect(() => { load(); }, [load]);
 
+  function toggleSeries(id: string) {
+    setExpandedSeries(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
   // Status filter
   const statusFiltered = filter === 'all' || filter === 'upcoming'
     ? bookings
+    : filter === 'no-show'
+    ? bookings.filter(b => b.status === 'no-show' || b.status === 'no_show')
     : bookings.filter(b => b.status === filter);
 
   // Type filter
@@ -803,31 +815,31 @@ function BookingsTab() {
       )}
 
       {/* Status filter tabs */}
-      <div className="flex gap-2 mb-3 flex-wrap">
-        {(['upcoming', 'all', 'completed', 'cancelled'] as const).map(f => (
+      <div className="flex gap-1.5 mb-3 flex-wrap">
+        {(['upcoming', 'all', 'completed', 'no-show', 'cancelled'] as const).map(f => (
           <button
             key={f}
             onClick={() => setFilter(f)}
             className={[
-              'px-4 py-2 rounded-full text-sm font-medium capitalize transition-colors',
+              'px-3 py-1.5 rounded-full text-xs font-medium capitalize transition-colors',
               filter === f
                 ? 'bg-[#1B4D2E] text-white'
                 : 'bg-white border border-[#e0ede5] text-[#42825e] hover:border-[#C9A96E]',
             ].join(' ')}
           >
-            {f}
+            {f === 'no-show' ? 'No-Show' : f.charAt(0).toUpperCase() + f.slice(1)}
           </button>
         ))}
       </div>
 
       {/* Type filter pills */}
-      <div className="flex gap-2 mb-6 flex-wrap">
+      <div className="flex gap-1.5 mb-6 flex-wrap">
         {(['all', 'series', 'single'] as const).map(f => (
           <button
             key={f}
             onClick={() => setTypeFilter(f)}
             className={[
-              'px-3 py-1.5 rounded-full text-xs font-medium capitalize transition-colors',
+              'px-2.5 py-1 rounded-full text-xs font-medium capitalize transition-colors',
               typeFilter === f
                 ? 'bg-purple-600 text-white'
                 : 'bg-white border border-[#e0ede5] text-[#65a07e] hover:border-purple-300',
@@ -867,6 +879,13 @@ function BookingsTab() {
             const clientName  = item.bookings[0]?.client_name ?? '';
             const serviceName = item.bookings[0]?.service_name ?? '';
 
+            // Collapsible series: find the "current" session to show when collapsed
+            const isExpanded = expandedSeries.has(item.id);
+            const nextSession = item.bookings.find(
+              b => b.status === 'upcoming' || b.status === 'confirmed'
+            ) ?? item.bookings[item.bookings.length - 1];
+            const sessionsToShow = isExpanded ? item.bookings : (nextSession ? [nextSession] : item.bookings.slice(0, 1));
+
             return (
               <div key={item.id + idx} className="border-2 border-purple-200 rounded-2xl overflow-hidden">
                 {/* Series header */}
@@ -882,12 +901,19 @@ function BookingsTab() {
                   <div className="flex items-center gap-2 flex-shrink-0 text-xs text-purple-700">
                     <span className="font-semibold text-[#C9A96E]">${headerPrice}</span>
                     <span>{completedCount}/{totalSessions} done</span>
+                    <button
+                      onClick={() => toggleSeries(item.id)}
+                      className="text-xs text-purple-600 hover:text-purple-800 transition-colors ml-1 whitespace-nowrap"
+                    >
+                      {isExpanded ? `▲ Collapse` : `▼ Show all ${totalSessions}`}
+                    </button>
                   </div>
                 </div>
 
                 {/* Series sessions — compact rows */}
                 <div className="divide-y divide-purple-100">
-                  {item.bookings.map((b, sIdx) => {
+                  {sessionsToShow.map((b) => {
+                    const sIdx = item.bookings.indexOf(b);
                     // Build progress dots for this session
                     const dots = Array.from({ length: totalSessions }, (_, di) => {
                       const sessB = item.bookings[di];
