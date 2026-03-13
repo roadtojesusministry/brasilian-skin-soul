@@ -156,7 +156,10 @@ export default function Services() {
                   </div>
                 )}
                 <div className="flex items-center justify-between pt-5 border-t border-white/10">
-                  <span className="font-bold text-gold text-xl">${p.price}</span>
+                  <div>
+                    <span className="font-bold text-gold text-xl">${p.price}</span>
+                    <p className="text-white/50 text-xs mt-0.5">for all 3 sessions — not per session</p>
+                  </div>
                   <Link href="/booking" className="bg-gold text-forest px-6 py-2.5 rounded-full text-xs font-semibold hover:bg-gold-light transition-colors">
                     {T.seriesBookBtn}
                   </Link>
