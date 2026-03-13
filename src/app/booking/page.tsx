@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { CheckCircle, ChevronLeft, Loader2 } from 'lucide-react';
+import { ChevronLeft, Loader2 } from 'lucide-react';
 import { getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
 import { useLang } from '@/lib/language-context';
 import { translations } from '@/lib/translations';
@@ -297,6 +298,7 @@ function Pill({ label, value }: { label: string; value: string }) {
 export default function BookingPage() {
   const { lang } = useLang();
   const T = translations[lang].booking;
+  const router = useRouter();
 
   const stepLabels = [T.stepService, T.stepAddOns, T.stepDate, T.stepTime, T.stepDetails];
 
@@ -449,8 +451,27 @@ export default function BookingPage() {
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || 'Booking failed');
 
-      // For series, bookingId stores the series_id; for single, the booking_id
-      set({ bookingId: isSeries ? json.series_id : json.booking_id, step: 6 });
+      // Redirect to confirmation page (Google Ads conversion tracking)
+      const params = new URLSearchParams({
+        service: state.selectedService!.name,
+        email: state.clientEmail,
+        price: String(isSeries
+          ? state.selectedService!.price
+          : state.selectedService!.price + state.addonTotal),
+        duration: String(state.selectedService!.duration_min + state.addonDuration),
+        series: isSeries ? '1' : '0',
+      });
+      if (!isSeries) {
+        params.set('date', state.selectedDate);
+        params.set('time', state.selectedTime);
+        const addonNames = state.selectedAddons.map(id => ADDONS.find(x => x.id === id)?.name).filter(Boolean) as string[];
+        if (addonNames.length > 0) {
+          params.set('addons', addonNames.join(', '));
+        }
+      } else {
+        params.set('sessions', encodeURIComponent(JSON.stringify(state.seriesSessions)));
+      }
+      router.push(`/booking/confirmation?${params.toString()}`);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
@@ -993,118 +1014,6 @@ export default function BookingPage() {
                   {T.paymentNote}
                 </p>
               </form>
-            </div>
-          )}
-
-          {/* ── Step 6: Confirmation ───────────────────────────────────── */}
-          {state.step === 6 && (
-            <div className="text-center">
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 rounded-full bg-[#f2f7f4] flex items-center justify-center">
-                  <CheckCircle size={40} className="text-[#1B4D2E]" />
-                </div>
-              </div>
-
-              <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">{T.allSet}</p>
-              <h2 className="font-serif text-5xl text-[#1B4D2E] font-light mb-2">
-                {isSeries ? T.bookedSeries : T.bookedSingle}
-              </h2>
-              <p className="text-[#42825e] mb-8">
-                {T.confirmationEmailSent} <strong>{state.clientEmail}</strong>
-              </p>
-
-              {/* Confirmation card */}
-              <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-8 mb-8 text-left max-w-md mx-auto">
-                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-5">
-                  {isSeries ? T.yourSeriesJourney : T.yourAppointment}
-                </p>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-[#65a07e]">{T.labelService}</span>
-                    <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
-                  </div>
-
-                  {isSeries ? (
-                    <div className="space-y-2 pt-1">
-                      {state.seriesSessions.map((s, i) => (
-                        <div key={i} className="flex justify-between items-baseline">
-                          <span className="text-[#65a07e]">{T.labelSession(i + 1)}</span>
-                          <span className="text-[#1B4D2E] font-medium text-right ml-4">
-                            {formatDisplayDate(s.date)} at {s.time}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <>
-                      {state.selectedAddons.length > 0 && (
-                        <div className="flex justify-between items-start">
-                          <span className="text-[#65a07e]">{T.labelAddOns}</span>
-                          <div className="text-right">
-                            {state.selectedAddons.map(id => {
-                              const a = ADDONS.find(x => x.id === id);
-                              return a ? (
-                                <p key={id} className="text-[#1B4D2E] font-medium">{a.name}</p>
-                              ) : null;
-                            })}
-                          </div>
-                        </div>
-                      )}
-                      <div className="flex justify-between">
-                        <span className="text-[#65a07e]">{T.labelDate}</span>
-                        <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[#65a07e]">{T.labelTime}</span>
-                        <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
-                      </div>
-                    </>
-                  )}
-
-                  <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
-                    <span className="text-[#65a07e]">{T.labelInvestment}</span>
-                    <div className="text-right">
-                      <span className="font-serif text-xl text-[#1B4D2E]">
-                        {isSeries
-                          ? `$${state.selectedService!.price}`
-                          : `$${state.selectedService!.price + state.addonTotal}`}
-                      </span>
-                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">{T.threeSessionPackage}</p>}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 pt-5 border-t border-[#f4efe3] text-sm text-[#42825e]">
-                  <p>📍 5303 Comercio Lane, Suite #2</p>
-                  <p>Woodland Hills, CA 91364</p>
-                  <p className="mt-1">📞 (818) 577-5421</p>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                {!isSeries && (
-                  <a
-                    href={toGoogleCalendarUrl(
-                      `Brasilian Skin Soul — ${state.selectedService!.name}`,
-                      state.selectedDate,
-                      state.selectedTime,
-                      state.selectedService!.duration_min + state.addonDuration,
-                      '5303 Comercio Lane Suite #2, Woodland Hills, CA 91364'
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-[#f2f7f4] border border-[#c2daca] text-[#1B4D2E] font-medium px-6 py-3 rounded-full text-sm hover:bg-[#e0ede5] transition-colors"
-                  >
-                    {T.addToCalendar}
-                  </a>
-                )}
-                <a
-                  href="/"
-                  className="bg-[#1B4D2E] text-white font-medium px-6 py-3 rounded-full text-sm hover:bg-[#27533c] transition-colors"
-                >
-                  {T.backToHome}
-                </a>
-              </div>
             </div>
           )}
 
