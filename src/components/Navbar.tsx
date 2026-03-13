@@ -2,17 +2,21 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-const links = [
-  { label: "Home",     href: "/" },
-  { label: "Services", href: "/services" },
-  { label: "Blog",     href: "/blog" },
-  { label: "About",    href: "/about" },
-  { label: "Contact",  href: "/contact" },
-];
+import { useLang, type Lang } from "@/lib/language-context";
+import { translations } from "@/lib/translations";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { lang, setLang } = useLang();
+  const T = translations[lang].nav;
+
+  const links = [
+    { label: T.home,     href: "/" },
+    { label: T.services, href: "/services" },
+    { label: T.blog,     href: "/blog" },
+    { label: T.about,    href: "/about" },
+    { label: T.contact,  href: "/contact" },
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-cream-100/95 backdrop-blur-sm border-b border-forest-200/40">
@@ -27,7 +31,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {links.map(l => (
             <Link key={l.href} href={l.href}
               className="text-sm text-forest-700 hover:text-forest tracking-wide transition-colors">
@@ -36,8 +40,24 @@ export default function Navbar() {
           ))}
           <Link href="/booking"
             className="bg-forest text-cream-100 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-forest-700 transition-colors">
-            Book Now
+            {T.bookNow}
           </Link>
+          {/* Language switcher */}
+          <div className="flex items-center gap-1">
+            {(['en', 'es', 'pt'] as Lang[]).map(l => (
+              <button
+                key={l}
+                onClick={() => setLang(l)}
+                className={`text-xs px-2 py-1 rounded-full transition-colors ${
+                  lang === l
+                    ? 'bg-[#C9A96E] text-[#1B4D2E] font-semibold'
+                    : 'text-[#42825e] hover:text-[#1B4D2E]'
+                }`}
+              >
+                {l === 'en' ? '🇺🇸' : l === 'es' ? '🇪🇸' : '🇧🇷'}
+              </button>
+            ))}
+          </div>
         </nav>
 
         {/* Mobile menu button */}
@@ -65,8 +85,24 @@ export default function Navbar() {
           ))}
           <Link href="/booking" onClick={() => setOpen(false)}
             className="bg-forest text-cream-100 px-5 py-3 rounded-full text-sm font-medium text-center">
-            Book Now
+            {T.bookNow}
           </Link>
+          {/* Mobile language switcher */}
+          <div className="flex items-center gap-2 pt-1">
+            {(['en', 'es', 'pt'] as Lang[]).map(l => (
+              <button
+                key={l}
+                onClick={() => { setLang(l); setOpen(false); }}
+                className={`text-sm px-3 py-1.5 rounded-full transition-colors ${
+                  lang === l
+                    ? 'bg-[#C9A96E] text-[#1B4D2E] font-semibold'
+                    : 'text-[#42825e] border border-[#c2daca] hover:text-[#1B4D2E]'
+                }`}
+              >
+                {l === 'en' ? '🇺🇸 EN' : l === 'es' ? '🇪🇸 ES' : '🇧🇷 PT'}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </header>

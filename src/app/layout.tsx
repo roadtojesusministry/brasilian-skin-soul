@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/lib/language-context";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -41,8 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <body>
-        <main>{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <main>{children}</main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

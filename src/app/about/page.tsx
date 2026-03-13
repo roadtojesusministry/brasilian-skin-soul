@@ -1,21 +1,15 @@
+'use client';
+
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
-
-export const metadata = {
-  title: "About Claudia Pieri | Brasilian Skin Soul — Woodland Hills, CA",
-  description: "Meet Claudia Pieri — passionate Brasilian Skin Care Therapist with 28+ years of experience. Her personal journey of healing deepens every treatment she gives.",
-};
-
-const milestones = [
-  { year: "1996", label: "Career began at Best Face & Body Spa" },
-  { year: "2000s", label: "Mastered LED therapy, glycolic peels & microdermabrasion" },
-  { year: "2010s", label: "Embraced cutting-edge technologies: Therma-Lift, Cold Plasma, Microcurrent" },
-  { year: "2020", label: "Founded Brasilian SkinSoul — her own practice" },
-  { year: "Today", label: "28+ years of experience, 60+ five-star reviews, clients for 20+ years" },
-];
+import { useLang } from "@/lib/language-context";
+import { translations } from "@/lib/translations";
 
 export default function About() {
+  const { lang } = useLang();
+  const T = translations[lang].about;
+
   return (
     <>
     <Navbar />
@@ -28,11 +22,9 @@ export default function About() {
           <div className="absolute inset-0 bg-forest/80" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold mb-4">The Heart Behind the Brand</p>
-          <h1 className="font-serif text-6xl md:text-7xl text-white font-light mb-6">Meet Claudia</h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto">
-            Passionate Brasilian Skin Care Therapist. Healer. Founder. A woman whose personal journey of transformation deepens every treatment she gives.
-          </p>
+          <p className="text-xs uppercase tracking-[0.25em] text-gold mb-4">{T.heroTag}</p>
+          <h1 className="font-serif text-6xl md:text-7xl text-white font-light mb-6">{T.heroTitle}</h1>
+          <p className="text-white/70 text-lg max-w-xl mx-auto">{T.heroSubtitle}</p>
         </div>
       </section>
 
@@ -47,16 +39,16 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6">
                 <p className="font-serif text-white text-3xl mb-1">Claudia Pieri</p>
-                <p className="text-white/70 text-sm tracking-wide">Founder & Lead Skincare Therapist</p>
+                <p className="text-white/70 text-sm tracking-wide">{T.founderTitle}</p>
               </div>
             </div>
 
             {/* Stats row */}
             <div className="grid grid-cols-3 gap-4 mt-6">
               {[
-                { value: "28+", label: "Years Experience" },
-                { value: "60+", label: "5-Star Reviews" },
-                { value: "20+", label: "Year Loyal Clients" },
+                { value: "28+", label: T.statsYearsLabel },
+                { value: "60+", label: T.statsReviewsLabel },
+                { value: "20+", label: T.statsClientsLabel },
               ].map((s) => (
                 <div key={s.label} className="bg-white rounded-2xl p-4 text-center border border-forest-100 shadow-sm">
                   <p className="font-serif text-3xl text-forest font-light">{s.value}</p>
@@ -69,35 +61,32 @@ export default function About() {
           {/* Story text */}
           <div className="space-y-8">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gold mb-4">Her Story</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-gold mb-4">{T.storyTag}</p>
               <h2 className="font-serif text-4xl text-forest font-light italic leading-tight mb-6">
-                A Healer with Love<br />in Her Heart
+                {T.storyTitle.split('\n').map((line, i) => (
+                  <span key={i}>{line}{i === 0 && <br />}</span>
+                ))}
               </h2>
             </div>
 
-            {[
-              "Your passionate Brasilian Skin Care Therapist with over 28 years of experience, I am dedicated to helping you achieve radiant skin and renewed self-confidence. My journey began at Best Face & Body Spa, where I perfected my craft through various treatments, including LED therapy, glycolic peels, microdermabrasion, and more specialized techniques.",
-              "My love for skincare drives me to explore the latest technologies, ensuring that I continually expand my knowledge for your benefit. Life has gifted me with profound challenges, including a brain tumor that changed my face and brought about facial paralysis. This journey deepened my understanding of both physical and emotional healing, igniting my commitment to foster connections that heal the heart and soul.",
-              "As the proud founder of Brasilian SkinSoul, my mission is clear: to heal your skin while boosting your self-esteem. I believe that true beauty emerges from within, and when your skin is healthy, your inner beauty shines brighter. There's nothing I cherish more than using advanced techniques and premium products to bring rejuvenation and transformation to your skin.",
-              "Heartfelt words from clients like you — \"You have a magic touch\" and \"Thank you for healing my skin\" — inspire me daily. Knowing that I can positively impact your life motivates me to deliver exceptional service with every visit. I value the connections we build, and I'm committed to listening to your unique needs as both a healer and a supporter of your overall well-being.",
-            ].map((para, i) => (
+            {[T.para1, T.para2, T.para3, T.para4].map((para, i) => (
               <p key={i} className="text-forest-600 leading-relaxed text-lg">{para}</p>
             ))}
 
             {/* Highlighted quote */}
             <div className="border-l-4 border-gold pl-6 py-2 bg-cream-200 rounded-r-xl">
               <p className="font-serif text-2xl text-forest italic leading-relaxed">
-                &ldquo;You don&apos;t have to face skin challenges alone. At Brasilian SkinSoul, I invite you to experience the gentle yet powerful touch that can make a real difference in your life. Let&apos;s embark on this journey together and uncover the beauty that lies within you!&rdquo;
+                &ldquo;{T.quote}&rdquo;
               </p>
-              <p className="text-forest-400 text-sm mt-3 font-medium">— Claudia Pieri</p>
+              <p className="text-forest-400 text-sm mt-3 font-medium">{T.quoteAuthor}</p>
             </div>
 
             <div className="flex flex-wrap gap-4 pt-4">
               <Link href="/booking" className="bg-forest text-cream-100 px-8 py-4 rounded-full text-sm font-medium hover:bg-forest-700 transition-colors">
-                Book with Claudia
+                {T.bookWithClaudia}
               </Link>
               <Link href="/services" className="border border-forest text-forest px-8 py-4 rounded-full text-sm font-medium hover:bg-forest hover:text-cream-100 transition-colors">
-                View Services
+                {T.viewServices}
               </Link>
             </div>
           </div>
@@ -108,13 +97,13 @@ export default function About() {
       <section className="py-24 bg-forest">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">The Journey</p>
-            <h2 className="font-serif text-4xl text-white font-light">28 Years of Mastery</h2>
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">{T.timelineTag}</p>
+            <h2 className="font-serif text-4xl text-white font-light">{T.timelineTitle}</h2>
           </div>
           <div className="relative">
             <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-forest-600" />
             <div className="space-y-10">
-              {milestones.map((m, i) => (
+              {T.milestones.map((m, i) => (
                 <div key={i} className={`relative flex items-start gap-6 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}>
                   <div className="md:w-1/2 md:text-right pl-14 md:pl-0 md:pr-10">
                     {i % 2 === 0 && (
@@ -146,12 +135,12 @@ export default function About() {
         <div className="max-w-xl mx-auto px-6">
           <Image src="/logo-circle.png" alt="" width={72} height={72} className="mx-auto mb-6 rounded-full" />
           <h2 className="font-serif text-4xl text-forest font-light mb-4">
-            Ready to Start<br /><span className="italic">Your Journey?</span>
+            {T.ctaTitle1}<br /><span className="italic">{T.ctaTitle2}</span>
           </h2>
-          <p className="text-forest-500 mb-8">Experience the gentle yet powerful touch that makes a real difference.</p>
+          <p className="text-forest-500 mb-8">{T.ctaDesc}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/booking" className="bg-forest text-cream-100 px-8 py-4 rounded-full text-sm font-medium hover:bg-forest-700 transition-colors">
-              Book an Appointment
+              {T.ctaBookBtn}
             </Link>
             <a href="tel:+18185775421" className="border border-forest text-forest px-8 py-4 rounded-full text-sm hover:bg-forest hover:text-cream-100 transition-colors">
               (818) 577-5421

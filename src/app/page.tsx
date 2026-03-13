@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ReviewsMarquee from '@/components/ReviewsMarquee';
 import TechInfoButton from '@/components/TechInfoButton';
 import FadeIn from '@/components/FadeIn';
 import { getServicesByCategory } from '@/lib/services-data';
-import { t, Lang } from '@/lib/homepage-translations';
+import { useLang } from '@/lib/language-context';
+import { translations } from '@/lib/translations';
 
 // Pull top 4 Signature Facials directly from the single source of truth
 const featuredServices = getServicesByCategory('Signature Facials').slice(0, 4).map(s => ({
@@ -115,19 +116,12 @@ const PhoneIcon = () => (
 );
 
 export default function Home() {
-  const [lang, setLang] = useState<Lang>('en');
+  const { lang, setLang } = useLang();
+  const T = translations[lang].homepage;
 
-  useEffect(() => {
-    const saved = localStorage.getItem('bss-lang') as Lang | null;
-    if (saved && ['en', 'es', 'pt'].includes(saved)) setLang(saved);
-  }, []);
-
-  function switchLang(l: Lang) {
+  function switchLang(l: Parameters<typeof setLang>[0]) {
     setLang(l);
-    localStorage.setItem('bss-lang', l);
   }
-
-  const T = t[lang];
 
   // Build service categories with translated labels
   const serviceCategories = [

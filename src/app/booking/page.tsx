@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Navbar from '@/components/Navbar';
 import { CheckCircle, ChevronLeft, Loader2 } from 'lucide-react';
 import { getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
+import { useLang } from '@/lib/language-context';
+import { translations } from '@/lib/translations';
 
 // ─── Add-Ons Data ────────────────────────────────────────────────────────────
 
@@ -42,6 +44,7 @@ interface BookingState {
   clientPhone: string;
   notes: string;
   bookingId: string;
+  agreedToPolicy: boolean;
   // Series-specific
   seriesSessions: SeriesSession[];
   currentSessionIndex: number;
@@ -226,12 +229,12 @@ const SKIP_ADDON_CATEGORIES = ['Transformation Series', 'Body & Massage', 'Waxin
 
 // ─── Step Indicator ──────────────────────────────────────────────────────────
 
-function StepIndicator({ step, selectedService }: { step: number; selectedService?: Service | null }) {
+function StepIndicator({ step, selectedService, stepLabels }: { step: number; selectedService?: Service | null; stepLabels: string[] }) {
   const skipAddons = SKIP_ADDON_CATEGORIES.includes(selectedService?.category ?? '');
   // When skipping add-ons, hide step 2 — show steps 1, 3, 4, 5 as 1, 2, 3, 4
-  const allSteps = ['Service', 'Add-Ons', 'Date', 'Time', 'Details'];
+  const allSteps = stepLabels;
   const visibleSteps = skipAddons
-    ? allSteps.filter(s => s !== 'Add-Ons')
+    ? allSteps.filter((_, i) => i !== 1)
     : allSteps;
 
   // Map actual step number → display position
@@ -292,6 +295,11 @@ function Pill({ label, value }: { label: string; value: string }) {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function BookingPage() {
+  const { lang } = useLang();
+  const T = translations[lang].booking;
+
+  const stepLabels = [T.stepService, T.stepAddOns, T.stepDate, T.stepTime, T.stepDetails];
+
   const [state, setState] = useState<BookingState>({
     step: 1,
     selectedService: null,
@@ -305,6 +313,7 @@ export default function BookingPage() {
     clientPhone: '',
     notes: '',
     bookingId: '',
+    agreedToPolicy: false,
     seriesSessions: [],
     currentSessionIndex: 0,
   });
@@ -461,14 +470,14 @@ export default function BookingPage() {
           {state.step === 1 && (
             <div>
               <div className="text-center mb-10">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Online Booking</p>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">{T.onlineBookingTag}</p>
                 <h1 className="font-serif text-5xl md:text-6xl text-[#1B4D2E] font-light mb-3">
-                  Book Your Treatment
+                  {T.bookTitle}
                 </h1>
-                <p className="text-[#42825e]">Choose a service to begin</p>
+                <p className="text-[#42825e]">{T.bookSubtitle}</p>
               </div>
 
-              <StepIndicator step={1} selectedService={state.selectedService} />
+              <StepIndicator step={1} selectedService={state.selectedService} stepLabels={stepLabels} />
 
               {Object.entries(grouped).map(([category, services]) => {
                 const isWaxing = category === 'Waxing';
@@ -558,7 +567,7 @@ export default function BookingPage() {
                     }}
                     className="bg-[#C9A96E] text-[#1B4D2E] font-semibold px-10 py-4 rounded-full shadow-lg hover:bg-[#D4B87A] transition-colors"
                   >
-                    Continue →
+                    {T.continueBtn}
                   </button>
                 </div>
               )}
@@ -572,18 +581,18 @@ export default function BookingPage() {
                 onClick={() => set({ step: 1 })}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
-                <ChevronLeft size={16} /> Back
+                <ChevronLeft size={16} /> {T.backBtn}
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 2 of 5</p>
-                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-2">Enhance Your Treatment</h2>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">{T.step2Tag}</p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-2">{T.step2Title}</h2>
                 <p className="text-sm text-[#65a07e]">
-                  Optional — add targeted boosters to your {state.selectedService!.name}
+                  {T.step2Optional(state.selectedService!.name)}
                 </p>
               </div>
 
-              <StepIndicator step={2} selectedService={state.selectedService} />
+              <StepIndicator step={2} selectedService={state.selectedService} stepLabels={stepLabels} />
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {ADDONS.filter(addon => state.selectedService?.addons?.includes(addon.name)).map(addon => {
@@ -611,13 +620,13 @@ export default function BookingPage() {
 
               <div className="bg-white border border-[#e0ede5] rounded-2xl p-5 mb-6 text-center">
                 <p className="text-sm text-[#65a07e] mb-1">
-                  Treatment total:{' '}
+                  {T.treatmentTotal}{' '}
                   <span className="font-serif text-xl text-[#1B4D2E] font-light">
                     ${state.selectedService!.price + state.addonTotal}
                   </span>
                 </p>
                 <p className="text-xs text-[#96c0a6]">
-                  Est. duration:{' '}
+                  {T.estDuration}{' '}
                   {formatTotalDuration(state.selectedService!.duration_min + state.addonDuration)}
                 </p>
               </div>
@@ -627,14 +636,14 @@ export default function BookingPage() {
                   onClick={() => set({ step: 3 })}
                   className="border border-[#c2daca] text-[#42825e] font-medium px-8 py-3 rounded-full hover:bg-[#f2f7f4] transition-colors text-sm"
                 >
-                  Skip Add-Ons →
+                  {T.skipAddOns}
                 </button>
                 {state.selectedAddons.length > 0 && (
                   <button
                     onClick={() => set({ step: 3 })}
                     className="bg-[#C9A96E] text-[#1B4D2E] font-semibold px-8 py-3 rounded-full hover:bg-[#D4B87A] transition-colors text-sm shadow-md"
                   >
-                    Continue with Add-Ons →
+                    {T.continueWithAddOns}
                   </button>
                 )}
               </div>
@@ -663,28 +672,28 @@ export default function BookingPage() {
                 }}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
-                <ChevronLeft size={16} /> Back
+                <ChevronLeft size={16} /> {T.backBtn}
               </button>
 
               <div className="text-center mb-8">
                 <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">
-                  {isSeries ? `Session ${state.currentSessionIndex + 1} of 3` : 'Step 3 of 5'}
+                  {isSeries ? T.seriesTag(state.currentSessionIndex + 1) : T.step3Tag}
                 </p>
                 <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">
-                  {isSeries ? `Choose a Date — Session ${state.currentSessionIndex + 1}` : 'Select a Date'}
+                  {isSeries ? T.step3SeriesTitle(state.currentSessionIndex + 1) : T.step3Title}
                 </h2>
                 <div className="flex flex-wrap justify-center gap-2">
-                  <Pill label="Service" value={state.selectedService!.name} />
+                  <Pill label={T.labelService} value={state.selectedService!.name} />
                   {isSeries && state.currentSessionIndex > 0 && (
                     <Pill
-                      label={`Session ${state.currentSessionIndex}`}
+                      label={T.labelSession(state.currentSessionIndex)}
                       value={`${formatDisplayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')} · ${state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}`}
                     />
                   )}
                 </div>
               </div>
 
-              <StepIndicator step={3} selectedService={state.selectedService} />
+              <StepIndicator step={3} selectedService={state.selectedService} stepLabels={stepLabels} />
 
               {/* Series progress dots */}
               {isSeries && (
@@ -705,27 +714,24 @@ export default function BookingPage() {
                 </div>
               )}
 
+              {/* Hours + reassurance — shown ABOVE calendar so users read before picking */}
+              <p className="text-center text-xs text-[#65a07e] mb-4">
+                {T.openHours}
+              </p>
+              {isSeries && (
+                <div className="mb-6 bg-[#f2f7f4] border border-[#c2daca] rounded-xl px-5 py-4 max-w-sm mx-auto text-center">
+                  <p className="text-xs text-[#C9A96E] font-medium mb-1">{T.noPressure}</p>
+                  <p className="text-xs text-[#42825e] leading-relaxed">{T.noPressureDesc}</p>
+                  <p className="text-xs text-[#65a07e] mt-2">{T.spacingRecommendation}</p>
+                </div>
+              )}
+
               <div className="flex justify-center">
                 <Calendar
                   selectedDate={state.selectedDate}
                   onSelect={(d) => set({ selectedDate: d, selectedTime: '', step: 4 })}
                 />
               </div>
-
-              <p className="text-center text-xs text-[#65a07e] mt-4">
-                Open Tuesday – Friday 9am–6pm · Saturday 9am–5pm
-              </p>
-              {isSeries && (
-                <div className="mt-4 bg-[#f2f7f4] border border-[#c2daca] rounded-xl px-5 py-4 max-w-sm mx-auto text-center">
-                  <p className="text-xs text-[#C9A96E] font-medium mb-1">No pressure on dates 🌿</p>
-                  <p className="text-xs text-[#42825e] leading-relaxed">
-                    Pick something that works for now — you can reschedule any session anytime using the link in your confirmation email.
-                  </p>
-                  <p className="text-xs text-[#65a07e] mt-2">
-                    We recommend spacing sessions 1–2 weeks apart for best results.
-                  </p>
-                </div>
-              )}
             </div>
           )}
 
@@ -736,23 +742,23 @@ export default function BookingPage() {
                 onClick={() => set({ step: 3, selectedTime: '' })}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
-                <ChevronLeft size={16} /> Back
+                <ChevronLeft size={16} /> {T.backBtn}
               </button>
 
               <div className="text-center mb-8">
                 <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">
-                  {isSeries ? `Session ${state.currentSessionIndex + 1} of 3` : 'Step 4 of 5'}
+                  {isSeries ? T.seriesTag(state.currentSessionIndex + 1) : T.step4Tag}
                 </p>
                 <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">
-                  {isSeries ? `Choose a Time — Session ${state.currentSessionIndex + 1}` : 'Select a Time'}
+                  {isSeries ? T.step4SeriesTitle(state.currentSessionIndex + 1) : T.step4Title}
                 </h2>
                 <div className="flex flex-wrap justify-center gap-2">
-                  <Pill label="Service" value={state.selectedService!.name} />
-                  <Pill label={isSeries ? `Session ${state.currentSessionIndex + 1} Date` : 'Date'} value={formatDisplayDate(state.selectedDate)} />
+                  <Pill label={T.labelService} value={state.selectedService!.name} />
+                  <Pill label={isSeries ? T.labelSession(state.currentSessionIndex + 1) : T.labelDate} value={formatDisplayDate(state.selectedDate)} />
                 </div>
               </div>
 
-              <StepIndicator step={4} selectedService={state.selectedService} />
+              <StepIndicator step={4} selectedService={state.selectedService} stepLabels={stepLabels} />
 
               {/* Series progress dots */}
               {isSeries && (
@@ -776,19 +782,19 @@ export default function BookingPage() {
               {slotsLoading && (
                 <div className="flex flex-col items-center gap-3 py-16">
                   <Loader2 size={32} className="animate-spin text-[#C9A96E]" />
-                  <p className="text-[#42825e] text-sm">Checking availability…</p>
+                  <p className="text-[#42825e] text-sm">{T.checkingAvailability}</p>
                 </div>
               )}
 
               {!slotsLoading && slots.length === 0 && (
                 <div className="text-center py-16">
-                  <p className="text-[#1B4D2E] font-serif text-2xl font-light mb-2">No availability</p>
-                  <p className="text-[#65a07e] text-sm">There are no open slots on this date. Please choose another day.</p>
+                  <p className="text-[#1B4D2E] font-serif text-2xl font-light mb-2">{T.noAvailabilityTitle}</p>
+                  <p className="text-[#65a07e] text-sm">{T.noAvailabilityDesc}</p>
                   <button
                     onClick={() => set({ step: 3 })}
                     className="mt-6 text-[#C9A96E] border border-[#C9A96E] px-6 py-2 rounded-full text-sm hover:bg-[#C9A96E] hover:text-white transition-colors"
                   >
-                    Pick a Different Date
+                    {T.pickDifferentDate}
                   </button>
                 </div>
               )}
@@ -828,22 +834,22 @@ export default function BookingPage() {
                 }}
                 className="flex items-center gap-1 text-[#42825e] hover:text-[#1B4D2E] text-sm mb-8 transition-colors"
               >
-                <ChevronLeft size={16} /> Back
+                <ChevronLeft size={16} /> {T.backBtn}
               </button>
 
               <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">Step 5 of 5</p>
-                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">Complete Your Booking</h2>
+                <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-3">{T.step5Tag}</p>
+                <h2 className="font-serif text-4xl text-[#1B4D2E] font-light mb-4">{T.step5Title}</h2>
               </div>
 
-              <StepIndicator step={5} selectedService={state.selectedService} />
+              <StepIndicator step={5} selectedService={state.selectedService} stepLabels={stepLabels} />
 
               {/* Booking summary card */}
               <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-6 mb-8">
-                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-4">Booking Summary</p>
+                <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-4">{T.bookingSummary}</p>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-[#65a07e]">Service</span>
+                    <span className="text-[#65a07e]">{T.labelService}</span>
                     <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
                   </div>
 
@@ -852,7 +858,7 @@ export default function BookingPage() {
                     <div className="space-y-2 pt-1">
                       {state.seriesSessions.map((s, i) => (
                         <div key={i} className="flex justify-between items-baseline">
-                          <span className="text-[#65a07e]">Session {i + 1}</span>
+                          <span className="text-[#65a07e]">{T.labelSession(i + 1)}</span>
                           <span className="text-[#1B4D2E] font-medium text-right ml-4">
                             {formatDisplayDate(s.date)} at {s.time}
                           </span>
@@ -863,7 +869,7 @@ export default function BookingPage() {
                     <>
                       {state.selectedAddons.length > 0 && (
                         <div className="flex justify-between items-start">
-                          <span className="text-[#65a07e]">Add-Ons</span>
+                          <span className="text-[#65a07e]">{T.labelAddOns}</span>
                           <div className="text-right">
                             {state.selectedAddons.map(id => {
                               const a = ADDONS.find(x => x.id === id);
@@ -875,25 +881,25 @@ export default function BookingPage() {
                         </div>
                       )}
                       <div className="flex justify-between">
-                        <span className="text-[#65a07e]">Date</span>
+                        <span className="text-[#65a07e]">{T.labelDate}</span>
                         <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#65a07e]">Time</span>
+                        <span className="text-[#65a07e]">{T.labelTime}</span>
                         <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
                       </div>
                     </>
                   )}
 
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
-                    <span className="text-[#65a07e]">Investment</span>
+                    <span className="text-[#65a07e]">{T.labelInvestment}</span>
                     <div className="text-right">
                       <span className="font-serif text-xl text-[#1B4D2E]">
                         {isSeries
                           ? `$${state.selectedService!.price}`
                           : `$${state.selectedService!.price + state.addonTotal}`}
                       </span>
-                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">3-session package</p>}
+                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">{T.threeSessionPackage}</p>}
                     </div>
                   </div>
                 </div>
@@ -902,55 +908,68 @@ export default function BookingPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
-                    Full Name <span className="text-red-400">*</span>
+                    {T.labelFullName} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
                     value={state.clientName}
                     onChange={e => set({ clientName: e.target.value })}
-                    placeholder="Jane Smith"
+                    placeholder={T.placeholderName}
                     className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
-                    Email <span className="text-red-400">*</span>
+                    {T.labelEmail} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="email"
                     required
                     value={state.clientEmail}
                     onChange={e => set({ clientEmail: e.target.value })}
-                    placeholder="jane@example.com"
+                    placeholder={T.placeholderEmail}
                     className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
-                    Phone <span className="text-red-400">*</span>
+                    {T.labelPhone} <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="tel"
                     required
                     value={state.clientPhone}
                     onChange={e => set({ clientPhone: e.target.value })}
-                    placeholder="(818) 555-0100"
+                    placeholder={T.placeholderPhone}
                     className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-xs uppercase tracking-[0.12em] text-[#42825e] mb-2">
-                    Notes (optional)
+                    {T.labelNotes}
                   </label>
                   <textarea
                     value={state.notes}
                     onChange={e => set({ notes: e.target.value })}
                     rows={3}
-                    placeholder="Any skin concerns, allergies, or special requests…"
+                    placeholder={T.placeholderNotes}
                     className="w-full bg-white border-2 border-[#e0ede5] rounded-xl px-4 py-3 text-[#1B4D2E] placeholder-[#96c0a6] focus:outline-none focus:border-[#C9A96E] transition-colors resize-none"
                   />
                 </div>
+
+                {/* Policy agreement checkbox */}
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={state.agreedToPolicy}
+                    onChange={e => set({ agreedToPolicy: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 rounded border-[#c2daca] accent-[#1B4D2E] flex-shrink-0 cursor-pointer"
+                  />
+                  <span className="text-sm text-[#42825e] leading-snug group-hover:text-[#1B4D2E] transition-colors">
+                    {T.policyAgreement}
+                  </span>
+                </label>
 
                 {submitError && (
                   <p className="text-red-500 text-sm bg-red-50 border border-red-200 rounded-xl px-4 py-3">
@@ -960,18 +979,18 @@ export default function BookingPage() {
 
                 <button
                   type="submit"
-                  disabled={submitLoading}
+                  disabled={submitLoading || !state.agreedToPolicy}
                   className="w-full bg-[#1B4D2E] text-white font-semibold py-4 rounded-xl hover:bg-[#27533c] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm tracking-wide"
                 >
                   {submitLoading ? (
-                    <><Loader2 size={18} className="animate-spin" /> Confirming…</>
+                    <><Loader2 size={18} className="animate-spin" /> {T.confirming}</>
                   ) : (
-                    isSeries ? 'Confirm All 3 Sessions →' : 'Confirm & Book'
+                    isSeries ? T.confirmAllSessions : T.confirmBook
                   )}
                 </button>
 
                 <p className="text-center text-xs text-[#65a07e]">
-                  Payment is collected at the time of your appointment.
+                  {T.paymentNote}
                 </p>
               </form>
             </div>
@@ -986,22 +1005,22 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">All Set!</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">{T.allSet}</p>
               <h2 className="font-serif text-5xl text-[#1B4D2E] font-light mb-2">
-                {isSeries ? 'Your series is booked! ✨' : 'You\'re booked! ✨'}
+                {isSeries ? T.bookedSeries : T.bookedSingle}
               </h2>
               <p className="text-[#42825e] mb-8">
-                A confirmation email has been sent to <strong>{state.clientEmail}</strong>
+                {T.confirmationEmailSent} <strong>{state.clientEmail}</strong>
               </p>
 
               {/* Confirmation card */}
               <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-8 mb-8 text-left max-w-md mx-auto">
                 <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-5">
-                  {isSeries ? 'Your 3-Session Journey' : 'Your Appointment'}
+                  {isSeries ? T.yourSeriesJourney : T.yourAppointment}
                 </p>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-[#65a07e]">Service</span>
+                    <span className="text-[#65a07e]">{T.labelService}</span>
                     <span className="text-[#1B4D2E] font-medium">{state.selectedService!.name}</span>
                   </div>
 
@@ -1009,7 +1028,7 @@ export default function BookingPage() {
                     <div className="space-y-2 pt-1">
                       {state.seriesSessions.map((s, i) => (
                         <div key={i} className="flex justify-between items-baseline">
-                          <span className="text-[#65a07e]">Session {i + 1}</span>
+                          <span className="text-[#65a07e]">{T.labelSession(i + 1)}</span>
                           <span className="text-[#1B4D2E] font-medium text-right ml-4">
                             {formatDisplayDate(s.date)} at {s.time}
                           </span>
@@ -1020,7 +1039,7 @@ export default function BookingPage() {
                     <>
                       {state.selectedAddons.length > 0 && (
                         <div className="flex justify-between items-start">
-                          <span className="text-[#65a07e]">Add-Ons</span>
+                          <span className="text-[#65a07e]">{T.labelAddOns}</span>
                           <div className="text-right">
                             {state.selectedAddons.map(id => {
                               const a = ADDONS.find(x => x.id === id);
@@ -1032,25 +1051,25 @@ export default function BookingPage() {
                         </div>
                       )}
                       <div className="flex justify-between">
-                        <span className="text-[#65a07e]">Date</span>
+                        <span className="text-[#65a07e]">{T.labelDate}</span>
                         <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#65a07e]">Time</span>
+                        <span className="text-[#65a07e]">{T.labelTime}</span>
                         <span className="text-[#1B4D2E] font-medium">{state.selectedTime}</span>
                       </div>
                     </>
                   )}
 
                   <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
-                    <span className="text-[#65a07e]">Investment</span>
+                    <span className="text-[#65a07e]">{T.labelInvestment}</span>
                     <div className="text-right">
                       <span className="font-serif text-xl text-[#1B4D2E]">
                         {isSeries
                           ? `$${state.selectedService!.price}`
                           : `$${state.selectedService!.price + state.addonTotal}`}
                       </span>
-                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">3-session package</p>}
+                      {isSeries && <p className="text-xs text-[#65a07e] mt-0.5">{T.threeSessionPackage}</p>}
                     </div>
                   </div>
                 </div>
@@ -1076,14 +1095,14 @@ export default function BookingPage() {
                     rel="noopener noreferrer"
                     className="bg-[#f2f7f4] border border-[#c2daca] text-[#1B4D2E] font-medium px-6 py-3 rounded-full text-sm hover:bg-[#e0ede5] transition-colors"
                   >
-                    📅 Add to Google Calendar
+                    {T.addToCalendar}
                   </a>
                 )}
                 <a
                   href="/"
                   className="bg-[#1B4D2E] text-white font-medium px-6 py-3 rounded-full text-sm hover:bg-[#27533c] transition-colors"
                 >
-                  Back to Home
+                  {T.backToHome}
                 </a>
               </div>
             </div>

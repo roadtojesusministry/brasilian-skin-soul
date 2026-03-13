@@ -1,14 +1,13 @@
+'use client';
+
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
 import TechInfoButton from "@/components/TechInfoButton";
 import { Crown, Leaf, Wind, Zap, Flame, Activity, Droplets, Sun, ShieldCheck, Dna, Flower, Award } from "lucide-react";
 import { getServicesByCategory, formatDuration, type Service } from "@/lib/services-data";
-
-export const metadata = {
-  title: "Services | Brasilian Skin Soul — Woodland Hills, CA",
-  description: "Explore our full menu of luxury facial treatments, body therapies, massage, waxing and treatment packages by Claudia Pieri in Woodland Hills, CA.",
-};
+import { useLang } from "@/lib/language-context";
+import { translations } from "@/lib/translations";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _Activity = Activity;
@@ -69,6 +68,9 @@ const badgeColors: Record<string, string> = {
 };
 
 export default function Services() {
+  const { lang } = useLang();
+  const T = translations[lang].services;
+
   const transformationSeries = getServicesByCategory('Transformation Series');
   const signatureFacials = getServicesByCategory('Signature Facials');
   const bodyMassage = getServicesByCategory('Body & Massage');
@@ -96,13 +98,11 @@ export default function Services() {
           <div className="absolute inset-0 bg-forest/80" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xs uppercase tracking-[0.25em] text-gold mb-4">Woodland Hills, CA</p>
-          <h1 className="font-serif text-6xl md:text-7xl text-white font-light mb-6">Our Services</h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto mb-8">
-            Every treatment is customized to your unique skin. Claudia&apos;s 28 years of expertise ensure you receive exactly what your skin needs.
-          </p>
+          <p className="text-xs uppercase tracking-[0.25em] text-gold mb-4">{T.heroTag}</p>
+          <h1 className="font-serif text-6xl md:text-7xl text-white font-light mb-6">{T.heroTitle}</h1>
+          <p className="text-white/70 text-lg max-w-xl mx-auto mb-8">{T.heroDesc}</p>
           <Link href="/booking" className="bg-gold text-forest px-8 py-4 rounded-full text-sm font-semibold hover:bg-gold-light transition-colors">
-            Book a Treatment
+            {T.heroBookBtn}
           </Link>
         </div>
       </section>
@@ -115,12 +115,10 @@ export default function Services() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
               </svg>
-              <p className="text-xs uppercase tracking-[0.25em] font-medium">Advanced Technology · 3-Session Protocols</p>
+              <p className="text-xs uppercase tracking-[0.25em] font-medium">{T.seriesTag}</p>
             </div>
-            <h2 className="font-serif text-5xl text-white font-light mb-4">The Transformation Series</h2>
-            <p className="text-white/60 max-w-xl mx-auto">
-              One session is great. Three sessions is transformation. Each series is a progressive protocol built around one of our four core technology groups — results that compound with every visit.
-            </p>
+            <h2 className="font-serif text-5xl text-white font-light mb-4">{T.seriesTitle}</h2>
+            <p className="text-white/60 max-w-xl mx-auto">{T.seriesDesc}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {transformationSeries.map((p) => (
@@ -135,7 +133,7 @@ export default function Services() {
                   </div>
                   <div className="flex-shrink-0 ml-4">
                     <div className="inline-flex items-center gap-1 bg-gold/15 text-gold text-xs font-semibold px-3 py-1 rounded-full">
-                      {p.sessions} Sessions
+                      {T.seriesSessionsBadge(p.sessions ?? 3)}
                     </div>
                   </div>
                 </div>
@@ -152,7 +150,7 @@ export default function Services() {
                 </div>
                 {p.compound && (
                   <div className="border-t border-white/10 pt-5 mt-2 mb-5">
-                    <p className="text-xs uppercase tracking-[0.15em] text-gold/70 font-semibold mb-2">Why It Compounds</p>
+                    <p className="text-xs uppercase tracking-[0.15em] text-gold/70 font-semibold mb-2">{T.seriesWhyCompounds}</p>
                     <p className="text-gold font-serif text-base italic leading-snug mb-2">&ldquo;{p.compound.headline}&rdquo;</p>
                     <p className="text-white/50 text-xs leading-relaxed">{p.compound.body}</p>
                   </div>
@@ -160,7 +158,7 @@ export default function Services() {
                 <div className="flex items-center justify-between pt-5 border-t border-white/10">
                   <span className="font-bold text-gold text-xl">${p.price}</span>
                   <Link href="/booking" className="bg-gold text-forest px-6 py-2.5 rounded-full text-xs font-semibold hover:bg-gold-light transition-colors">
-                    Book This Series
+                    {T.seriesBookBtn}
                   </Link>
                 </div>
               </div>
@@ -172,9 +170,9 @@ export default function Services() {
       {/* ── SIGNATURE FACIALS ────────────────────────────────── */}
       <section id="signature" className="py-24 max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Single Session</p>
-          <h2 className="font-serif text-5xl text-forest font-light">Signature Treatments</h2>
-          <p className="text-forest-500 mt-3 max-w-lg mx-auto">Our core menu — each treatment a unique experience designed to transform your skin.</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">{T.signatureTag}</p>
+          <h2 className="font-serif text-5xl text-forest font-light">{T.signatureTitle}</h2>
+          <p className="text-forest-500 mt-3 max-w-lg mx-auto">{T.signatureDesc}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {signatureFacials.map((s: Service) => {
@@ -203,7 +201,7 @@ export default function Services() {
                   <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.fullDesc}</p>
                   {s.addons && (
                     <div className="mt-2">
-                      <p className="text-xs text-forest-300 mb-1.5">Enhance with:</p>
+                      <p className="text-xs text-forest-300 mb-1.5">{T.enhanceWith}</p>
                       <div className="flex flex-wrap gap-1">
                         {s.addons.map((addon) => (
                           <span key={addon} className="text-xs bg-gold/12 text-gold/80 border border-gold/35 px-2 py-0.5 rounded-full">
@@ -218,10 +216,10 @@ export default function Services() {
                     <span className="text-xs text-forest-400">{s.displayDuration ?? formatDuration(s.duration_min)}</span>
                   </div>
                   <Link href="/booking" className="mt-3 block text-center bg-forest text-cream-100 py-2.5 rounded-full text-xs font-medium hover:bg-forest-700 transition-colors">
-                    Book This Treatment
+                    {T.signatureBookBtn}
                   </Link>
-                  </div>{/* end p-5 */}
-                </div>{/* end flex flex-col flex-1 */}
+                  </div>
+                </div>
               </div>
             );
           })}
@@ -232,9 +230,9 @@ export default function Services() {
       <section id="addons" className="py-24 bg-cream-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Customize Your Treatment</p>
-            <h2 className="font-serif text-5xl text-forest font-light">Add-Ons</h2>
-            <p className="text-forest-500 mt-3 max-w-lg mx-auto">Enhance any facial with one or more of these targeted boosters.</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">{T.addonsTag}</p>
+            <h2 className="font-serif text-5xl text-forest font-light">{T.addonsTitle}</h2>
+            <p className="text-forest-500 mt-3 max-w-lg mx-auto">{T.addonsDesc}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {addons.map((a) => (
@@ -260,8 +258,8 @@ export default function Services() {
       <section id="body" className="py-24 bg-forest">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Full Body Care</p>
-            <h2 className="font-serif text-5xl text-white font-light">Body & Massage</h2>
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">{T.bodyTag}</p>
+            <h2 className="font-serif text-5xl text-white font-light">{T.bodyTitle}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {bodyMassage.map((s: Service) => (
@@ -270,7 +268,7 @@ export default function Services() {
                 <p className="text-sm text-white/60 leading-relaxed mb-4">{s.fullDesc}</p>
                 {s.pairWith && s.pairWith.length > 0 && (
                   <div className="mt-2 mb-3">
-                    <p className="text-xs text-white/30 mb-1.5">Pair with:</p>
+                    <p className="text-xs text-white/30 mb-1.5">{T.pairWith}</p>
                     <div className="flex flex-wrap gap-1">
                       {s.pairWith.map((addon) => (
                         <span key={addon} className="text-xs bg-gold/10 text-gold/70 border border-gold/25 px-2 py-0.5 rounded-full">
@@ -294,8 +292,8 @@ export default function Services() {
       <section id="waxing" className="py-24 bg-cream-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Hair Removal</p>
-            <h2 className="font-serif text-5xl text-forest font-light">Waxing Services</h2>
+            <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">{T.waxingTag}</p>
+            <h2 className="font-serif text-5xl text-forest font-light">{T.waxingTitle}</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {waxing.map((w: Service) => (
@@ -314,11 +312,11 @@ export default function Services() {
       {/* ── CTA ──────────────────────────────────────────────── */}
       <section className="py-20 bg-forest text-center">
         <div className="max-w-xl mx-auto px-6">
-          <h2 className="font-serif text-4xl text-white font-light mb-4">Not sure where to start?</h2>
-          <p className="text-white/60 mb-8">Book a consultation and Claudia will personally recommend the perfect treatment for your skin.</p>
+          <h2 className="font-serif text-4xl text-white font-light mb-4">{T.ctaTitle}</h2>
+          <p className="text-white/60 mb-8">{T.ctaDesc}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/booking" className="bg-gold text-forest px-8 py-4 rounded-full text-sm font-semibold hover:bg-gold-light transition-colors">
-              Book a Consultation
+              {T.ctaBookBtn}
             </Link>
             <a href="tel:+18185775421" className="border border-white/30 text-white px-8 py-4 rounded-full text-sm hover:border-gold hover:text-gold transition-colors">
               (818) 577-5421
