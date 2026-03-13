@@ -22,7 +22,7 @@ export async function PATCH(
     return NextResponse.json({ error: 'status is required' }, { status: 400 });
   }
 
-  const validStatuses = ['confirmed', 'completed', 'cancelled'];
+  const validStatuses = ['confirmed', 'completed', 'cancelled', 'no-show'];
   if (!validStatuses.includes(body.status)) {
     return NextResponse.json(
       { error: `status must be one of: ${validStatuses.join(', ')}` },
