@@ -192,7 +192,7 @@ export const SERVICES: Service[] = [
     price: 185,
     description: 'Advanced stem cell therapy',
     tagline: 'Deep Cellular Renewal',
-    fullDesc: 'Plant-derived stem cells penetrate deep to trigger cellular renewal, stimulate collagen, and repair damage at its source — improving elasticity, reducing fine lines, and restoring a youthful density that creams and serums simply can\'t achieve. For anyone seeking deep, lasting regeneration.',
+    fullDesc: 'A complete cellular renewal ritual. Begins with professional pore extractions and a glycolic peel to resurface and refresh the skin\'s canvas, then ultrasound waves open micro-channels for maximum penetration as plant-derived stem cell serums are infused deep — triggering cellular renewal, stimulating collagen, and repairing damage at its source. Oxygen therapy floods the skin with nutrients and amplifies every active ingredient. A cooling eye mask de-puffs and restores the delicate eye area, followed by a relaxing neck and shoulder massage to complete the experience. The result: visibly firmer, smoother skin with a luminosity that no topical product can achieve.',
     iconName: 'Dna',
     addons: ['Eye Lift — Stem Cell', 'Microcurrent Lifting', 'CO2 Lift'],
     imagePath: '/facial-stem-cell.jpg',

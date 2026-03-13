@@ -560,6 +560,11 @@ export default function BookingPage() {
                                   <p className={`text-sm ${selected ? 'text-[#C9A96E]' : 'text-[#65a07e]'}`}>
                                     {svc.description}
                                   </p>
+                                  {svc.category === 'Transformation Series' && (
+                                    <span className={`inline-flex items-center gap-1 mt-2 text-xs px-2.5 py-1 rounded-full font-medium border ${selected ? 'bg-white/15 text-white border-white/30' : 'bg-[#f4efe3] text-[#C9A96E] border-[#C9A96E]/40'}`}>
+                                      ✦ 3-Session Package
+                                    </span>
+                                  )}
                                 </div>
                                 <div className="text-right flex-shrink-0">
                                   <p className={`font-serif text-2xl font-light ${selected ? 'text-[#C9A96E]' : 'text-[#1B4D2E]'}`}>
@@ -732,6 +737,26 @@ export default function BookingPage() {
                       ].join(' ')}
                     />
                   ))}
+                </div>
+              )}
+
+              {/* Session confirmed banner — shown when moving to session 2 or 3 */}
+              {isSeries && state.currentSessionIndex > 0 && (
+                <div className="mb-6 bg-[#1B4D2E] border border-[#2a6340] rounded-2xl px-6 py-5 text-center max-w-sm mx-auto">
+                  <p className="text-[#C9A96E] text-xs font-semibold uppercase tracking-widest mb-2">
+                    ✓ Session {state.currentSessionIndex} Confirmed
+                  </p>
+                  <p className="text-white font-medium text-sm mb-0.5">
+                    {formatDisplayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')}
+                  </p>
+                  <p className="text-white/60 text-xs">
+                    at {state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}
+                  </p>
+                  <div className="mt-3 pt-3 border-t border-white/10">
+                    <p className="text-white/80 text-xs">
+                      Now choose a date for <span className="text-[#C9A96E] font-semibold">Session {state.currentSessionIndex + 1} of 3</span>
+                    </p>
+                  </div>
                 </div>
               )}
 
