@@ -28,12 +28,13 @@ export default function PtBlogPage() {
       >
         <div className="max-w-4xl mx-auto flex items-start justify-between gap-6 flex-wrap">
           <div>
-            <p
-              className="text-xs tracking-widest uppercase mb-3"
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs tracking-widest uppercase mb-3 hover:opacity-80 transition-opacity"
               style={{ color: '#C9A96E' }}
             >
-              Brasilian Skin Soul
-            </p>
+              ← Brasilian Skin Soul
+            </Link>
             <h1
               className="text-4xl md:text-5xl font-serif mb-4"
               style={{ color: '#FAF8F2', fontFamily: 'Georgia, serif' }}
