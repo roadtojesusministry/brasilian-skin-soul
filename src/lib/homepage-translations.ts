@@ -120,7 +120,7 @@ export const t: Record<Lang, HomepageStrings> = {
     techGroup4: 'Detox & Cellular Renewal',
 
     techDesc1_1: 'Electrical muscle stimulation for a natural, non-surgical lift',
-    techDesc1_2: 'Heat-based sculpting to tighten skin and contour the face',
+    techDesc1_2: 'Advanced sculpting technology to tighten skin and contour the face',
     techDesc1_3: 'Amplifies absorption of skin boosters by up to 120× and stimulates collagen',
     techDesc2_1: 'Red, blue & near-infrared light to heal, clarify, and regenerate',
     techDesc2_2: 'Pressurized oxygen drives customized serums deep into the skin',

@@ -52,7 +52,7 @@ const addons = [
   { name: "Oxygen Therapy O2", desc: "Pure oxygen infusion to amplify any treatment with a deep hydration boost.", price: "$40" },
   { name: "Microdermabrasion", desc: "Physical resurfacing for smooth, even-toned skin.", price: "$55" },
   { name: "Microcurrent Lifting", desc: "Electrical muscle stimulation for instant lift and firmness.", price: "$55" },
-  { name: "Therma-Lift", desc: "Heat-based sculpting technology to tighten and contour.", price: "$60" },
+  { name: "Therma-Lift", desc: "Advanced sculpting technology to tighten and contour the face.", price: "$60" },
   { name: "Deep Extractions", desc: "Professional deep pore cleansing to remove blackheads and congestion.", price: "$30" },
   { name: "Divine Décolleté", desc: "Targeted treatment for neck and chest area — reduces sun damage and fine lines.", price: "$45" },
   { name: "Glow Mask", desc: "Brightening and hydrating masque for a radiant finish.", price: "$25" },
