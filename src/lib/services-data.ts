@@ -119,7 +119,7 @@ export const SERVICES: Service[] = [
     price: 285,
     description: 'Brand signature ritual treatment',
     tagline: 'Ancient Wisdom · Brazilian Soul',
-    fullDesc: 'A 90-minute ceremony rooted in ancient healing traditions. Facial acupressure awakens energy points to lift and release deep tension. Brazilian lymphatic lifting massage sculpts and de-puffs. A reflexology session stimulates the body\'s healing pathways through targeted foot pressure points. A papaya enzyme treatment brightens and softens the complexion, dissolving dead cells with natural fruit enzymes. A cooling jade eye mask de-puffs and restores the delicate eye area, followed by a nourishing bamboo face mask. Finished with a scalp massage to melt stress from the roots down. Every layer — face, feet, scalp — brought back into balance.',
+    fullDesc: 'A 90-minute ceremony rooted in ancient healing traditions. A papaya enzyme treatment opens the ritual — brightening and softening the complexion, dissolving dead cells with natural fruit enzymes. Facial acupressure then awakens energy points to lift and release deep tension. Brazilian lymphatic lifting massage sculpts and de-puffs. A reflexology session stimulates the body\'s healing pathways through targeted foot pressure points. A cooling jade eye mask de-puffs and restores the delicate eye area, followed by a nourishing bamboo face mask. Finished with a scalp massage to melt stress from the roots down. Every layer — face, feet, scalp — brought back into balance.',
     badge: 'HOLISTIC',
     iconName: 'Leaf',
     addons: ['Eye Lift — Stem Cell', 'Divine Décolleté', 'LED Light Therapy'],
