@@ -138,6 +138,18 @@ async function handleSingleBooking(body: Record<string, unknown>) {
     return NextResponse.json({ error: 'Failed to create booking' }, { status: 500 });
   }
 
+  // Auto-create client record (non-blocking)
+  try {
+    await supabaseAdmin
+      .from('clients')
+      .upsert(
+        { name: client_name, email: client_email, phone: client_phone },
+        { onConflict: 'email', ignoreDuplicates: true }
+      );
+  } catch (clientUpsertError) {
+    console.error('Client upsert error (non-fatal):', clientUpsertError);
+  }
+
   const displayDate  = formatDate(booking_date);
   const displayStart = formatTime(start24);
   const adminEmail   = process.env.ADMIN_EMAIL || 'claudia@brasilianskinsoul.com';
@@ -359,6 +371,18 @@ async function handleSeriesBooking(body: Record<string, unknown>) {
   const sorted = [...inserted].sort((a, b) => a.session_number - b.session_number);
   const booking_ids = sorted.map((r: { id: string }) => r.id);
   const tokens      = sorted.map((r: { reschedule_token: string }) => r.reschedule_token);
+
+  // Auto-create client record (non-blocking, once for the series)
+  try {
+    await supabaseAdmin
+      .from('clients')
+      .upsert(
+        { name: client_name, email: client_email, phone: client_phone },
+        { onConflict: 'email', ignoreDuplicates: true }
+      );
+  } catch (clientUpsertError) {
+    console.error('Client upsert error (non-fatal):', clientUpsertError);
+  }
 
   const adminEmail = process.env.ADMIN_EMAIL || 'claudia@brasilianskinsoul.com';
 
