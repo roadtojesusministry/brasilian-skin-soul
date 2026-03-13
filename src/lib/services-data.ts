@@ -104,7 +104,7 @@ export const SERVICES: Service[] = [
     price: 350,
     description: 'Our signature 2-hour luxury treatment',
     tagline: 'The Ultimate Luxury Experience',
-    fullDesc: 'Our most indulgent treatment. A full 2-hour journey combining deep pore extractions, oxygen therapy, microcurrent lifting, LED light, collagen masque, and a full massage. The pinnacle of what professional skincare can achieve — you\'ll leave looking and feeling genuinely transformed.',
+    fullDesc: 'Our most indulgent treatment — a full 2-hour luxury journey that does everything. Microdermabrasion resurfaces the skin and fades dark spots for a fresh, even-toned canvas. Microcurrent therapy stimulates and strengthens facial muscles for a natural, visible lift. LED light therapy penetrates deep to stimulate collagen production and accelerate skin renewal. Oxygen therapy infuses pure collagen directly into the skin — firming, plumping, and delivering a signature youthful glow. Professional pore extractions clear every layer of congestion. Finished with a relaxing hand and foot massage to complete the experience. The pinnacle of what professional skincare can achieve — you\'ll leave looking and feeling genuinely transformed.',
     badge: 'FLAGSHIP',
     iconName: 'Crown',
     addons: ['Eye Lift — Stem Cell', 'CO2 Lift', 'Divine Décolleté'],
