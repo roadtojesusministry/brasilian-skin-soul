@@ -1,5 +1,8 @@
 "use client";
 
+import { useLang } from "@/lib/language-context";
+import { translations } from "@/lib/translations";
+
 const reviews = [
   { name: "Brittany Paden", text: "I absolutely love getting facials with Claudia. She is very knowledgeable and very kind. My skin has been improving since seeing her and I am so grateful. I would definitely recommend her services!" },
   { name: "Michele Lovio", text: "I have gone to Claudia for my skincare needs for more than 10 years now. I'm constantly impressed by her continuing education in the newest skincare treatments. This is clearly her passion." },
@@ -65,15 +68,18 @@ function ReviewCard({ review }: { review: { name: string; text: string } }) {
 }
 
 export default function ReviewsMarquee() {
+  const { lang } = useLang();
+  const T = translations[lang].reviews;
+
   return (
     <section className="py-20 bg-cream-200 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 text-center mb-12">
-        <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">Client Love</p>
-        <h2 className="font-serif text-4xl md:text-5xl text-forest font-light mb-4">What People Are Saying</h2>
+        <p className="text-xs uppercase tracking-[0.2em] text-gold mb-3">{T.tag}</p>
+        <h2 className="font-serif text-4xl md:text-5xl text-forest font-light mb-4">{T.title}</h2>
         <div className="flex items-center justify-center gap-8 mt-4 text-sm text-forest-500">
-          <span className="flex items-center gap-2">⭐ <strong className="text-forest">5.0</strong> on Google</span>
-          <span className="flex items-center gap-2">💬 <strong className="text-forest">60+</strong> Reviews</span>
-          <span className="flex items-center gap-2">🌿 <strong className="text-forest">20+ year</strong> loyal clients</span>
+          <span className="flex items-center gap-2">⭐ <strong className="text-forest">{T.statRating}</strong></span>
+          <span className="flex items-center gap-2">💬 <strong className="text-forest">{T.statReviews}</strong></span>
+          <span className="flex items-center gap-2">🌿 <strong className="text-forest">{T.statLoyal}</strong></span>
         </div>
       </div>
 
@@ -101,7 +107,7 @@ export default function ReviewsMarquee() {
           href="https://www.google.com/search?q=Brasilian+SkinSoul+by+Claudia+Pieri+Woodland+Hills"
           target="_blank" rel="noopener"
           className="inline-flex items-center gap-2 border border-forest text-forest px-6 py-3 rounded-full text-sm font-medium hover:bg-forest hover:text-cream-100 transition-colors">
-          Read All Reviews on Google →
+          {T.readAll}
         </a>
       </div>
     </section>

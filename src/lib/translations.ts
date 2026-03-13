@@ -48,6 +48,33 @@ export interface ServicesStrings {
 
   pairWith: string;
   enhanceWith: string;
+  seriesAllSessions: string;
+  addons: Array<{ name: string; desc: string; price: string }>;
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+export interface FooterStrings {
+  tagline: string;
+  quickLinks: string;
+  findUs: string;
+  linkServices: string;
+  linkAbout: string;
+  linkBook: string;
+  linkContact: string;
+  bookBtn: string;
+  copyright: (year: number) => string;
+}
+
+// ─── Reviews ──────────────────────────────────────────────────────────────────
+
+export interface ReviewsStrings {
+  tag: string;
+  title: string;
+  statRating: string;
+  statReviews: string;
+  statLoyal: string;
+  readAll: string;
 }
 
 // ─── Booking Page ─────────────────────────────────────────────────────────────
@@ -264,6 +291,8 @@ export interface SiteTranslations {
   about: AboutStrings;
   contact: ContactStrings;
   reschedule: RescheduleStrings;
+  footer: FooterStrings;
+  reviews: ReviewsStrings;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -316,6 +345,21 @@ const en: SiteTranslations = {
 
     pairWith: 'Pair with:',
     enhanceWith: 'Enhance with:',
+    seriesAllSessions: 'for all 3 sessions — not per session',
+    addons: [
+      { name: 'Dermaplane', desc: 'Removes dead skin cells and fine facial hair for silky smooth skin.', price: '$45' },
+      { name: 'Glycolic Peel', desc: 'Resurfaces skin and brightens tone with alpha hydroxy acid.', price: '$35' },
+      { name: 'LED Light Therapy', desc: 'Targeted light wavelengths for healing, collagen boost, or acne control.', price: '$40' },
+      { name: 'CO2 Lift', desc: 'Carboxytherapy mask delivers instant firming and brightening.', price: '$45' },
+      { name: 'Eye Lift — Stem Cell', desc: 'Targeted stem cell treatment to lift and firm the eye area.', price: '$50' },
+      { name: 'Oxygen Therapy O2', desc: 'Pure oxygen infusion to amplify any treatment with a deep hydration boost.', price: '$40' },
+      { name: 'Microdermabrasion', desc: 'Physical resurfacing for smooth, even-toned skin.', price: '$55' },
+      { name: 'Microcurrent Lifting', desc: 'Electrical muscle stimulation for instant lift and firmness.', price: '$55' },
+      { name: 'Therma-Lift', desc: 'Advanced sculpting technology to tighten and contour the face.', price: '$60' },
+      { name: 'Deep Extractions', desc: 'Professional deep pore cleansing to remove blackheads and congestion.', price: '$30' },
+      { name: 'Divine Décolleté', desc: 'Targeted treatment for neck and chest area — reduces sun damage and fine lines.', price: '$45' },
+      { name: 'Glow Mask', desc: 'Brightening and hydrating masque for a radiant finish.', price: '$25' },
+    ],
   },
 
   booking: {
@@ -513,6 +557,27 @@ const en: SiteTranslations = {
     rescheduling: 'Rescheduling…',
     confirmationWillBeSent: (email) => `A confirmation email will be sent to ${email}`,
   },
+
+  footer: {
+    tagline: 'Healing skin. Restoring confidence. Transforming lives.',
+    quickLinks: 'Quick Links',
+    findUs: 'Find Us',
+    linkServices: 'Services',
+    linkAbout: 'About Claudia',
+    linkBook: 'Book Appointment',
+    linkContact: 'Contact',
+    bookBtn: 'Book Appointment',
+    copyright: (year) => `© ${year} Brasilian Skin Soul by Claudia Pieri. All rights reserved. · Woodland Hills, CA`,
+  },
+
+  reviews: {
+    tag: 'Client Love',
+    title: 'What People Are Saying',
+    statRating: '5.0 on Google',
+    statReviews: '60+ Reviews',
+    statLoyal: '20+ year loyal clients',
+    readAll: 'Read All Reviews on Google →',
+  },
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -565,6 +630,21 @@ const es: SiteTranslations = {
 
     pairWith: 'Combina con:',
     enhanceWith: 'Mejora con:',
+    seriesAllSessions: 'para las 3 sesiones — no por sesión',
+    addons: [
+      { name: 'Dermaplane', desc: 'Elimina células muertas y vello facial fino para una piel suave como seda.', price: '$45' },
+      { name: 'Peeling de Glicólico', desc: 'Resurface la piel e ilumina el tono con ácido alfa-hidroxi.', price: '$35' },
+      { name: 'Fototerapia LED', desc: 'Longitudes de onda de luz específicas para la sanación, el estímulo de colágeno o el control del acné.', price: '$40' },
+      { name: 'Lifting CO2', desc: 'La mascarilla de carboxiterapia proporciona firmeza e iluminación instantáneas.', price: '$45' },
+      { name: 'Lifting de Ojos — Células Madre', desc: 'Tratamiento de células madre específico para levantar y tonificar el área de los ojos.', price: '$50' },
+      { name: 'Terapia de Oxígeno O2', desc: 'Infusión de oxígeno puro para potenciar cualquier tratamiento con una hidratación profunda.', price: '$40' },
+      { name: 'Microdermoabrasión', desc: 'Resurfacing físico para una piel suave y de tono uniforme.', price: '$55' },
+      { name: 'Lifting por Microcorriente', desc: 'Estimulación muscular eléctrica para un levantamiento e firmeza instantáneos.', price: '$55' },
+      { name: 'Therma-Lift', desc: 'Tecnología de escultura avanzada para tensar y contornear el rostro.', price: '$60' },
+      { name: 'Extracciones Profundas', desc: 'Limpieza profesional profunda de los poros para eliminar puntos negros y congestión.', price: '$30' },
+      { name: 'Divino Décolleté', desc: 'Tratamiento específico para el cuello y el escote — reduce el daño solar y las líneas finas.', price: '$45' },
+      { name: 'Mascarilla Luminosa', desc: 'Mascarilla iluminadora e hidratante para un acabado radiante.', price: '$25' },
+    ],
   },
 
   booking: {
@@ -762,6 +842,27 @@ const es: SiteTranslations = {
     rescheduling: 'Reprogramando…',
     confirmationWillBeSent: (email) => `Se enviará un correo de confirmación a ${email}`,
   },
+
+  footer: {
+    tagline: 'Sanando la piel. Restaurando la confianza. Transformando vidas.',
+    quickLinks: 'Enlaces Rápidos',
+    findUs: 'Encuéntranos',
+    linkServices: 'Servicios',
+    linkAbout: 'Sobre Claudia',
+    linkBook: 'Reservar Cita',
+    linkContact: 'Contacto',
+    bookBtn: 'Reservar Cita',
+    copyright: (year) => `© ${year} Brasilian Skin Soul by Claudia Pieri. Todos los derechos reservados. · Woodland Hills, CA`,
+  },
+
+  reviews: {
+    tag: 'Lo Que Dicen Nuestros Clientes',
+    title: 'Lo Que Dicen Las Personas',
+    statRating: '5.0 en Google',
+    statReviews: '60+ Reseñas',
+    statLoyal: 'Clientes fieles por 20+ años',
+    readAll: 'Leer Todas las Reseñas en Google →',
+  },
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -814,6 +915,21 @@ const pt: SiteTranslations = {
 
     pairWith: 'Combine com:',
     enhanceWith: 'Melhore com:',
+    seriesAllSessions: 'pelas 3 sessões — não por sessão',
+    addons: [
+      { name: 'Dermaplane', desc: 'Remove células mortas e pelos faciais finos para uma pele sedosamente suave.', price: '$45' },
+      { name: 'Peeling de Glicólico', desc: 'Ressurfaceia a pele e ilumina o tom com ácido alfa-hidroxi.', price: '$35' },
+      { name: 'Fototerapia LED', desc: 'Comprimentos de onda de luz direcionados para cura, estímulo de colágeno ou controle da acne.', price: '$40' },
+      { name: 'Lifting CO2', desc: 'A máscara de carboxiterapia proporciona firmeza e luminosidade instantâneas.', price: '$45' },
+      { name: 'Lifting Ocular — Células-Tronco', desc: 'Tratamento de células-tronco direcionado para levantar e firmar a área dos olhos.', price: '$50' },
+      { name: 'Terapia de Oxigênio O2', desc: 'Infusão de oxigênio puro para potencializar qualquer tratamento com uma hidratação profunda.', price: '$40' },
+      { name: 'Microdermoabrasão', desc: 'Ressurfaceamento físico para uma pele suave e de tom uniforme.', price: '$55' },
+      { name: 'Lifting por Microcorrente', desc: 'Estimulação muscular elétrica para um levantamento e firmeza instantâneos.', price: '$55' },
+      { name: 'Therma-Lift', desc: 'Tecnologia avançada de escultura para firmar e contornar o rosto.', price: '$60' },
+      { name: 'Extrações Profundas', desc: 'Limpeza profissional de poros para remover cravos e congestão.', price: '$30' },
+      { name: 'Divino Decote', desc: 'Tratamento direcionado para o pescoço e o colo — reduz danos solares e linhas finas.', price: '$45' },
+      { name: 'Máscara Iluminadora', desc: 'Máscara iluminadora e hidratante para um acabado radiante.', price: '$25' },
+    ],
   },
 
   booking: {
@@ -1010,6 +1126,27 @@ const pt: SiteTranslations = {
     confirmRescheduleBtn: 'Confirmar Reagendamento →',
     rescheduling: 'Reagendando…',
     confirmationWillBeSent: (email) => `Um e-mail de confirmação será enviado para ${email}`,
+  },
+
+  footer: {
+    tagline: 'Cuidando da pele. Restaurando a confiança. Transformando vidas.',
+    quickLinks: 'Links Rápidos',
+    findUs: 'Nos Encontre',
+    linkServices: 'Serviços',
+    linkAbout: 'Sobre Claudia',
+    linkBook: 'Agendar Consulta',
+    linkContact: 'Contato',
+    bookBtn: 'Agendar Consulta',
+    copyright: (year) => `© ${year} Brasilian Skin Soul by Claudia Pieri. Todos os direitos reservados. · Woodland Hills, CA`,
+  },
+
+  reviews: {
+    tag: 'O Que Dizem Nossos Clientes',
+    title: 'O Que as Pessoas Estão Dizendo',
+    statRating: '5.0 no Google',
+    statReviews: '60+ Avaliações',
+    statLoyal: 'Clientes fiéis há 20+ anos',
+    readAll: 'Ler Todas as Avaliações no Google →',
   },
 };
 

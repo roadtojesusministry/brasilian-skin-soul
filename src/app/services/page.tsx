@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import TechInfoButton from "@/components/TechInfoButton";
 import { Crown, Leaf, Wind, Zap, Flame, Activity, Droplets, Sun, ShieldCheck, Dna, Flower, Award } from "lucide-react";
-import { getServicesByCategory, formatDuration, type Service } from "@/lib/services-data";
+import { getServicesByCategory, getLocalizedService, formatDuration, type Service } from "@/lib/services-data";
 import { useLang } from "@/lib/language-context";
 import { translations } from "@/lib/translations";
 
@@ -42,22 +42,6 @@ const SERIES_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-// Add-ons / boosters — separate concept, not bookable services
-const addons = [
-  { name: "Dermaplane", desc: "Removes dead skin cells and fine facial hair for silky smooth skin.", price: "$45" },
-  { name: "Glycolic Peel", desc: "Resurfaces skin and brightens tone with alpha hydroxy acid.", price: "$35" },
-  { name: "LED Light Therapy", desc: "Targeted light wavelengths for healing, collagen boost, or acne control.", price: "$40" },
-  { name: "CO2 Lift", desc: "Carboxytherapy mask delivers instant firming and brightening.", price: "$45" },
-  { name: "Eye Lift — Stem Cell", desc: "Targeted stem cell treatment to lift and firm the eye area.", price: "$50" },
-  { name: "Oxygen Therapy O2", desc: "Pure oxygen infusion to amplify any treatment with a deep hydration boost.", price: "$40" },
-  { name: "Microdermabrasion", desc: "Physical resurfacing for smooth, even-toned skin.", price: "$55" },
-  { name: "Microcurrent Lifting", desc: "Electrical muscle stimulation for instant lift and firmness.", price: "$55" },
-  { name: "Therma-Lift", desc: "Advanced sculpting technology to tighten and contour the face.", price: "$60" },
-  { name: "Deep Extractions", desc: "Professional deep pore cleansing to remove blackheads and congestion.", price: "$30" },
-  { name: "Divine Décolleté", desc: "Targeted treatment for neck and chest area — reduces sun damage and fine lines.", price: "$45" },
-  { name: "Glow Mask", desc: "Brightening and hydrating masque for a radiant finish.", price: "$25" },
-];
-
 const badgeColors: Record<string, string> = {
   "FLAGSHIP": "bg-gold text-forest",
   "BEST SELLER": "bg-forest text-cream-100",
@@ -71,10 +55,10 @@ export default function Services() {
   const { lang } = useLang();
   const T = translations[lang].services;
 
-  const transformationSeries = getServicesByCategory('Transformation Series');
-  const signatureFacials = getServicesByCategory('Signature Facials');
-  const bodyMassage = getServicesByCategory('Body & Massage');
-  const waxing = getServicesByCategory('Waxing');
+  const transformationSeries = getServicesByCategory('Transformation Series').map(p => getLocalizedService(p, lang));
+  const signatureFacials = getServicesByCategory('Signature Facials').map(p => getLocalizedService(p, lang));
+  const bodyMassage = getServicesByCategory('Body & Massage').map(p => getLocalizedService(p, lang));
+  const waxing = getServicesByCategory('Waxing').map(p => getLocalizedService(p, lang));
 
   return (
     <>
@@ -158,7 +142,7 @@ export default function Services() {
                 <div className="flex items-center justify-between pt-5 border-t border-white/10">
                   <div>
                     <span className="font-bold text-gold text-xl">${p.price}</span>
-                    <p className="text-white/50 text-xs mt-0.5">for all 3 sessions — not per session</p>
+                    <p className="text-white/50 text-xs mt-0.5">{T.seriesAllSessions}</p>
                   </div>
                   <Link href="/booking" className="bg-gold text-forest px-6 py-2.5 rounded-full text-xs font-semibold hover:bg-gold-light transition-colors">
                     {T.seriesBookBtn}
@@ -238,7 +222,7 @@ export default function Services() {
             <p className="text-forest-500 mt-3 max-w-lg mx-auto">{T.addonsDesc}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {addons.map((a) => (
+            {T.addons.map((a) => (
               <div key={a.name} className="flex items-start gap-4 bg-white rounded-xl p-5 border border-forest-100 hover:border-forest-300 transition-colors">
                 <div className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
                 <div className="flex-1">
