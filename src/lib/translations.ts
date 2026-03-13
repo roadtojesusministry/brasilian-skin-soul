@@ -153,11 +153,28 @@ export interface BookingStrings {
   yourAppointment: string;
   yourSeriesJourney: string;
 
+  // Confirmation page specific
+  confirmTagline: string;
+  appointmentBooked: string;
+  seriesBooked: string;
+  atLabel: string;
+  loadingLabel: string;
+
   // Series-specific
   noPressure: string;
   noPressureDesc: string;
   spacingRecommendation: string;
   openHours: string;
+
+  // Calendar
+  calendarDays: string[];
+  calendarMonths: string[];
+
+  // Misc hardcoded
+  seriesPackageBadge: string;
+  sessionConfirmedLabel: (n: number) => string;
+  nowChooseDateFor: string;
+  submitErrorFallback: string;
 
   continueBtn: string;
   backBtn: string;
