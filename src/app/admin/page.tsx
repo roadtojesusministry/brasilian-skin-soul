@@ -123,10 +123,37 @@ const EMPTY_FORM: ClientFormData = {
 
 // ─── Dashboard Tab ────────────────────────────────────────────────────────────
 
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
 function DashboardTab() {
   const [data, setData]     = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]   = useState('');
+
+  // Month navigator
+  const nowRef = useRef(new Date());
+  const [navYear,  setNavYear]  = useState(() => nowRef.current.getFullYear());
+  const [navMonth, setNavMonth] = useState(() => nowRef.current.getMonth() + 1);
+  const [navRevenue,       setNavRevenue]       = useState<number | null>(null);
+  const [navBookingCount,  setNavBookingCount]  = useState<number | null>(null);
+  const [navLoading,       setNavLoading]       = useState(false);
+
+  const isCurrentMonth =
+    navYear  === nowRef.current.getFullYear() &&
+    navMonth === nowRef.current.getMonth() + 1;
+
+  function goToPrevMonth() {
+    if (navMonth === 1) { setNavYear(y => y - 1); setNavMonth(12); }
+    else setNavMonth(m => m - 1);
+  }
+  function goToNextMonth() {
+    if (isCurrentMonth) return;
+    if (navMonth === 12) { setNavYear(y => y + 1); setNavMonth(1); }
+    else setNavMonth(m => m + 1);
+  }
 
   useEffect(() => {
     fetch('/api/admin/dashboard')
@@ -138,6 +165,20 @@ function DashboardTab() {
       .catch(() => setError('Failed to load dashboard'))
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    setNavLoading(true);
+    setNavRevenue(null);
+    setNavBookingCount(null);
+    fetch(`/api/admin/revenue?year=${navYear}&month=${navMonth}`)
+      .then(r => r.json())
+      .then(json => {
+        setNavRevenue(json.revenue  ?? 0);
+        setNavBookingCount(json.bookingCount ?? 0);
+      })
+      .catch(() => { setNavRevenue(0); setNavBookingCount(0); })
+      .finally(() => setNavLoading(false));
+  }, [navYear, navMonth]);
 
   if (loading) {
     return (
@@ -214,10 +255,53 @@ function DashboardTab() {
         {/* Revenue Summary */}
         <section>
           <h2 className="font-serif text-xl text-[#1B4D2E] font-light mb-4">💰 Revenue</h2>
-          <div className="bg-white rounded-2xl border border-[#e0ede5] p-5 space-y-3">
+          <div className="bg-white rounded-2xl border border-[#e0ede5] p-5 space-y-4">
+
+            {/* Month Navigator */}
+            <div className="bg-[#FAF8F2] rounded-xl border border-[#e0ede5] px-4 py-4">
+              {/* Arrow row */}
+              <div className="flex items-center justify-between mb-2">
+                <button
+                  onClick={goToPrevMonth}
+                  className="w-8 h-8 flex items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white transition-colors text-sm font-bold"
+                  aria-label="Previous month"
+                >
+                  ←
+                </button>
+                <span className="text-sm font-semibold text-[#1B4D2E]">
+                  {MONTH_NAMES[navMonth - 1]} {navYear}
+                </span>
+                <button
+                  onClick={goToNextMonth}
+                  disabled={isCurrentMonth}
+                  className="w-8 h-8 flex items-center justify-center rounded-full border border-[#C9A96E] text-[#C9A96E] hover:bg-[#C9A96E] hover:text-white transition-colors text-sm font-bold disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[#C9A96E]"
+                  aria-label="Next month"
+                >
+                  →
+                </button>
+              </div>
+
+              {/* Revenue display */}
+              <div className="text-center">
+                {navLoading ? (
+                  <div className="flex justify-center py-2">
+                    <Loader2 size={20} className="animate-spin text-[#C9A96E]" />
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-2xl font-semibold text-[#1B4D2E]">
+                      ${(navRevenue ?? 0).toLocaleString()}
+                    </p>
+                    <p className="text-xs text-[#96c0a6] mt-0.5">
+                      {navBookingCount ?? 0} {(navBookingCount ?? 0) === 1 ? 'booking' : 'bookings'}
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Static stats */}
             {[
-              { label: 'This Month',   value: data.monthRevenue },
-              { label: 'Last Month',   value: data.lastMonthRevenue },
               { label: 'All Time',     value: data.allTimeRevenue, highlight: true },
               { label: 'Avg. Booking', value: data.avgBookingValue },
             ].map(row => (
