@@ -290,7 +290,7 @@ const en: SiteTranslations = {
 
     seriesTag: 'Advanced Technology · 3-Session Protocols',
     seriesTitle: 'The Transformation Series',
-    seriesDesc: 'One session is great. Three sessions is transformation. Each series is a progressive protocol built around one of our four core technology groups — results that compound with every visit.',
+    seriesDesc: 'One session is a treatment. Three sessions is a transformation. Each series is a three-session journey — every appointment building on the last, going deeper, delivering results that actually last.',
     seriesSessionsBadge: (n) => `${n} Sessions`,
     seriesWhyCompounds: 'Why It Compounds',
     seriesBookBtn: 'Book This Series',
@@ -539,7 +539,7 @@ const es: SiteTranslations = {
 
     seriesTag: 'Tecnología Avanzada · Protocolos de 3 Sesiones',
     seriesTitle: 'La Serie de Transformación',
-    seriesDesc: 'Una sesión es excelente. Tres sesiones es transformación. Cada serie es un protocolo progresivo construido alrededor de uno de nuestros cuatro grupos de tecnología central — resultados que se acumulan con cada visita.',
+    seriesDesc: 'Una sesión es un tratamiento. Tres sesiones es una transformación. Cada serie es un viaje de tres sesiones — cada cita construyendo sobre la anterior, profundizando, entregando resultados que realmente duran.',
     seriesSessionsBadge: (n) => `${n} Sesiones`,
     seriesWhyCompounds: 'Por Qué Se Acumula',
     seriesBookBtn: 'Reservar Esta Serie',
@@ -788,7 +788,7 @@ const pt: SiteTranslations = {
 
     seriesTag: 'Tecnologia Avançada · Protocolos de 3 Sessões',
     seriesTitle: 'A Série de Transformação',
-    seriesDesc: 'Uma sessão é ótima. Três sessões é transformação. Cada série é um protocolo progressivo construído em torno de um dos nossos quatro grupos de tecnologia principais — resultados que se acumulam a cada visita.',
+    seriesDesc: 'Uma sessão é um tratamento. Três sessões é uma transformação. Cada série é uma jornada de três sessões — cada consulta construindo sobre a anterior, indo mais fundo, entregando resultados que realmente duram.',
     seriesSessionsBadge: (n) => `${n} Sessões`,
     seriesWhyCompounds: 'Por Que Se Acumula',
     seriesBookBtn: 'Agendar Esta Série',
