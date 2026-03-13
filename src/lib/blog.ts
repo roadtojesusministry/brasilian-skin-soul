@@ -14,7 +14,7 @@ export interface BlogPost {
 
 const contentDir = path.join(process.cwd(), 'content', 'blog');
 
-export function getBlogPosts(lang: 'en' | 'es'): BlogPost[] {
+export function getBlogPosts(lang: 'en' | 'es' | 'pt'): BlogPost[] {
   const dir = path.join(contentDir, lang);
   if (!fs.existsSync(dir)) return [];
 
@@ -39,7 +39,7 @@ export function getBlogPosts(lang: 'en' | 'es'): BlogPost[] {
   return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getBlogPost(slug: string, lang: 'en' | 'es'): BlogPost | null {
+export function getBlogPost(slug: string, lang: 'en' | 'es' | 'pt'): BlogPost | null {
   const dir = path.join(contentDir, lang);
   const filePath = path.join(dir, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;

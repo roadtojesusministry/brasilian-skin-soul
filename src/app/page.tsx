@@ -225,12 +225,15 @@ export default function Home() {
               <div className="text-center">
                 <p className="font-serif text-2xl text-white">Brasilian Skin Soul</p>
                 <p className="text-xs text-white/60 tracking-widest uppercase mt-1">by Claudia Pieri</p>
-                <div className="flex items-center justify-center gap-2 mt-3">
+                <div className="flex items-center justify-center gap-2 mt-3 flex-wrap">
                   <a href="/" className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 border border-white/20 rounded-full px-3 py-1 text-xs text-white font-medium transition-colors">
                     🇺🇸 English
                   </a>
                   <a href="/es/blog" className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/15 rounded-full px-3 py-1 text-xs text-white/70 hover:text-white font-medium transition-colors">
                     🇪🇸 Español
+                  </a>
+                  <a href="/pt/blog" className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 border border-white/15 rounded-full px-3 py-1 text-xs text-white/70 hover:text-white font-medium transition-colors">
+                    🇧🇷 Português
                   </a>
                 </div>
               </div>
