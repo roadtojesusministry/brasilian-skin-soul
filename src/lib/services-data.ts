@@ -149,7 +149,7 @@ export const SERVICES: Service[] = [
     price: 195,
     description: 'Advanced plasma technology',
     tagline: 'Science Meets Skin',
-    fullDesc: '13,000 volts of cold plasma stimulate collagen and elastin while amplifying absorption of skin boosters by up to 120×. Includes professional pore extractions and stem cell infusion — active ingredients are driven deeper into freshly cleared channels for maximum cellular renewal. Non-invasive, with visible results from the very first session.',
+    fullDesc: '13,000 volts of cold plasma stimulate collagen and elastin while amplifying absorption of skin boosters by up to 120×. Includes professional pore extractions and stem cell infusion — active ingredients are driven deeper into freshly cleared channels for maximum cellular renewal. Finished with a stem cell oxygen infusion to stimulate cell renewal and deep rejuvenation from within. Non-invasive, with visible results from the very first session.',
     badge: 'ADVANCED',
     iconName: 'Zap',
     addons: ['Eye Lift — Stem Cell', 'Therma-Lift', 'Glow Mask'],
