@@ -134,7 +134,7 @@ export const SERVICES: Service[] = [
     price: 185,
     description: 'Microdermabrasion + Therma-Lift technology',
     tagline: 'Resurface · Sculpt · Illuminate',
-    fullDesc: 'The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a fresh, smooth canvas — then Therma-Lift technology sculpts and tightens from the outside in. Two powerful modalities in one session: resurface the skin, then contour and lift it. Visible refinement and firmness from the very first visit.',
+    fullDesc: 'The ultimate surface-to-structure treatment. Diamond-tip microdermabrasion strips away texture and dead cells to reveal a fresh, smooth canvas — then Therma-Lift technology sculpts and tightens from the outside in. Finished with a vitamin C oxygenation infusion for the ultimate glow. Two powerful modalities plus a radiance-sealing finale: resurface, lift, and illuminate. Visible refinement and firmness from the very first visit.',
     badge: 'POPULAR',
     iconName: 'Flame',
     addons: ['LED Light Therapy', 'Eye Lift — Stem Cell', 'CO2 Lift'],
