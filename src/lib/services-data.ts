@@ -164,7 +164,7 @@ export const SERVICES: Service[] = [
     price: 195,
     description: 'Best-selling oxygen infusion',
     tagline: 'Hydrate · Lift · Rejuvenate',
-    fullDesc: 'The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Includes professional pore extractions to open the skin before pressurized oxygen drives customized serums deep into layers no topical product can reach. The result: intense hydration, visible plumping, and a luminous anti-aging lift.',
+    fullDesc: 'The gold standard in oxygen-based skin therapy — trusted by skin professionals worldwide. Cutting-edge Intraceuticals infusion delivers customized serums deep into the skin using pressurized oxygen, for intense hydration, visible plumping, and a luminous anti-aging lift. Includes professional pore extractions to clear impurities for a fresh complexion, a firming eye mask to reduce puffiness and fine lines, and a Décolleté Renewal Treatment to minimize fine lines and sun damage. Finished with a relaxing massage of the hands, neck, and shoulders. Transform, hydrate, lift, and rejuvenate — leave with a radiant glow and a youthful appearance.',
     iconName: 'Wind',
     addons: ['LED Light Therapy', 'Dermaplane', 'CO2 Lift'],
     imagePath: '/facial-intraceuticals.jpg',
