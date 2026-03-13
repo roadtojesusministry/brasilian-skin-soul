@@ -4,6 +4,8 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import Navbar from '@/components/Navbar';
 import { CheckCircle } from 'lucide-react';
+import { useLang } from '@/lib/language-context';
+import { translations } from '@/lib/translations';
 
 function toGoogleCalendarUrl(
   title: string,
@@ -30,6 +32,8 @@ function toGoogleCalendarUrl(
 
 function ConfirmationContent() {
   const params = useSearchParams();
+  const { lang } = useLang();
+  const T = translations[lang].confirmation;
 
   const service = params.get('service') || '';
   const date = params.get('date') || '';
@@ -49,8 +53,10 @@ function ConfirmationContent() {
   const formatDisplayDate = (d: string) => {
     if (!d) return '';
     const [y, m, day] = d.split('-').map(Number);
-    return new Date(y, m - 1, day).toLocaleDateString('en-US', {
+    const locale = lang === 'es' ? 'es-ES' : lang === 'pt' ? 'pt-BR' : 'en-US';
+    return new Date(Date.UTC(y, m - 1, day)).toLocaleDateString(locale, {
       weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+      timeZone: 'UTC',
     });
   };
 
@@ -63,24 +69,24 @@ function ConfirmationContent() {
         </div>
       </div>
 
-      <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">You&apos;re all set</p>
+      <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-2">{T.allSet}</p>
       <h2 className="font-serif text-5xl text-[#1B4D2E] font-light mb-2">
-        {isSeries ? 'Series Booked' : 'Appointment Booked'}
+        {isSeries ? T.seriesBooked : T.appointmentBooked}
       </h2>
       {email && (
         <p className="text-[#42825e] mb-8">
-          A confirmation email has been sent to <strong>{email}</strong>
+          {T.confirmationEmailSent} <strong>{email}</strong>
         </p>
       )}
 
       {/* Confirmation card */}
       <div className="bg-white border-2 border-[#C9A96E] rounded-2xl p-8 mb-8 text-left max-w-md mx-auto">
         <p className="text-xs uppercase tracking-[0.15em] text-[#C9A96E] mb-5">
-          {isSeries ? 'Your Series Journey' : 'Your Appointment'}
+          {isSeries ? T.yourSeriesJourney : T.yourAppointment}
         </p>
         <div className="space-y-3 text-sm">
           <div className="flex justify-between">
-            <span className="text-[#65a07e]">Service</span>
+            <span className="text-[#65a07e]">{T.labelService}</span>
             <span className="text-[#1B4D2E] font-medium">{service}</span>
           </div>
 
@@ -88,9 +94,9 @@ function ConfirmationContent() {
             <div className="space-y-2 pt-1">
               {seriesSessions.map((s, i) => (
                 <div key={i} className="flex justify-between items-baseline">
-                  <span className="text-[#65a07e]">Session {i + 1}</span>
+                  <span className="text-[#65a07e]">{T.labelSession(i + 1)}</span>
                   <span className="text-[#1B4D2E] font-medium text-right ml-4">
-                    {formatDisplayDate(s.date)} at {s.time}
+                    {formatDisplayDate(s.date)} {T.atConnector} {s.time}
                   </span>
                 </div>
               ))}
@@ -99,19 +105,19 @@ function ConfirmationContent() {
             <>
               {addons && (
                 <div className="flex justify-between">
-                  <span className="text-[#65a07e]">Add-Ons</span>
+                  <span className="text-[#65a07e]">{T.labelAddOns}</span>
                   <span className="text-[#1B4D2E] font-medium text-right ml-4">{addons}</span>
                 </div>
               )}
               {date && (
                 <div className="flex justify-between">
-                  <span className="text-[#65a07e]">Date</span>
+                  <span className="text-[#65a07e]">{T.labelDate}</span>
                   <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(date)}</span>
                 </div>
               )}
               {time && (
                 <div className="flex justify-between">
-                  <span className="text-[#65a07e]">Time</span>
+                  <span className="text-[#65a07e]">{T.labelTime}</span>
                   <span className="text-[#1B4D2E] font-medium">{time}</span>
                 </div>
               )}
@@ -120,11 +126,11 @@ function ConfirmationContent() {
 
           {price && (
             <div className="flex justify-between pt-3 border-t border-[#f4efe3]">
-              <span className="text-[#65a07e]">Investment</span>
+              <span className="text-[#65a07e]">{T.labelInvestment}</span>
               <div className="text-right">
                 <span className="font-serif text-xl text-[#1B4D2E]">${price}</span>
                 {isSeries && (
-                  <p className="text-xs text-[#65a07e] mt-0.5">3-session package</p>
+                  <p className="text-xs text-[#65a07e] mt-0.5">{T.threeSessionPackage}</p>
                 )}
               </div>
             </div>
@@ -153,14 +159,14 @@ function ConfirmationContent() {
             rel="noopener noreferrer"
             className="bg-[#f2f7f4] border border-[#c2daca] text-[#1B4D2E] font-medium px-6 py-3 rounded-full text-sm hover:bg-[#e0ede5] transition-colors"
           >
-            Add to Google Calendar
+            {T.addToCalendar}
           </a>
         )}
         <a
           href="/"
           className="bg-[#1B4D2E] text-white font-medium px-6 py-3 rounded-full text-sm hover:bg-[#27533c] transition-colors"
         >
-          Back to Home
+          {T.backToHome}
         </a>
       </div>
     </div>
@@ -174,7 +180,10 @@ export default function BookingConfirmationPage() {
       <div className="min-h-screen bg-[#FAF8F2] pt-24 pb-16">
         <div className="max-w-2xl mx-auto px-4">
           <Suspense fallback={
-            <div className="text-center py-20 text-[#65a07e]">Loading...</div>
+            <div className="text-center py-20 text-[#65a07e]">
+              {/* Static fallback — T not available outside Suspense boundary */}
+              Loading...
+            </div>
           }>
             <ConfirmationContent />
           </Suspense>

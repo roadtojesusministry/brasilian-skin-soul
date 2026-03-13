@@ -8,22 +8,8 @@ import { getServicesGrouped, formatDuration, Service } from '@/lib/services-data
 import { useLang } from '@/lib/language-context';
 import { translations } from '@/lib/translations';
 
-// ─── Add-Ons Data ────────────────────────────────────────────────────────────
-
-const ADDONS = [
-  { id: 'dermaplane', name: 'Dermaplane', price: 45, duration_min: 15, desc: 'Removes dead skin & peach fuzz for a silky canvas' },
-  { id: 'glycolic-peel', name: 'Glycolic Peel', price: 35, duration_min: 10, desc: 'Resurfaces and brightens tone' },
-  { id: 'led', name: 'LED Light Therapy', price: 40, duration_min: 15, desc: 'Healing, collagen boost, or acne control' },
-  { id: 'co2', name: 'CO2 Lift', price: 45, duration_min: 10, desc: 'Instant firming and brightening mask' },
-  { id: 'eye-lift', name: 'Eye Lift — Stem Cell', price: 50, duration_min: 15, desc: 'Lifts and firms the delicate eye area' },
-  { id: 'oxygen', name: 'Oxygen Therapy O2', price: 40, duration_min: 10, desc: 'Deep hydration boost with pure oxygen' },
-  { id: 'microderm', name: 'Microdermabrasion', price: 55, duration_min: 15, desc: 'Physical resurfacing for smooth even skin' },
-  { id: 'microcurrent-addon', name: 'Microcurrent Lifting', price: 55, duration_min: 20, desc: 'Electrical muscle stimulation for lift' },
-  { id: 'therma-addon', name: 'Therma-Lift', price: 60, duration_min: 20, desc: 'Heat sculpting to tighten and contour' },
-  { id: 'extractions', name: 'Deep Extractions', price: 30, duration_min: 15, desc: 'Professional deep pore cleansing' },
-  { id: 'decollete', name: 'Divine Décolleté', price: 45, duration_min: 20, desc: 'Targeted neck and chest treatment' },
-  { id: 'glow-mask', name: 'Glow Mask', price: 25, duration_min: 10, desc: 'Brightening and hydrating masque' },
-];
+// ─── Add-Ons Data ─────────────────────────────────────────────────────────────
+// Sourced from T.addons (translations) — no hardcoded array here.
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -53,13 +39,19 @@ interface BookingState {
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function formatDisplayDate(yyyy: string): string {
+function formatDisplayDate(yyyy: string, locale: string): string {
   const [y, m, d] = yyyy.split('-').map(Number);
   const dt = new Date(Date.UTC(y, m - 1, d));
-  return dt.toLocaleDateString('en-US', {
+  return dt.toLocaleDateString(locale, {
     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
     timeZone: 'UTC',
   });
+}
+
+function langToLocale(lang: string): string {
+  if (lang === 'es') return 'es-ES';
+  if (lang === 'pt') return 'pt-BR';
+  return 'en-US';
 }
 
 function formatTotalDuration(totalMin: number): string {
@@ -105,21 +97,19 @@ function toGoogleCalendarUrl(
 function Calendar({
   selectedDate,
   onSelect,
+  days,
+  months,
 }: {
   selectedDate: string;
   onSelect: (d: string) => void;
+  days: string[];
+  months: string[];
 }) {
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
 
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth()); // 0-based
-
-  const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-  const MONTHS = [
-    'January','February','March','April','May','June',
-    'July','August','September','October','November','December',
-  ];
 
   const firstDow = new Date(viewYear, viewMonth, 1).getDay();
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
@@ -177,7 +167,7 @@ function Calendar({
           <ChevronLeft size={18} />
         </button>
         <span className="font-serif text-lg text-[#1B4D2E]">
-          {MONTHS[viewMonth]} {viewYear}
+          {months[viewMonth]} {viewYear}
         </span>
         <button
           onClick={nextMonth}
@@ -189,7 +179,7 @@ function Calendar({
 
       {/* Day headers */}
       <div className="grid grid-cols-7 mb-2">
-        {DAYS.map(d => (
+        {days.map(d => (
           <div key={d} className="text-center text-xs font-medium text-[#65a07e] py-1">{d}</div>
         ))}
       </div>
@@ -299,6 +289,9 @@ export default function BookingPage() {
   const { lang } = useLang();
   const T = translations[lang].booking;
   const router = useRouter();
+  const locale = langToLocale(lang);
+  const displayDate = (yyyy: string) => formatDisplayDate(yyyy, locale);
+  const ADDONS = T.addons;
 
   const stepLabels = [T.stepService, T.stepAddOns, T.stepDate, T.stepTime, T.stepDetails];
 
@@ -473,7 +466,7 @@ export default function BookingPage() {
       }
       router.push(`/booking/confirmation?${params.toString()}`);
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setSubmitError(err instanceof Error ? err.message : T.genericError);
     } finally {
       setSubmitLoading(false);
     }
@@ -562,7 +555,7 @@ export default function BookingPage() {
                                   </p>
                                   {svc.category === 'Transformation Series' && (
                                     <span className={`inline-flex items-center gap-1 mt-2 text-xs px-2.5 py-1 rounded-full font-medium border ${selected ? 'bg-white/15 text-white border-white/30' : 'bg-[#f4efe3] text-[#C9A96E] border-[#C9A96E]/40'}`}>
-                                      ✦ 3-Session Package
+                                      {T.seriesPackageBadge}
                                     </span>
                                   )}
                                 </div>
@@ -713,7 +706,7 @@ export default function BookingPage() {
                   {isSeries && state.currentSessionIndex > 0 && (
                     <Pill
                       label={T.labelSession(state.currentSessionIndex)}
-                      value={`${formatDisplayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')} · ${state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}`}
+                      value={`${displayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')} · ${state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}`}
                     />
                   )}
                 </div>
@@ -744,17 +737,17 @@ export default function BookingPage() {
               {isSeries && state.currentSessionIndex > 0 && (
                 <div className="mb-6 bg-[#1B4D2E] border border-[#2a6340] rounded-2xl px-6 py-5 text-center max-w-sm mx-auto">
                   <p className="text-[#C9A96E] text-xs font-semibold uppercase tracking-widest mb-2">
-                    ✓ Session {state.currentSessionIndex} Confirmed
+                    {T.sessionConfirmed(state.currentSessionIndex)}
                   </p>
                   <p className="text-white font-medium text-sm mb-0.5">
-                    {formatDisplayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')}
+                    {displayDate(state.seriesSessions[state.currentSessionIndex - 1]?.date ?? '')}
                   </p>
                   <p className="text-white/60 text-xs">
-                    at {state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}
+                    {T.atTime} {state.seriesSessions[state.currentSessionIndex - 1]?.time ?? ''}
                   </p>
                   <div className="mt-3 pt-3 border-t border-white/10">
                     <p className="text-white/80 text-xs">
-                      Now choose a date for <span className="text-[#C9A96E] font-semibold">Session {state.currentSessionIndex + 1} of 3</span>
+                      {T.nowChooseDate(state.currentSessionIndex + 1)}
                     </p>
                   </div>
                 </div>
@@ -776,6 +769,8 @@ export default function BookingPage() {
                 <Calendar
                   selectedDate={state.selectedDate}
                   onSelect={(d) => set({ selectedDate: d, selectedTime: '', step: 4 })}
+                  days={T.calDays}
+                  months={T.calMonths}
                 />
               </div>
             </div>
@@ -800,7 +795,7 @@ export default function BookingPage() {
                 </h2>
                 <div className="flex flex-wrap justify-center gap-2">
                   <Pill label={T.labelService} value={state.selectedService!.name} />
-                  <Pill label={isSeries ? T.labelSession(state.currentSessionIndex + 1) : T.labelDate} value={formatDisplayDate(state.selectedDate)} />
+                  <Pill label={isSeries ? T.labelSession(state.currentSessionIndex + 1) : T.labelDate} value={displayDate(state.selectedDate)} />
                 </div>
               </div>
 
@@ -906,7 +901,7 @@ export default function BookingPage() {
                         <div key={i} className="flex justify-between items-baseline">
                           <span className="text-[#65a07e]">{T.labelSession(i + 1)}</span>
                           <span className="text-[#1B4D2E] font-medium text-right ml-4">
-                            {formatDisplayDate(s.date)} at {s.time}
+                            {displayDate(s.date)} {T.atTime} {s.time}
                           </span>
                         </div>
                       ))}
@@ -928,7 +923,7 @@ export default function BookingPage() {
                       )}
                       <div className="flex justify-between">
                         <span className="text-[#65a07e]">{T.labelDate}</span>
-                        <span className="text-[#1B4D2E] font-medium">{formatDisplayDate(state.selectedDate)}</span>
+                        <span className="text-[#1B4D2E] font-medium">{displayDate(state.selectedDate)}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#65a07e]">{T.labelTime}</span>

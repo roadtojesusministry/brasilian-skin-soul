@@ -153,13 +153,6 @@ export interface BookingStrings {
   yourAppointment: string;
   yourSeriesJourney: string;
 
-  // Confirmation page specific
-  confirmTagline: string;
-  appointmentBooked: string;
-  seriesBooked: string;
-  atLabel: string;
-  loadingLabel: string;
-
   // Series-specific
   noPressure: string;
   noPressureDesc: string;
@@ -167,18 +160,46 @@ export interface BookingStrings {
   openHours: string;
 
   // Calendar
-  calendarDays: string[];
-  calendarMonths: string[];
+  calDays: string[];
+  calMonths: string[];
 
-  // Misc hardcoded
+  // Add-Ons (booking-page specific)
+  addons: Array<{ id: string; name: string; price: number; duration_min: number; desc: string }>;
+
+  // Series progress UI
   seriesPackageBadge: string;
-  sessionConfirmedLabel: (n: number) => string;
-  nowChooseDateFor: string;
-  submitErrorFallback: string;
+  sessionConfirmed: (n: number) => string;
+  nowChooseDate: (n: number) => string;
+  atTime: string;
+
+  // Error
+  genericError: string;
 
   continueBtn: string;
   backBtn: string;
   policyAgreement: string;
+}
+
+// ─── Confirmation Page ────────────────────────────────────────────────────────
+
+export interface ConfirmationStrings {
+  allSet: string;
+  appointmentBooked: string;
+  seriesBooked: string;
+  confirmationEmailSent: string;
+  yourSeriesJourney: string;
+  yourAppointment: string;
+  labelService: string;
+  labelSession: (n: number) => string;
+  labelAddOns: string;
+  labelDate: string;
+  labelTime: string;
+  labelInvestment: string;
+  threeSessionPackage: string;
+  atConnector: string;
+  addToCalendar: string;
+  backToHome: string;
+  loading: string;
 }
 
 // ─── About Page ───────────────────────────────────────────────────────────────
@@ -305,6 +326,7 @@ export interface SiteTranslations {
   nav: NavStrings;
   services: ServicesStrings;
   booking: BookingStrings;
+  confirmation: ConfirmationStrings;
   about: AboutStrings;
   contact: ContactStrings;
   reschedule: RescheduleStrings;
@@ -452,9 +474,54 @@ const en: SiteTranslations = {
     spacingRecommendation: 'We recommend spacing sessions 1–2 weeks apart for best results.',
     openHours: 'Open Tuesday – Friday 9am–6pm · Saturday 9am–5pm',
 
+    calDays: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+    calMonths: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+
+    addons: [
+      { id: 'dermaplane',        name: 'Dermaplane',          price: 45, duration_min: 15, desc: 'Removes dead skin & peach fuzz for a silky canvas' },
+      { id: 'glycolic-peel',     name: 'Glycolic Peel',        price: 35, duration_min: 10, desc: 'Resurfaces and brightens tone' },
+      { id: 'led',               name: 'LED Light Therapy',    price: 40, duration_min: 15, desc: 'Healing, collagen boost, or acne control' },
+      { id: 'co2',               name: 'CO2 Lift',             price: 45, duration_min: 10, desc: 'Instant firming and brightening mask' },
+      { id: 'eye-lift',          name: 'Eye Lift — Stem Cell', price: 50, duration_min: 15, desc: 'Lifts and firms the delicate eye area' },
+      { id: 'oxygen',            name: 'Oxygen Therapy O2',    price: 40, duration_min: 10, desc: 'Deep hydration boost with pure oxygen' },
+      { id: 'microderm',         name: 'Microdermabrasion',    price: 55, duration_min: 15, desc: 'Physical resurfacing for smooth even skin' },
+      { id: 'microcurrent-addon',name: 'Microcurrent Lifting', price: 55, duration_min: 20, desc: 'Electrical muscle stimulation for lift' },
+      { id: 'therma-addon',      name: 'Therma-Lift',          price: 60, duration_min: 20, desc: 'Heat sculpting to tighten and contour' },
+      { id: 'extractions',       name: 'Deep Extractions',     price: 30, duration_min: 15, desc: 'Professional deep pore cleansing' },
+      { id: 'decollete',         name: 'Divine Décolleté',     price: 45, duration_min: 20, desc: 'Targeted neck and chest treatment' },
+      { id: 'glow-mask',         name: 'Glow Mask',            price: 25, duration_min: 10, desc: 'Brightening and hydrating masque' },
+    ],
+
+    seriesPackageBadge: '✦ 3-Session Package',
+    sessionConfirmed: (n) => `✓ Session ${n} Confirmed`,
+    nowChooseDate: (n) => `Now choose a date for Session ${n} of 3`,
+    atTime: 'at',
+
+    genericError: 'Something went wrong. Please try again.',
+
     continueBtn: 'Continue →',
     backBtn: 'Back',
     policyAgreement: 'I understand that all sales are final. I may reschedule any session at any time, as many times as needed.',
+  },
+
+  confirmation: {
+    allSet: "You're all set",
+    appointmentBooked: 'Appointment Booked',
+    seriesBooked: 'Series Booked',
+    confirmationEmailSent: 'A confirmation email has been sent to',
+    yourSeriesJourney: 'Your Series Journey',
+    yourAppointment: 'Your Appointment',
+    labelService: 'Service',
+    labelSession: (n) => `Session ${n}`,
+    labelAddOns: 'Add-Ons',
+    labelDate: 'Date',
+    labelTime: 'Time',
+    labelInvestment: 'Investment',
+    threeSessionPackage: '3-session package',
+    atConnector: 'at',
+    addToCalendar: 'Add to Google Calendar',
+    backToHome: 'Back to Home',
+    loading: 'Loading...',
   },
 
   about: {
@@ -737,9 +804,54 @@ const es: SiteTranslations = {
     spacingRecommendation: 'Recomendamos espaciar las sesiones 1–2 semanas para mejores resultados.',
     openHours: 'Abierto Martes – Viernes 9am–6pm · Sábado 9am–5pm',
 
+    calDays: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+    calMonths: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+
+    addons: [
+      { id: 'dermaplane',        name: 'Dermaplane',              price: 45, duration_min: 15, desc: 'Elimina la piel muerta y el vello fino para una base sedosa' },
+      { id: 'glycolic-peel',     name: 'Peeling de Glicólico',    price: 35, duration_min: 10, desc: 'Resurface e ilumina el tono de la piel' },
+      { id: 'led',               name: 'Fototerapia LED',         price: 40, duration_min: 15, desc: 'Sanación, estímulo de colágeno o control del acné' },
+      { id: 'co2',               name: 'Lifting CO2',             price: 45, duration_min: 10, desc: 'Mascarilla de firmeza y luminosidad instantáneas' },
+      { id: 'eye-lift',          name: 'Lifting de Ojos — Células Madre', price: 50, duration_min: 15, desc: 'Levanta y tonifica el área delicada de los ojos' },
+      { id: 'oxygen',            name: 'Terapia de Oxígeno O2',   price: 40, duration_min: 10, desc: 'Hidratación profunda con oxígeno puro' },
+      { id: 'microderm',         name: 'Microdermoabrasión',      price: 55, duration_min: 15, desc: 'Resurfacing físico para una piel suave y uniforme' },
+      { id: 'microcurrent-addon',name: 'Lifting por Microcorriente', price: 55, duration_min: 20, desc: 'Estimulación muscular eléctrica para un levantamiento inmediato' },
+      { id: 'therma-addon',      name: 'Therma-Lift',             price: 60, duration_min: 20, desc: 'Escultura térmica para tensar y contornear el rostro' },
+      { id: 'extractions',       name: 'Extracciones Profundas',  price: 30, duration_min: 15, desc: 'Limpieza profesional profunda de los poros' },
+      { id: 'decollete',         name: 'Divino Décolleté',        price: 45, duration_min: 20, desc: 'Tratamiento específico para el cuello y el escote' },
+      { id: 'glow-mask',         name: 'Mascarilla Luminosa',     price: 25, duration_min: 10, desc: 'Mascarilla iluminadora e hidratante' },
+    ],
+
+    seriesPackageBadge: '✦ Paquete de 3 Sesiones',
+    sessionConfirmed: (n) => `✓ Sesión ${n} Confirmada`,
+    nowChooseDate: (n) => `Ahora elige una fecha para la Sesión ${n} de 3`,
+    atTime: 'a las',
+
+    genericError: 'Algo salió mal. Por favor, inténtalo de nuevo.',
+
     continueBtn: 'Continuar →',
     backBtn: 'Atrás',
     policyAgreement: 'Entiendo que todas las ventas son finales. Puedo reprogramar cualquier sesión en cualquier momento, tantas veces como sea necesario.',
+  },
+
+  confirmation: {
+    allSet: 'Todo listo',
+    appointmentBooked: 'Cita Reservada',
+    seriesBooked: 'Serie Reservada',
+    confirmationEmailSent: 'Se ha enviado un correo de confirmación a',
+    yourSeriesJourney: 'Tu Viaje en Serie',
+    yourAppointment: 'Tu Cita',
+    labelService: 'Servicio',
+    labelSession: (n) => `Sesión ${n}`,
+    labelAddOns: 'Extras',
+    labelDate: 'Fecha',
+    labelTime: 'Hora',
+    labelInvestment: 'Inversión',
+    threeSessionPackage: 'Paquete de 3 sesiones',
+    atConnector: 'a las',
+    addToCalendar: 'Agregar a Google Calendar',
+    backToHome: 'Volver al Inicio',
+    loading: 'Cargando...',
   },
 
   about: {
@@ -1022,9 +1134,54 @@ const pt: SiteTranslations = {
     spacingRecommendation: 'Recomendamos espaçar as sessões 1–2 semanas para melhores resultados.',
     openHours: 'Aberto Terça – Sexta 9h–18h · Sábado 9h–17h',
 
+    calDays: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    calMonths: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+
+    addons: [
+      { id: 'dermaplane',        name: 'Dermaplane',              price: 45, duration_min: 15, desc: 'Remove pele morta e pelos finos para uma tela sedosa' },
+      { id: 'glycolic-peel',     name: 'Peeling de Glicólico',    price: 35, duration_min: 10, desc: 'Ressurfaceia e ilumina o tom da pele' },
+      { id: 'led',               name: 'Fototerapia LED',         price: 40, duration_min: 15, desc: 'Cicatrização, estímulo de colágeno ou controle da acne' },
+      { id: 'co2',               name: 'Lifting CO2',             price: 45, duration_min: 10, desc: 'Máscara de firmeza e luminosidade instantâneas' },
+      { id: 'eye-lift',          name: 'Lifting Ocular — Células-Tronco', price: 50, duration_min: 15, desc: 'Levanta e firma a delicada área dos olhos' },
+      { id: 'oxygen',            name: 'Terapia de Oxigênio O2',  price: 40, duration_min: 10, desc: 'Hidratação profunda com oxigênio puro' },
+      { id: 'microderm',         name: 'Microdermoabrasão',       price: 55, duration_min: 15, desc: 'Ressurfaceamento físico para pele suave e uniforme' },
+      { id: 'microcurrent-addon',name: 'Lifting por Microcorrente', price: 55, duration_min: 20, desc: 'Estimulação muscular elétrica para levantamento imediato' },
+      { id: 'therma-addon',      name: 'Therma-Lift',             price: 60, duration_min: 20, desc: 'Escultura térmica para firmar e contornar o rosto' },
+      { id: 'extractions',       name: 'Extrações Profundas',     price: 30, duration_min: 15, desc: 'Limpeza profissional profunda dos poros' },
+      { id: 'decollete',         name: 'Divino Decote',           price: 45, duration_min: 20, desc: 'Tratamento específico para pescoço e colo' },
+      { id: 'glow-mask',         name: 'Máscara Iluminadora',     price: 25, duration_min: 10, desc: 'Máscara iluminadora e hidratante' },
+    ],
+
+    seriesPackageBadge: '✦ Pacote de 3 Sessões',
+    sessionConfirmed: (n) => `✓ Sessão ${n} Confirmada`,
+    nowChooseDate: (n) => `Agora escolha uma data para a Sessão ${n} de 3`,
+    atTime: 'às',
+
+    genericError: 'Algo deu errado. Por favor, tente novamente.',
+
     continueBtn: 'Continuar →',
     backBtn: 'Voltar',
     policyAgreement: 'Entendo que todas as vendas são finais. Posso reagendar qualquer sessão a qualquer momento, quantas vezes forem necessárias.',
+  },
+
+  confirmation: {
+    allSet: 'Tudo certo',
+    appointmentBooked: 'Agendamento Confirmado',
+    seriesBooked: 'Série Agendada',
+    confirmationEmailSent: 'Um e-mail de confirmação foi enviado para',
+    yourSeriesJourney: 'Sua Jornada em Série',
+    yourAppointment: 'Seu Agendamento',
+    labelService: 'Serviço',
+    labelSession: (n) => `Sessão ${n}`,
+    labelAddOns: 'Extras',
+    labelDate: 'Data',
+    labelTime: 'Hora',
+    labelInvestment: 'Investimento',
+    threeSessionPackage: 'Pacote de 3 sessões',
+    atConnector: 'às',
+    addToCalendar: 'Adicionar ao Google Agenda',
+    backToHome: 'Voltar ao Início',
+    loading: 'Carregando...',
   },
 
   about: {
