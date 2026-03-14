@@ -3,7 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { techScience } from "@/lib/techScience";
+import { techScienceES, techSciencePT } from "@/lib/techScience-i18n";
 import { useLang } from "@/lib/language-context";
+
+const techScienceByLang: Record<string, typeof techScience> = {
+  en: techScience,
+  es: techScienceES,
+  pt: techSciencePT,
+};
 
 const UI: Record<string, { howItWorks: string; theScience: string; whyThisWorks: string }> = {
   en: { howItWorks: 'How it works', theScience: 'The Science', whyThisWorks: 'Why This Works' },
@@ -39,7 +46,8 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
     window.dispatchEvent(new CustomEvent("tech-modal-open", { detail: instanceId.current }));
     setOpen(true);
   };
-  const items = techNames.map((name) => ({ name, info: techScience[name] })).filter((t) => t.info);
+  const localizedScience = techScienceByLang[lang] ?? techScience;
+  const items = techNames.map((name) => ({ name, info: localizedScience[name] ?? techScience[name] })).filter((t) => t.info);
   if (items.length === 0) return null;
 
   return (

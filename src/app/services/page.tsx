@@ -49,6 +49,15 @@ const badgeColors: Record<string, string> = {
   "POPULAR": "bg-gold text-forest",
   "RITUAL": "bg-gold text-forest",
   "HOLISTIC": "bg-gold text-forest",
+  // Spanish
+  "EMBLEMA": "bg-gold text-forest",
+  "MÁS VENDIDO": "bg-forest text-cream-100",
+  "AVANZADO": "bg-forest-700 text-cream-100",
+  "HOLÍSTICO": "bg-gold text-forest",
+  // Portuguese
+  "CARRO-CHEFE": "bg-gold text-forest",
+  "MAIS VENDIDO": "bg-forest text-cream-100",
+  "AVANÇADO": "bg-forest-700 text-cream-100",
 };
 
 export default function Services() {
