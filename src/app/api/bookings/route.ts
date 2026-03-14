@@ -167,6 +167,7 @@ async function handleSingleBooking(body: Record<string, unknown>) {
         <!-- Header -->
         <tr>
           <td style="background:#1B4D2E;padding:40px 48px;text-align:center;">
+            <img src="https://brasilianskinsoul.com/logo-circle.png" alt="Brasilian Skin Soul" width="80" height="80" style="display:block;margin:0 auto 16px;border-radius:50%;border:2px solid #C9A96E;" />
             <p style="margin:0 0 8px;font-size:11px;letter-spacing:0.2em;color:#C9A96E;text-transform:uppercase;">Brasilian Skin Soul</p>
             <h1 style="margin:0;font-size:32px;font-weight:300;color:#ffffff;font-family:Georgia,serif;">Your appointment is confirmed ✨</h1>
           </td>
@@ -422,6 +423,7 @@ async function handleSeriesBooking(body: Record<string, unknown>) {
         <!-- Header -->
         <tr>
           <td style="background:#1B4D2E;padding:40px 48px;text-align:center;">
+            <img src="https://brasilianskinsoul.com/logo-circle.png" alt="Brasilian Skin Soul" width="80" height="80" style="display:block;margin:0 auto 16px;border-radius:50%;border:2px solid #C9A96E;" />
             <p style="margin:0 0 8px;font-size:11px;letter-spacing:0.2em;color:#C9A96E;text-transform:uppercase;">Brasilian Skin Soul</p>
             <h1 style="margin:0;font-size:30px;font-weight:300;color:#ffffff;font-family:Georgia,serif;">Your 3-Session Journey is Booked ✨</h1>
           </td>
