@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
-import { ChevronLeft, Loader2 } from 'lucide-react';
+import { ChevronLeft, Loader2, Phone, MessageCircle } from 'lucide-react';
 import { getServicesGrouped, formatDuration, Service } from '@/lib/services-data';
 import { useLang } from '@/lib/language-context';
 import { translations } from '@/lib/translations';
@@ -217,6 +217,11 @@ function Calendar({
 }
 
 const SKIP_ADDON_CATEGORIES = ['Transformation Series', 'Body & Massage', 'Waxing'];
+
+// ─── Maintenance Mode ────────────────────────────────────────────────────────
+// Set to true to show a "coming soon" overlay instead of the booking flow.
+// Flip to false once booking system is fully ready.
+const BOOKING_MAINTENANCE = true;
 
 // ─── Step Indicator ──────────────────────────────────────────────────────────
 
@@ -473,6 +478,53 @@ export default function BookingPage() {
   }
 
   const grouped = getServicesGrouped();
+
+  // ─── Maintenance Mode Screen ─────────────────────────────────────────────
+  if (BOOKING_MAINTENANCE) {
+    return (
+      <>
+        <Navbar />
+        <div className="pt-32 pb-20 bg-[#FAF8F2] min-h-screen flex items-center justify-center">
+          <div className="max-w-md mx-auto px-6 text-center">
+            {/* Decorative icon */}
+            <div className="w-20 h-20 rounded-full bg-[#1B4D2E] flex items-center justify-center mx-auto mb-8">
+              <span className="text-3xl">✦</span>
+            </div>
+
+            <p className="text-xs uppercase tracking-[0.25em] text-[#C9A96E] mb-4">Brasilian Skin Soul</p>
+            <h1 className="font-serif text-4xl md:text-5xl text-[#1B4D2E] font-light mb-4">
+              {T.maintenanceTitle}
+            </h1>
+            <p className="text-[#42825e] text-base leading-relaxed mb-10">
+              {T.maintenanceMessage}
+            </p>
+
+            {/* Call / Text buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <a
+                href="tel:+18185775421"
+                className="inline-flex items-center justify-center gap-3 bg-[#1B4D2E] text-white font-semibold px-8 py-4 rounded-full hover:bg-[#27533c] transition-colors shadow-lg"
+              >
+                <Phone size={18} />
+                {T.maintenanceCallLabel} — (818) 577-5421
+              </a>
+              <a
+                href="sms:+18185775421"
+                className="inline-flex items-center justify-center gap-3 border-2 border-[#1B4D2E] text-[#1B4D2E] font-semibold px-8 py-4 rounded-full hover:bg-[#1B4D2E] hover:text-white transition-colors"
+              >
+                <MessageCircle size={18} />
+                {T.maintenanceTextLabel}
+              </a>
+            </div>
+
+            <p className="text-xs text-[#96c0a6]">
+              {T.openHours}
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

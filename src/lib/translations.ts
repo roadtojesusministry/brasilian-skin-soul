@@ -175,6 +175,12 @@ export interface BookingStrings {
   // Error
   genericError: string;
 
+  // Maintenance
+  maintenanceTitle: string;
+  maintenanceMessage: string;
+  maintenanceCallLabel: string;
+  maintenanceTextLabel: string;
+
   continueBtn: string;
   backBtn: string;
   policyAgreement: string;
@@ -498,6 +504,11 @@ const en: SiteTranslations = {
     atTime: 'at',
 
     genericError: 'Something went wrong. Please try again.',
+
+    maintenanceTitle: 'Online Booking Coming Soon',
+    maintenanceMessage: 'Our online booking system is being set up. In the meantime, please call or text us to schedule your appointment.',
+    maintenanceCallLabel: 'Call Us',
+    maintenanceTextLabel: 'Text Us',
 
     continueBtn: 'Continue →',
     backBtn: 'Back',
@@ -829,6 +840,11 @@ const es: SiteTranslations = {
 
     genericError: 'Algo salió mal. Por favor, inténtalo de nuevo.',
 
+    maintenanceTitle: 'Reservas en Línea Próximamente',
+    maintenanceMessage: 'Nuestro sistema de reservas en línea está en preparación. Mientras tanto, llámenos o envíenos un mensaje para agendar su cita.',
+    maintenanceCallLabel: 'Llamar',
+    maintenanceTextLabel: 'Enviar Mensaje',
+
     continueBtn: 'Continuar →',
     backBtn: 'Atrás',
     policyAgreement: 'Entiendo que todas las ventas son finales. Puedo reprogramar cualquier sesión en cualquier momento, tantas veces como sea necesario.',
@@ -1158,6 +1174,11 @@ const pt: SiteTranslations = {
     atTime: 'às',
 
     genericError: 'Algo deu errado. Por favor, tente novamente.',
+
+    maintenanceTitle: 'Agendamento Online Em Breve',
+    maintenanceMessage: 'Nosso sistema de agendamento online está sendo preparado. Enquanto isso, ligue ou envie uma mensagem para agendar seu horário.',
+    maintenanceCallLabel: 'Ligar',
+    maintenanceTextLabel: 'Enviar Mensagem',
 
     continueBtn: 'Continuar →',
     backBtn: 'Voltar',
