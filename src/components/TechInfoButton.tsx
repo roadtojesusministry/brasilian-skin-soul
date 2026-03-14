@@ -3,6 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { techScience } from "@/lib/techScience";
+import { useLang } from "@/lib/language-context";
+
+const UI: Record<string, { howItWorks: string; theScience: string; whyThisWorks: string }> = {
+  en: { howItWorks: 'How it works', theScience: 'The Science', whyThisWorks: 'Why This Works' },
+  es: { howItWorks: 'Cómo funciona', theScience: 'La Ciencia', whyThisWorks: 'Por Qué Funciona' },
+  pt: { howItWorks: 'Como funciona', theScience: 'A Ciência', whyThisWorks: 'Por Que Funciona' },
+};
 
 interface Props {
   techNames: string[];
@@ -14,6 +21,8 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const instanceId = useRef(Math.random().toString(36));
+  const { lang } = useLang();
+  const ui = UI[lang] ?? UI.en;
 
   useEffect(() => setMounted(true), []);
 
@@ -54,7 +63,7 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5v-5m0-3.75h.008M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
           </svg>
-          How it works
+          {ui.howItWorks}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3 h-3 group-hover:translate-x-0.5 transition-transform">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
           </svg>
@@ -77,9 +86,9 @@ export default function TechInfoButton({ techNames, groupName, iconOnly }: Props
             {/* Header */}
             <div className="bg-forest px-6 py-5 flex items-start justify-between gap-4 flex-shrink-0">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-gold/70 mb-1">The Science</p>
+                <p className="text-xs uppercase tracking-[0.2em] text-gold/70 mb-1">{ui.theScience}</p>
                 <h3 className="font-serif text-xl text-white leading-snug">
-                  {groupName ?? "Why This Works"}
+                  {groupName ?? ui.whyThisWorks}
                 </h3>
               </div>
               <button

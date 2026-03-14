@@ -130,7 +130,7 @@ export default function Services() {
                   ))}
                 </div>
                 <div className="mb-5">
-                  <TechInfoButton techNames={p.technologies ?? []} groupName={p.seriesGroup ?? p.name} />
+                  <TechInfoButton techNames={p.technologiesEN ?? p.technologies ?? []} groupName={p.seriesGroup ?? p.name} />
                 </div>
                 {p.compound && (
                   <div className="border-t border-white/10 pt-5 mt-2 mb-5">

@@ -22,6 +22,7 @@ export interface Service {
   sessions?: number;
   seriesGroup?: string;
   technologies?: string[];
+  technologiesEN?: string[]; // always English — used for techScience lookup
   compound?: { headline: string; body: string };
 
   // Body & Massage
@@ -758,6 +759,7 @@ export function getLocalizedService(service: Service, lang: string): Service {
     fullDesc: override.fullDesc ?? service.fullDesc,
     seriesGroup: override.seriesGroup ?? service.seriesGroup,
     technologies: override.technologies ?? service.technologies,
+    technologiesEN: service.technologies, // always preserve English names for techScience lookup
     pairWith: override.pairWith ?? service.pairWith,
     badge: override.badge ?? service.badge,
     compound: service.compound
