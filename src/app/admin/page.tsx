@@ -361,6 +361,145 @@ function formatWeekRange(dates: Date[]): string {
   return `${startMonth} ${start.getDate()} – ${endMonth} ${end.getDate()}, ${year}`;
 }
 
+// ─── Month Calendar Component ─────────────────────────────────────────────────
+
+function MonthCalendar({
+  bookings,
+  selectedDay,
+  setSelectedDay,
+}: {
+  bookings: Booking[];
+  selectedDay: string | null;
+  setSelectedDay: (day: string | null) => void;
+}) {
+  const today = new Date();
+  const [year, setYear]   = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth());
+
+  function prevMonth() {
+    if (month === 0) { setYear(y => y - 1); setMonth(11); }
+    else setMonth(m => m - 1);
+  }
+  function nextMonth() {
+    if (month === 11) { setYear(y => y + 1); setMonth(0); }
+    else setMonth(m => m + 1);
+  }
+
+  // Group bookings by date
+  const byDate = new Map<string, Booking[]>();
+  for (const b of bookings) {
+    const arr = byDate.get(b.booking_date) ?? [];
+    arr.push(b);
+    byDate.set(b.booking_date, arr);
+  }
+
+  // Month-level stats
+  const monthStr = `${year}-${String(month + 1).padStart(2, '0')}`;
+  const monthBookings = bookings.filter(b => b.booking_date.startsWith(monthStr));
+  const monthRevenue  = monthBookings.reduce((s, b) => s + (b.service_price ?? 0), 0);
+  const busiestCount  = Math.max(0, ...Array.from(byDate.entries())
+    .filter(([d]) => d.startsWith(monthStr))
+    .map(([, arr]) => arr.length));
+
+  // Build calendar grid (Sun–Sat rows)
+  const firstDow = new Date(year, month, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const todayStr = toDateStr(today);
+
+  const cells: (Date | null)[] = [];
+  for (let i = 0; i < firstDow; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, month, d));
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  function dayStyle(count: number, isSelected: boolean, isClosed: boolean) {
+    if (isClosed) return 'bg-gray-50 opacity-50 cursor-default';
+    if (isSelected) return 'bg-[#1B4D2E] cursor-pointer';
+    if (count === 0) return 'bg-white hover:bg-[#f2f7f4] cursor-pointer';
+    if (count <= 2)  return 'bg-[#e8f4ee] hover:bg-[#d5ecdf] cursor-pointer';
+    if (count <= 4)  return 'bg-[#c2daca] hover:bg-[#add0bb] cursor-pointer';
+    return 'bg-[#C9A96E]/25 hover:bg-[#C9A96E]/40 cursor-pointer'; // gold = packed day
+  }
+
+  return (
+    <div className="bg-white rounded-2xl border border-[#e0ede5] p-4 mb-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-1">
+        <button onClick={prevMonth} className="text-sm text-[#C9A96E] hover:text-[#1B4D2E] transition-colors px-2 py-1">← Prev</button>
+        <div className="text-center">
+          <p className="text-sm font-semibold text-[#1B4D2E]">{MONTH_NAMES[month]} {year}</p>
+          <p className="text-xs text-[#96c0a6]">
+            {monthBookings.length} bookings · <span className="text-[#C9A96E] font-medium">${monthRevenue.toLocaleString()}</span>
+            {busiestCount > 0 && <span> · peak {busiestCount} in a day</span>}
+          </p>
+        </div>
+        <button onClick={nextMonth} className="text-sm text-[#C9A96E] hover:text-[#1B4D2E] transition-colors px-2 py-1">Next →</button>
+      </div>
+
+      {/* Day-of-week headers */}
+      <div className="grid grid-cols-7 gap-1 mb-1 mt-3">
+        {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
+          <div key={d} className="text-center text-[10px] font-bold text-[#96c0a6] tracking-wider py-1">{d}</div>
+        ))}
+      </div>
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-1">
+        {cells.map((date, i) => {
+          if (!date) return <div key={`empty-${i}`} className="min-h-[58px]" />;
+
+          const dateStr   = toDateStr(date);
+          const dayBkgs   = byDate.get(dateStr) ?? [];
+          const count     = dayBkgs.length;
+          const revenue   = dayBkgs.reduce((s, b) => s + (b.service_price ?? 0), 0);
+          const isSelected = selectedDay === dateStr;
+          const isToday   = dateStr === todayStr;
+          const isClosed  = date.getDay() === 0 || date.getDay() === 1; // Sun + Mon
+
+          return (
+            <div
+              key={dateStr}
+              onClick={() => !isClosed && setSelectedDay(isSelected ? null : dateStr)}
+              className={`rounded-lg p-1.5 min-h-[58px] border transition-colors ${dayStyle(count, isSelected, isClosed)} ${isSelected ? 'border-[#1B4D2E]' : 'border-transparent'}`}
+            >
+              {/* Day number */}
+              <p className={`text-xs font-bold leading-tight ${
+                isSelected ? 'text-white' :
+                isToday    ? 'text-[#C9A96E]' :
+                isClosed   ? 'text-gray-300' :
+                'text-[#1B4D2E]'
+              }`}>
+                {isToday ? `${date.getDate()} ●` : date.getDate()}
+              </p>
+
+              {/* Stats */}
+              {count > 0 && !isClosed && (
+                <div className="mt-0.5 space-y-0.5">
+                  <p className={`text-[10px] font-semibold leading-tight ${isSelected ? 'text-white/90' : 'text-[#1B4D2E]'}`}>
+                    {count} {count === 1 ? 'apt' : 'apts'}
+                  </p>
+                  <p className={`text-[10px] font-medium leading-tight ${isSelected ? 'text-[#f0d99a]' : 'text-[#C9A96E]'}`}>
+                    ${revenue >= 1000 ? `${(revenue/1000).toFixed(1)}k` : revenue}
+                  </p>
+                </div>
+              )}
+              {count === 0 && !isClosed && (
+                <p className="text-[10px] text-[#c0d8ca] mt-0.5">—</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center gap-3 mt-3 justify-end text-[10px] text-[#96c0a6]">
+        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-[#e8f4ee] border border-[#c2daca] inline-block" /> 1–2</span>
+        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-[#c2daca] inline-block" /> 3–4</span>
+        <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-[#C9A96E]/25 inline-block" /> 5+</span>
+      </div>
+    </div>
+  );
+}
+
 // ─── Week Calendar Component ──────────────────────────────────────────────────
 
 const CAL_DAY_SHORT = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -563,6 +702,7 @@ function BookingsTab() {
   const [typeFilter, setTypeFilter] = useState<'all' | 'series' | 'single'>('all');
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [calView, setCalView] = useState<'week' | 'month'>('week');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -792,12 +932,38 @@ function BookingsTab() {
 
   return (
     <div>
-      {/* Weekly Calendar */}
-      <WeekCalendar
-        bookings={bookings}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}
-      />
+      {/* Calendar view toggle */}
+      <div className="flex items-center gap-1 mb-3">
+        {(['week', 'month'] as const).map(v => (
+          <button
+            key={v}
+            onClick={() => { setCalView(v); setSelectedDay(null); }}
+            className={[
+              'px-3 py-1.5 rounded-full text-xs font-medium transition-colors capitalize',
+              calView === v
+                ? 'bg-[#1B4D2E] text-white'
+                : 'bg-white border border-[#e0ede5] text-[#42825e] hover:border-[#C9A96E]',
+            ].join(' ')}
+          >
+            {v === 'week' ? '📅 Week' : '🗓 Month'}
+          </button>
+        ))}
+      </div>
+
+      {/* Calendar */}
+      {calView === 'week' ? (
+        <WeekCalendar
+          bookings={bookings}
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
+        />
+      ) : (
+        <MonthCalendar
+          bookings={bookings}
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
+        />
+      )}
 
       {/* Selected day filter pill */}
       {selectedDay && (
