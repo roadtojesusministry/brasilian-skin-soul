@@ -346,7 +346,7 @@ export default function Home() {
                 <div className="p-6">
                   <p className="text-xs text-gold font-medium uppercase tracking-wide mb-2">{s.tagline}</p>
                   <h3 className="font-serif text-xl text-forest leading-tight mb-2">{s.name}</h3>
-                  <p className="text-sm text-forest-500 leading-relaxed mb-4">{s.desc}</p>
+                  <p className="text-sm text-forest-500 leading-relaxed mb-4 whitespace-pre-line">{s.desc}</p>
                   <div className="flex items-center justify-end text-xs pt-3 border-t border-forest-100">
                     <span className="text-forest-400">{s.duration}</span>
                   </div>

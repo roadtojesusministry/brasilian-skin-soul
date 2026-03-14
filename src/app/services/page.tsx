@@ -121,7 +121,7 @@ export default function Services() {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/60 text-sm leading-relaxed mb-5">{p.fullDesc}</p>
+                <p className="text-white/60 text-sm leading-relaxed mb-5 whitespace-pre-line">{p.fullDesc}</p>
                 <div className="flex flex-wrap gap-2 mb-3">
                   {p.technologies?.map((tech) => (
                     <span key={tech} className="text-xs border border-white/15 text-white/50 px-3 py-1 rounded-full">
@@ -187,7 +187,7 @@ export default function Services() {
                     {IconComponent && <IconComponent className="w-4 h-4 text-gold shrink-0" strokeWidth={1.5} />}
                     <h3 className="font-serif text-xl text-forest leading-tight">{s.name}</h3>
                   </div>
-                  <p className="text-sm text-forest-500 leading-relaxed flex-1">{s.fullDesc}</p>
+                  <p className="text-sm text-forest-500 leading-relaxed flex-1 whitespace-pre-line">{s.fullDesc}</p>
                   {s.addons && (
                     <div className="mt-2">
                       <p className="text-xs text-forest-300 mb-1.5">{T.enhanceWith}</p>
@@ -254,7 +254,7 @@ export default function Services() {
             {bodyMassage.map((s: Service) => (
               <div key={s.id} className="bg-white/10 border border-white/10 rounded-2xl p-6 hover:bg-white/15 transition-colors">
                 <h3 className="font-serif text-xl text-white mb-2">{s.name}</h3>
-                <p className="text-sm text-white/60 leading-relaxed mb-4">{s.fullDesc}</p>
+                <p className="text-sm text-white/60 leading-relaxed mb-4 whitespace-pre-line">{s.fullDesc}</p>
                 {s.pairWith && s.pairWith.length > 0 && (
                   <div className="mt-2 mb-3">
                     <p className="text-xs text-white/30 mb-1.5">{T.pairWith}</p>
