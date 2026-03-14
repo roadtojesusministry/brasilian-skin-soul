@@ -134,9 +134,11 @@ export default function Services() {
                 </div>
                 {p.compound && (
                   <div className="border-t border-white/10 pt-5 mt-2 mb-5">
-                    <p className="text-xs uppercase tracking-[0.15em] text-gold/70 font-semibold mb-2">{T.seriesWhyCompounds}</p>
-                    <p className="text-gold font-serif text-base italic leading-snug mb-2">&ldquo;{p.compound.headline}&rdquo;</p>
-                    <p className="text-white/50 text-xs leading-relaxed">{p.compound.body}</p>
+                    <p className="text-xs uppercase tracking-[0.15em] text-gold/70 font-semibold mb-3">{T.seriesWhyCompounds}</p>
+                    <div className="border-l-2 border-gold/50 pl-4">
+                      <p className="text-gold font-serif text-lg italic leading-snug mb-2">&ldquo;{p.compound.headline}&rdquo;</p>
+                      <p className="text-white/80 text-sm leading-relaxed">{p.compound.body}</p>
+                    </div>
                   </div>
                 )}
                 <div className="flex items-center justify-between pt-5 border-t border-white/10">
