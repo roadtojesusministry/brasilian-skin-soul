@@ -10,10 +10,12 @@ export default function Navbar() {
   const { lang, setLang } = useLang();
   const T = translations[lang].nav;
 
+  const blogHref = lang === 'es' ? '/es/blog' : lang === 'pt' ? '/pt/blog' : '/blog';
+
   const links = [
     { label: T.home,     href: "/" },
     { label: T.services, href: "/services" },
-    { label: T.blog,     href: "/blog" },
+    { label: T.blog,     href: blogHref },
     { label: T.about,    href: "/about" },
     { label: T.contact,  href: "/contact" },
   ];

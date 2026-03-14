@@ -53,6 +53,7 @@ export const SERVICES: Service[] = [
     },
     i18n: {
       es: {
+        name: 'Serie Lifting & Escultura',
         seriesGroup: 'Lifting No Quirúrgico',
         fullDesc: 'El protocolo de lifting no quirúrgico definitivo. Las tres tecnologías se aplican juntas en cada sesión — sin rotaciones, sin divisiones. Tres sesiones progresivas que combinan el entrenamiento muscular con microcorriente, el contorneado Therma-Lift y la estimulación de colágeno con Plasma Frío. Cada sesión potencia la anterior — el efecto acumulado es un rostro visiblemente levantado, firme y esculpido.',
         technologies: ['Lifting por Microcorriente', 'Tecnología Therma-Lift', 'Plasma Frío (13.000V)'],
@@ -60,6 +61,7 @@ export const SERVICES: Service[] = [
         compoundBody: 'La microcorriente reeduca los músculos faciales de la misma manera que el gimnasio desarrolla la fuerza — con cada sesión, el músculo responde más rápido y mantiene más tiempo porque recuerda la señal. Mientras tanto, Therma-Lift activa una ola de remodelación de colágeno que tarda semanas en desarrollarse completamente. Cuando comienza la segunda sesión, el colágeno de la primera aún está madurando — dos oleadas separadas de nuevo colágeno construyéndose simultáneamente. Para la tercera sesión, tienes tres ciclos de reparación superpuestos. El lifting después de tres sesiones no es tres veces una sesión. Es exponencial.',
       },
       pt: {
+        name: 'Série Lifting & Escultura',
         seriesGroup: 'Lifting Não Cirúrgico',
         fullDesc: 'O protocolo definitivo de lifting não cirúrgico. As três tecnologias são aplicadas juntas em cada sessão — sem rotações, sem divisões. Três sessões progressivas combinando treinamento muscular com microcorrente, contorno Therma-Lift e estimulação de colágeno com Plasma Frio. Cada sessão potencializa a anterior — o efeito cumulativo é um rosto visivelmente mais elevado, firme e esculpido.',
         technologies: ['Lifting por Microcorrente', 'Tecnologia Therma-Lift', 'Plasma Frio (13.000V)'],
@@ -85,6 +87,7 @@ export const SERVICES: Service[] = [
     },
     i18n: {
       es: {
+        name: 'Serie Iluminación',
         seriesGroup: 'Luminosidad y Sanación',
         fullDesc: 'Sana, hidrata e ilumina desde adentro. Tres sesiones combinando terapia de luz LED dirigida, infusión de oxígeno a presión (Intraceuticals) y firmeza con carboxiterapia CO2. Las tres tecnologías se aplican juntas en cada sesión — sanando, inundando y tonificando la piel en un protocolo completo. Cada sesión se acumula sobre la anterior — en la tercera sesión, la luminosidad es innegable.',
         technologies: ['Fototerapia LED', 'Infusión de Oxígeno (Intraceuticals)', 'Carboxiterapia CO2'],
@@ -92,6 +95,7 @@ export const SERVICES: Service[] = [
         compoundBody: 'La fototerapia LED activa cromóforos dentro de las células de la piel — y las células ya activadas responden con mayor intensidad a la siguiente exposición. La infusión de oxígeno en la segunda sesión inunda tejidos que la primera dejó más hidratados y receptivos. La carboxiterapia CO2 entrena progresivamente la microcirculación — con cada sesión, la capacidad de tu piel para distribuir nutrientes y eliminar residuos mejora no solo durante el tratamiento, sino también en las semanas entre sesiones. Para la tercera sesión, estás iluminando una piel entrenada para brillar.',
       },
       pt: {
+        name: 'Série Iluminação',
         seriesGroup: 'Luminosidade e Cura',
         fullDesc: 'Cure, hidrate e ilumine de dentro para fora. Três sessões combinando terapia de luz LED direcionada, infusão de oxigênio pressurizado (Intraceuticals) e firmeza com carboxiterapia CO2. As três tecnologias são aplicadas juntas em cada sessão — curando, inundando e firmando a pele em um protocolo completo. Cada sessão potencializa a anterior — na terceira sessão, a luminosidade é inegável.',
         technologies: ['Fototerapia LED', 'Infusão de Oxigênio (Intraceuticals)', 'Carboxiterapia CO2'],
@@ -117,6 +121,7 @@ export const SERVICES: Service[] = [
     },
     i18n: {
       es: {
+        name: 'Serie Renovación & Refinamiento',
         seriesGroup: 'Textura y Tono',
         fullDesc: 'Tres sesiones progresivas que eliminan años de acumulación de textura y revelan la piel más suave y uniforme de tu vida. La microdermoabrasión con punta de diamante resurface en capas profundas, el Dermaplane de grado quirúrgico elimina el vello fino y la piel muerta para un lienzo impecable, y un peeling de glicólico profesional disuelve el daño superficial para revelar una piel brillante y renovada. Cada sesión va más profundo — el resultado acumulado es un cutis que verdaderamente resplandece.',
         technologies: ['Microdermoabrasión', 'Exfoliación Dermaplane', 'Peeling de Glicólico'],
@@ -124,6 +129,7 @@ export const SERVICES: Service[] = [
         compoundBody: 'La primera sesión elimina años de acumulación superficial — pero la verdadera transformación comienza en la segunda sesión, cuando las mismas modalidades encuentran una piel más fresca y receptiva. La microdermoabrasión estimula el colágeno, que engrosa y fortalece la dermis — así, el resurfacing de la segunda sesión penetra más profundo en un tejido más saludable. La eficacia del ácido glicólico aumenta con el uso regular al acelerar la renovación celular — para la tercera sesión, tu piel está en un ciclo de renovación activo, no solo recibiendo pasivamente el tratamiento. Tres sesiones no solo resurface. Reconstruyen.',
       },
       pt: {
+        name: 'Série Renovação & Refinamento',
         seriesGroup: 'Textura e Tom',
         fullDesc: 'Três sessões progressivas que removem anos de acúmulo de textura e revelam a pele mais suave e uniforme da sua vida. A microdermoabrasão com ponta de diamante ressurfaceia camadas profundas, o Dermaplane de grau cirúrgico elimina a penugem e as células mortas para uma tela impecável, e um peeling de glicólico profissional dissolve danos superficiais para revelar uma pele brilhante e renovada. Cada sessão vai mais fundo — o resultado cumulativo é uma tez que genuinamente brilha.',
         technologies: ['Microdermoabrasão', 'Esfoliação Dermaplane', 'Peeling de Glicólico'],
@@ -149,6 +155,7 @@ export const SERVICES: Service[] = [
     },
     i18n: {
       es: {
+        name: 'Serie Detox & Renovación Celular',
         seriesGroup: 'Desintoxicación y Renovación Celular',
         fullDesc: 'Regeneración profunda y desintoxicación desde adentro hacia afuera. La terapia con células madre vegetales activa la renovación en la capa más profunda de la piel, las ondas de ultrasonido amplían la absorción de productos y estimulan la actividad celular, y el drenaje linfático Gua Sha esculpe y restaura la luminosidad natural de la piel. Los tres trabajan juntos en cada sesión — las células madre activan la reparación, el ultrasonido la lleva más profundo, el Gua Sha elimina lo descompuesto. Tres sesiones de esa acumulación es transformación a nivel celular.',
         technologies: ['Terapia con Células Madre Vegetales', 'Terapia de Ultrasonido', 'Drenaje Linfático Gua Sha'],
@@ -156,6 +163,7 @@ export const SERVICES: Service[] = [
         compoundBody: 'Los factores de células madre vegetales no actúan una vez y desaparecen — se acumulan, superponiendo señales que despiertan progresivamente más de la capacidad de renovación latente de tu piel. El ultrasonido crea un efecto de permeabilidad transitoria que se profundiza con cada sesión, lo que significa que los activos penetran más porque el tejido ya ha sido preparado. Las vías linfáticas del Gua Sha se mantienen progresivamente más despejadas entre sesiones — lo que significa que la tercera sesión alcanza una profundidad de desintoxicación que la primera nunca pudo. La ciencia no solo suma. Se acumula exponencialmente.',
       },
       pt: {
+        name: 'Série Detox & Renovação Celular',
         seriesGroup: 'Desintoxicação e Renovação Celular',
         fullDesc: 'Regeneração profunda e desintoxicação de dentro para fora. A terapia com células-tronco vegetais aciona a renovação na camada mais profunda da pele, as ondas de ultrassom amplificam a absorção de produtos e estimulam a atividade celular, e a drenagem linfática Gua Sha esculpe e restaura a luminosidade natural da pele. Os três trabalham juntos em cada sessão — as células-tronco ativam o reparo, o ultrassom o leva mais fundo, o Gua Sha elimina o que foi degradado. Três sessões desse acúmulo é transformação no nível celular.',
         technologies: ['Terapia com Células-Tronco Vegetais', 'Terapia por Ultrassom', 'Drenagem Linfática Gua Sha'],

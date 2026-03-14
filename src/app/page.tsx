@@ -378,7 +378,7 @@ export default function Home() {
             </div>
             <div className="absolute -top-4 -right-4 bg-gold text-forest rounded-2xl p-4 text-center shadow-xl">
               <p className="font-serif text-4xl font-bold">28</p>
-              <p className="text-xs font-semibold uppercase tracking-wide">Years<br />Experience</p>
+              <p className="text-xs font-semibold uppercase tracking-wide whitespace-pre-line">{T.aboutYearsLabel}</p>
             </div>
           </div></FadeIn>
 

@@ -80,7 +80,7 @@ export default function Contact() {
                 style={{ border: 0 }}
                 loading="lazy"
                 allowFullScreen
-                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3e-o&q=5303+Comercio+Lane+Suite+2+Woodland+Hills+CA+91364"
+                src="https://maps.google.com/maps?q=5303+Comercio+Lane+Suite+2+Woodland+Hills+CA+91364&output=embed"
               />
             </div>
 
@@ -100,14 +100,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Social */}
-            <div className="bg-white rounded-2xl p-8 border border-forest-100 shadow-sm text-center">
-              <p className="text-xs uppercase tracking-[0.15em] text-gold mb-4">{T.followLabel}</p>
-              <a href="https://instagram.com/brasilianskinsoul" target="_blank" rel="noopener"
-                className="inline-flex items-center gap-2 text-forest font-medium hover:text-gold transition-colors">
-                📸 @brasilianskinsoul
-              </a>
-            </div>
+
           </div>
         </div>
       </div>

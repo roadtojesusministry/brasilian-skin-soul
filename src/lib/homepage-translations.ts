@@ -69,6 +69,7 @@ export interface HomepageStrings {
   aboutP3Post: string;
   aboutBtn: string;
   aboutFounderTitle: string;
+  aboutYearsLabel: string;
 
   // Location strip
   locationLabel: string;
@@ -150,6 +151,7 @@ export const t: Record<Lang, HomepageStrings> = {
     aboutP3Post: ' — inspire her every day.',
     aboutBtn: "Read Claudia\u2019s Full Story \u2192",
     aboutFounderTitle: 'Founder & Lead Skincare Therapist',
+    aboutYearsLabel: 'Years\nExperience',
 
     locationLabel: 'Location',
     hoursLabel: 'Hours',
@@ -229,6 +231,7 @@ export const t: Record<Lang, HomepageStrings> = {
     aboutP3Post: ' — la inspiran cada día.',
     aboutBtn: 'Leer la Historia Completa de Claudia →',
     aboutFounderTitle: 'Fundadora y Terapeuta Principal de la Piel',
+    aboutYearsLabel: 'Años de\nExperiencia',
 
     locationLabel: 'Ubicación',
     hoursLabel: 'Horario',
@@ -307,6 +310,7 @@ export const t: Record<Lang, HomepageStrings> = {
     aboutP3Post: ' — a inspiram todos os dias.',
     aboutBtn: 'Ler a História Completa de Claudia →',
     aboutFounderTitle: 'Fundadora e Terapeuta Principal de Skincare',
+    aboutYearsLabel: 'Anos de\nExperiência',
 
     locationLabel: 'Localização',
     hoursLabel: 'Horário',
