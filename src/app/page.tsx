@@ -125,10 +125,10 @@ export default function Home() {
 
   // Build service categories with translated labels
   const serviceCategories = [
-    { label: T.catUniqueProtocols, svg: categoryIcons[0] },
-    { label: T.catSignatureFacials, svg: categoryIcons[1] },
-    { label: T.catBodyTreatments,   svg: categoryIcons[2] },
-    { label: T.catWaxingServices,   svg: categoryIcons[3] },
+    { label: T.catUniqueProtocols, svg: categoryIcons[0], href: '/services#transformation-series' },
+    { label: T.catSignatureFacials, svg: categoryIcons[1], href: '/services#signature' },
+    { label: T.catBodyTreatments,   svg: categoryIcons[2], href: '/services#body' },
+    { label: T.catWaxingServices,   svg: categoryIcons[3], href: '/services#waxing' },
   ];
 
   // Build advanced tech with translated labels and descriptions
@@ -242,13 +242,13 @@ export default function Home() {
                   </button>
                 </div>
               </div>
-              <div className="w-full border-t border-white/15 pt-3 flex flex-col gap-1">
+              <div className="w-full border-t border-white/15 pt-4 flex flex-col gap-2">
                 {serviceCategories.map((c) => (
-                  <div key={c.label}
-                    className="flex items-center gap-3 text-white/70 text-xs py-2 px-3 rounded-xl">
-                    <span className="text-gold/70 [&>svg]:w-4 [&>svg]:h-4">{c.svg}</span>
+                  <Link key={c.label} href={c.href}
+                    className="flex items-center gap-3 bg-gold/10 border border-gold/30 hover:bg-gold/20 hover:border-gold/60 text-gold text-sm font-medium px-4 py-2.5 rounded-full transition-all duration-200">
+                    <span className="[&>svg]:w-4 [&>svg]:h-4 flex-shrink-0">{c.svg}</span>
                     {c.label}
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
